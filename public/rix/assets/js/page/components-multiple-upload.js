@@ -1,41 +1,48 @@
 "use strict";
+Dropzone.autoDiscover = false;
+var dropzone = new Dropzone("#dropzone", {
+    dictDefaultMessage: "Yüklemek istediğiniz resmi sürükleyin veya seçin",
+    dictFallbackMessage: "Tarayıcınız sürükle bırak eklentisini desteklemiyor.",
+    dictFileTooBig: "Dosya çok büyük ({{filesize}}MiB). Maximum : {{maxFilesize}}MiB.",
+    dictInvalidFileType: "Bu uzantıda dosya yükleyemezsiniz.",
+    dictResponseError: "Sunucu şu kod ile yanıt verdi {{statusCode}}.",
+    dictCancelUpload: "Yüklemeyi iptal et",
+    dictUploadCanceled: "Yükleme iptal edildi.",
+    dictCancelUploadConfirmation: "Yüklemeyi iptal etmek istediğinizden emin misiniz?",
+    dictRemoveFile: "Dosyayı Sil",
+    dictMaxFilesExceeded: "Daha fazla dosya yükleyemezsiniz.",
+    url: route,
+    maxFilesize: 3,
+    maxFiles: 20,
+    paramName: 'image',
+    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    init: function () {
+        this.on("success", function (file, response) {
+            if (response.status === false) {
+                $(file.previewElement).removeClass("dz-success");
+                $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response.message);
+            }
+        });
+        this.on("error", function (file, response) {
+            $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response.errors.image);
+        });
+        this.on('queuecomplete', function () {
+            let dropzone = $('#dropzone');
+            if (dropzone.data('dropzone') === 1) {
+                $.ajax({
+                    url: '?page=' + 1,
+                    type: 'get',
 
-var dropzone = new Dropzone("#mydropzone", {
-  url: "#"
-});
-
-var minSteps = 6,
-  maxSteps = 60,
-  timeBetweenSteps = 100,
-  bytesPerStep = 100000;
-
-dropzone.uploadFiles = function(files) {
-  var self = this;
-
-  for (var i = 0; i < files.length; i++) {
-
-    var file = files[i];
-      totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-
-    for (var step = 0; step < totalSteps; step++) {
-      var duration = timeBetweenSteps * (step + 1);
-      setTimeout(function(file, totalSteps, step) {
-        return function() {
-          file.upload = {
-            progress: 100 * (step + 1) / totalSteps,
-            total: file.size,
-            bytesSent: (step + 1) * file.size / totalSteps
-          };
-
-          self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-          if (file.upload.progress == 100) {
-            file.status = Dropzone.SUCCESS;
-            self.emit("success", file, 'success', null);
-            self.emit("complete", file);
-            self.processQueue();
-          }
-        };
-      }(file, totalSteps, step), duration);
+                }).done(function (res) {
+                    let len = res.html.length;
+                    if (len > 0) {
+                        $('.post-gallery-content').html(res.html);
+                    }
+                })
+            }
+        })
     }
-  }
-}
+});

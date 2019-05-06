@@ -367,7 +367,18 @@ $(function() {
     $(".summernote").summernote({
        dialogsInBody: true,
       minHeight: 250,
+        toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["fontname", ["fontname"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture", "video"]],
+            ["view", ["codeview", "help"]]
+        ],
     });
+    $('.summernote .btn-fullscreen').remove();
     $(".summernote-simple").summernote({
        dialogsInBody: true,
       minHeight: 150,

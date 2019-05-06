@@ -6,15 +6,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="/rix/assets/js/stisla.js"></script>
 
-<!-- JS Libraies -->
-{{--<script src="../node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
-<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
-<script src="../node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
-<script src="../node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
-<script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>--}}
+@yield('general_js')
 
 <!-- Template JS File -->
 <script src="/rix/assets/js/scripts.js"></script>
-<script src="/rix/assets/js/custom.js"></script>
-
+<script src="/rix/assets/js/page/modules-ion-icons.js"></script>
+@yield("js")

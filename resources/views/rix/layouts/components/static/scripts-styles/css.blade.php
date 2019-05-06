@@ -3,14 +3,9 @@
       crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous">
-
-<!-- CSS Libraries -->
-
-{{--<link rel="stylesheet" href="../node_modules/jqvmap/dist/jqvmap.min.css">
-<link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons.min.css">
-<link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons-wind.min.css">--}}
-<link rel="stylesheet" href="/rix/assets/node_modules/summernote/dist/summernote-bs4.css">
-
+<link rel="stylesheet" href="/rix/assets/modules/ionicons201/css/ionicons.min.css">
+@yield('general_css')
 <!-- Template CSS -->
 <link rel="stylesheet" href="/rix/assets/css/style.css">
 <link rel="stylesheet" href="/rix/assets/css/components.css">
+@yield('css')

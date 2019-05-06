@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield("title","Rix Admin")</title>
     <!-- CSS -->
     @include("rix.layouts.components.static.scripts-styles.css")
+
 </head>
 
 <body>
@@ -19,10 +21,13 @@
     <!-- Main Content -->
         <div class="main-content">
             <section class="section">
-                <div class="section-header">
+                <div class="section-header" id="section-header">
                     <h1>@yield("page_title","Anasayfa")</h1>
+                    @yield('section_header')
                 </div>
-                @yield("content")
+                <div class="section-content" id="section-content">
+                    @yield("content")
+                </div>
             </section>
         </div>
         <!-- FOOTER -->
@@ -31,6 +36,5 @@
 </div>
 <!-- JAVASCRIPT -->
 @include("rix.layouts.components.static.scripts-styles.js")
-@yield("js")
 </body>
 </html>

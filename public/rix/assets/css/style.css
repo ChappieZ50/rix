@@ -426,7 +426,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .imagecheck-image {
     max-width: 100%;
-    opacity: .64;
+    opacity: .84;
     transition: .3s opacity; }
 .imagecheck-image:first-child {
     border-top-left-radius: 2px;
@@ -2326,6 +2326,16 @@ pre {
     background-size: cover; }
 
 /* 4.2 Section */
+.section-fixed-sticky{
+    position: fixed !important;
+    margin-top: -175px !important;
+    }
+.section-fixed-sticky h1{
+    display: none !important;
+}
+.section-content-sticky {
+    margin-top: 90px !important;
+}
 .section {
     position: relative;
     z-index: 1; }
@@ -2339,8 +2349,8 @@ pre {
     position: relative;
     margin-bottom: 30px;
     padding: 20px;
-    display: flex;
-    align-items: center; }
+    z-index: 100;
+    }
 .section .section-header h1 {
     margin-bottom: 0;
     font-weight: 700;
@@ -2451,7 +2461,6 @@ pre {
     background-color: #fff;
     z-index: 880;
     left: 0; }
-
 .main-sidebar,
 .navbar,
 .main-content,
