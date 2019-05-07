@@ -13,7 +13,7 @@ class GalleryController extends Controller
 
     public function get_gallery(Request $request)
     {
-        $images = Gallery::get_gallery(['id','image_name'],config('definitions.GALLERY_PAGINATE'));
+        $images = Gallery::get_gallery(['id','image_name','image_data','created_at'],config('definitions.MODAL_GALLERY_PAGINATE'));
         if ($request->ajax())
             return Helper::renderImages($images);
         return view('rix.media.gallery', compact('images'));
@@ -26,13 +26,20 @@ class GalleryController extends Controller
                 'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:3072',
             ]);
             $file = $request->file('image');
-            $imageName = Helper::uniqImg($file->getClientOriginalExtension());
+            $noExtensionName = Helper::uniqImg();
+            $imageName = Helper::uniqImg(['extension' => $file->getClientOriginalExtension()],$noExtensionName);
+
+
             $imageData = json_encode([
-                'width'     => getimagesize($file)[0],
-                'height'    => getimagesize($file)[1],
-                'mime-type' => $file->getClientMimeType(),
-                'size'      => $file->getSize(),
-                'extension' => $file->getClientOriginalExtension()
+                'width'                 => getimagesize($file)[0],
+                'height'                => getimagesize($file)[1],
+                'mime-type'             => $file->getClientMimeType(),
+                'size'                  => $file->getSize(),
+                'extension'             => $file->getClientOriginalExtension(),
+                'url'                   => Helper::srcImage($imageName),
+                'formatedDate'          => Helper::changeDateFormat(),
+                'noExtensionName'       => $noExtensionName,
+                'imageSizeHumanReadable'=> Helper::fileSize($file->getSize()),
             ]);
             $upload = $file->move(public_path(config('definitions.PUBLIC_PATH')), $imageName);
             if ($upload) {

@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                @include('rix.layouts.components.media.new_media')
+
             </div>
         </div>
     </div>

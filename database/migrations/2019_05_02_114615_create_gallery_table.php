@@ -18,9 +18,9 @@ class CreateGalleryTable extends Migration
             $table->text('image_name'); // Image Random Name
             $table->text('image_data'); // Image Data (Width,Height,Extension,Size,MimeType)
             
-            $table->string('meta_table',255)->nullable(); // Table to attach
+/*            $table->string('meta_table',255)->nullable(); // Table to attach
             $table->string('meta_key',255)->nullable(); // Key for image type (banner,background etc.)
-            $table->integer('meta_id')->nullable(); // Table column id
+            $table->integer('meta_id')->nullable(); // Table column id*/
             $table->timestamps();
         });
     }

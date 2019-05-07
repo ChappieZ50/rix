@@ -29,20 +29,5 @@ var dropzone = new Dropzone("#dropzone", {
         this.on("error", function (file, response) {
             $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response.errors.image);
         });
-        this.on('queuecomplete', function () {
-            let dropzone = $('#dropzone');
-            if (dropzone.data('dropzone') === 1) {
-                $.ajax({
-                    url: '?page=' + 1,
-                    type: 'get',
-
-                }).done(function (res) {
-                    let len = res.html.length;
-                    if (len > 0) {
-                        $('.post-gallery-content').html(res.html);
-                    }
-                })
-            }
-        })
     }
 });

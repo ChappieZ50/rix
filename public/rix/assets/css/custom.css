@@ -1,9 +1,172 @@
-.progress-gallery{
-    display: none;
+/*
+    Media Modal
+*/
+
+.media-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
 }
-.progress-gallery a{
-    display: none;
+
+.media-modal .modal-dialog {
+  position: fixed;
+  margin: 0;
+  min-width: 100%;
+  height: 100%;
+  padding: 0;
 }
-.delete_selected{
-    display: none;
+
+.media-modal .modal-dialog .modal-header {
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  border: 0;
 }
+
+.media-modal .modal-dialog .modal-header .close {
+  padding: 25px;
+}
+
+.media-modal .modal-dialog .modal-header .modal-title {
+  color: #23282d;
+  padding: 0 16px;
+  font-size: 26px;
+  line-height: 50px;
+}
+
+.media-modal .modal-dialog .modal-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body {
+  position: absolute;
+  top: 50px;
+  bottom: 60px;
+  width: 100%;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content {
+  position: relative;
+  height: 100%;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab {
+  padding: 0;
+  height: 100%;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 267px;
+  bottom: 0;
+  overflow: auto;
+  outline: 0;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-content .form-group input {
+  width: 180px;
+  margin: 15px;
+  height: 26px;
+  border-radius: 3px;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-content .modal-media-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-content .modal-media-items .imagecheck-item {
+  float: left;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-content .modal-media-items .imagecheck-item .imagecheck-image {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 150px;
+  height: 150px;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details {
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  height: 100%;
+  width: 267px;
+  overflow: auto;
+  padding: 10px 16px 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .preload {
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: 50%;
+  margin-top: -50px;
+  display: none;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .content {
+  display: none;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .content .image img {
+  max-width: 120px;
+  max-height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .content .delete-image button {
+  color: red !important;
+  background: transparent !important;
+  padding: 0;
+  margin: 0;
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .content .inputs input {
+  height: 26px;
+  border-radius: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ddd;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+}
+
+.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .select-image {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  box-shadow: none;
+  border-radius: 3px;
+  padding: 5px 20px 5px 20px;
+  background: #fc544b !important;
+}
+
+@media screen and (max-width: 780px) {
+  .media-details {
+    display: none !important;
+  }
+
+  .media-content {
+    right: 0 !important;
+  }
+}
+

@@ -46,7 +46,7 @@ class BlogController extends Controller
                     preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
                     $mimeType = $groups['mime']; // Getting image mime type
                     // Generating a random imageName
-                    $imageName = Helper::uniqImg($mimeType);
+                    $imageName = Helper::uniqImg(['extension' => $mimeType]);
                     $imagePath = config('definitions.PUBLIC_PATH') . "/$imageName";
                     $image = Image::make($src)
                         ->encode($mimeType, 100)// encode file to the specified mimetype

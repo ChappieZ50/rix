@@ -14,6 +14,6 @@ class Gallery extends Model
 
     static function get_gallery($select = ['*'], $paginate,$order = 'desc')
     {
-        return self::select($select)->orderBy('created_at',$order)->paginate($paginate);
+        return self::select($select)->orderBy('id',$order)->paginate($paginate);
     }
 }

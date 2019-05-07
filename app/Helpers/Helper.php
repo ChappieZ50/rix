@@ -5,10 +5,15 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\File;
 class Helper
 {
-    static function uniqImg($extension, $prefix = 'img_')
+    static function uniqImg($options = [], $uniq = '')
     {
-        $uniq = uniqid($prefix);
-        return $uniq . '.' . $extension;
+       $defaults = [
+           'prefix' => 'img_',
+           'extension' => '',
+       ];
+       $options = array_merge($options,$defaults);
+       $name =  !empty($uniq) ? $options['prefix'].$uniq : uniqid($options['prefix']);
+       return !empty($options['extension']) ? $name. ".".$options['extension'] : $name;
     }
 
     static function srcImage($img = '')
@@ -30,6 +35,24 @@ class Helper
     static function renderImages($images)
     {
         $view = view('rix.layouts.components.media.images', compact('images'))->render();
-        return response()->json(['html' => $view]);
+        return response()->json(['html' => $view, 'data' => $images->toArray()['data']]);
+    }
+
+    static function changeDateFormat(){
+        $months = __('date');
+        $month = $months[date('m') - 1];
+        return date('j ') . $month . date(' Y ');
+    }
+
+    static function fileSize($size){
+            if($size >= 1073741824)
+                $size=round($size/1073741824)." GB";
+            elseif($size >= 1048576 )
+                $size=round($size/1048576)." MB";
+            elseif ($size >= 1024)
+                $size=round($size/1024)." KB";
+            else
+                $size = $size. " B";
+            return $size;
     }
 }
