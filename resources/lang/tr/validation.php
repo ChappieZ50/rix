@@ -145,5 +145,15 @@ return [
     */
 
     'attributes' => [
+        'title'           => 'Başlık',
+        'slug'            => 'Url',
+        'content'         => 'İçerik',
+        'summary'         => 'Özet',
+        'featured_image'  => 'Öne Çıkan Resim',
+        'seo_title'       => 'Seo Başlık',
+        'seo_description' => 'Seo Açıklama',
+        'seo_keywords'    => 'Seo Anahtar Kelimeler',
+        'tags'            => 'Etiketler',
+        'categories'      => 'Kategoriler'
     ],
 ];

@@ -17,6 +17,8 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     // New Media
     Route::get('new_media','Rix\GalleryController@new_media')->name('rix_new_media');
     Route::post('new_media','Rix\GalleryController@new_media')->name('rix_add_new_media');
+    // Update Media
+    Route::post('update_media','Rix\GalleryController@update_media')->name('rix_update_media');
 
     // Posts
     Route::get('posts','Rix\BlogController@get_posts')->name('rix_posts');

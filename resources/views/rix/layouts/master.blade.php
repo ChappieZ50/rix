@@ -21,9 +21,10 @@
     <!-- Main Content -->
         <div class="main-content">
             <section class="section">
-                <div class="section-header" id="section-header">
+                <div class="section-header">
+                    @yield('section_header_top')
                     <h1>@yield("page_title","Anasayfa")</h1>
-                    @yield('section_header')
+                    @yield('section_header_bottom')
                 </div>
                 <div class="section-content" id="section-content">
                     @yield("content")

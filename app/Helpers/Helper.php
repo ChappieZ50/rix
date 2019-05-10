@@ -11,9 +11,11 @@ class Helper
            'prefix' => 'img_',
            'extension' => '',
        ];
-       $options = array_merge($options,$defaults);
-       $name =  !empty($uniq) ? $options['prefix'].$uniq : uniqid($options['prefix']);
-       return !empty($options['extension']) ? $name. ".".$options['extension'] : $name;
+       $options = array_merge($defaults,$options);
+       if(empty($uniq))
+           return uniqid($options['prefix']);
+       else
+           return $uniq.".".$options['extension'];
     }
 
     static function srcImage($img = '')

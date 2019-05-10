@@ -114,15 +114,6 @@
   bottom: 0;
 }
 
-.media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .preload {
-  position: absolute;
-  left: 50%;
-  margin-left: -50px;
-  top: 50%;
-  margin-top: -50px;
-  display: none;
-}
-
 .media-modal .modal-dialog .modal-content .modal-body .media-tabs-content .media-tab .media-details .content {
   display: none;
 }
@@ -168,5 +159,13 @@
   .media-content {
     right: 0 !important;
   }
+}
+
+.select-image #image-preview img {
+  width: 100%;
+  height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-top: 10px;
 }
 

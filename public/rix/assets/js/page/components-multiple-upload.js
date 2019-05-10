@@ -24,6 +24,22 @@ var dropzone = new Dropzone("#dropzone", {
             if (response.status === false) {
                 $(file.previewElement).removeClass("dz-success");
                 $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response.message);
+            } else {
+                let decode = $.parseJSON(response.data.image_data);
+                $('.modal-media-items h1').hide();
+
+
+                $('.modal-media-items').prepend(
+                    '<div class="imagecheck-item">' +
+                    '<label class="imagecheck mb-4">' +
+                    '<input name="imagecheck" type="radio" value="' + response.data.id + '" class="imagecheck-input" />' +
+                    '<figure class="imagecheck-figure">' +
+                    '<img src="' + decode.url + '" class="imagecheck-image">' +
+                    '</figure>' +
+                    '</label>' +
+                    '</div>'
+                );
+                loadImageData({0: response.data});
             }
         });
         this.on("error", function (file, response) {

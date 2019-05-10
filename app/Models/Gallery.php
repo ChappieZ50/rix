@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    protected $casts = [
-        'image_data' => 'array'
-    ];
     protected $table = 'gallery';
     protected $guarded = [];
 
