@@ -10,21 +10,14 @@ class Posts
     /*
      * For Categories And Tags Controller
      */
-    private static $depth = 0;
-
     static function getRecords($options = [], $render = false, $taxonomy = '', $blade = '')
     {
         $defaults = [
-            'select'       => [
-                'rix_terms.term_id', 'rix_terms.name',
-                'rix_terms.slug', 'rix_terms.readable_date',
-                'rix_term_taxonomy.count', 'rix_term_taxonomy.parent'
-            ],
+            'select'       => ['*'],
             'taxonomy'     => '',
             'paginate'     => 20,
             'order_column' => 'rix_terms.created_at',
             'order_type'   => 'desc',
-            'all'          => false
         ];
         $options = array_merge($defaults, $options);
         $data = DB::table('rix_terms')
@@ -32,11 +25,10 @@ class Posts
             ->where('rix_term_taxonomy.taxonomy', $options['taxonomy'])
             ->select($options['select'])
             ->orderBy($options['order_column'], $options['order_type']);
-        $data = $options['all'] ? $data->get()->toArray() : $data->paginate($options['paginate']);
+        $data = $options['taxonomy'] === 'post_tag' ? $data->paginate($options['paginate']) : $data;
 
-        return $render ?
-            Helper::response(true, '',
-                ['custom' => Helper::render($data, $taxonomy, $blade)])
+        return $render
+            ? Helper::response(true, '', ['custom' => Helper::render($data, $taxonomy, $blade)])
             : $data;
     }
 
@@ -59,41 +51,37 @@ class Posts
         return DB::table('rix_terms')->count() > 0 && $term > 0 ? 0 : 1;
     }
 
-    static function findParentName($records, $taxonomy)
+    /*
+     * Only for categories
+     */
+    static function renderCategories($data, $variable, $blade)
     {
-        if (!empty($records)) {
-            foreach ($records as $record) {
-                $parent_name = DB::table('rix_terms')
-                    ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                    ->where([
-                        'rix_term_taxonomy.taxonomy' => $taxonomy,
-                        'rix_term_taxonomy.term_id'  => $record->parent
-                    ])
-                    ->select(['rix_terms.name', 'rix_terms.slug'])
-                    ->first();
-                $record->{'parent_name'} = isset($parent_name->name) ? $parent_name->name : null;
-            }
-        }
-        return $records;
+        $view = view($blade)->with([
+            $variable => $data
+        ])->render();
+        return response()->json(['html' => $view, 'data' => $data]);
     }
 
-
-    static function depthAdder($parent)
+    /*
+     * Only for categories
+     */
+    static function parentCategories($term_id, $main = '', $taxonomy = 'category')
     {
-        $taxonomy = 'category';
-        $record = (array) DB::table('rix_terms')
+        static $parentCategories =  [];
+        $record = (array)DB::table('rix_terms')
             ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-            ->where('rix_term_taxonomy.taxonomy', $taxonomy)
-            ->where('rix_term_taxonomy.term_id', $parent)
-            ->select('rix_term_taxonomy.parent')
+            ->where([
+                'rix_term_taxonomy.taxonomy' => $taxonomy,
+                'rix_term_taxonomy.parent'  => $term_id,])
+            ->select(['rix_terms.term_id', 'rix_terms.name', 'rix_terms.slug', 'rix_term_taxonomy.count', 'rix_terms.readable_date', 'rix_term_taxonomy.parent'])
             ->get()->toArray();
         if (!empty($record)) {
-            foreach($record as $item){
-                self::$depth++;
-                return self::depthAdder($item->parent);
+            $parentCategories[] = $record;
+            foreach ($record as $item) {
+                return self::parentCategories($item->term_id, $main);
             }
         } else {
-            return self::$depth;
+            return ['main' => $main, 'records' => array_reduce($parentCategories,'array_merge',[])];
         }
     }
 }

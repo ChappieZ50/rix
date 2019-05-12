@@ -28,45 +28,5 @@
 @section('js')
     <script src="/rix/assets/js/custom.js"></script>
     <script src="/rix/assets/js/simple-post.js"></script>
-    <script>
-        $('#txt_src').on('keyup', function () {
-            $('#txt_trg').val(stringToSlug($(this).val()))
-        });
-        $(document).on('click', '#publish', function () {
-            let progress = $('.btn-progress'),
-                publish = $(this),
-                name = $('input[name=name]').val(),
-                slug = $('input[name=slug]').val(),
-                parent = $('select[name=parent_category]').val();
-            progress.show();
-            publish.hide();
-            simplePost({
-                name: name, slug: slug, parent: parent
-            }, add_category).done(function (res) {
-                console.log(res);
-                ajaxCheckStatus(res, {
-                    successMessage: 'Kategori Başarıyla Eklendi',
-                });
-                if (res.status !== false) {
-                    $('select[name=parent_category]').html(res.parents.content.original.html);
-                    $('#categories').html(res.table.content.original.html).promise().done(function () {
-                        progress.hide();
-                        publish.show();
-                        $('input[name=name],input[name=slug]').val('');
-                    });
-                } else {
-                    progress.hide();
-                    publish.show();
-                }
-
-            }).fail(function (res) {
-                ajaxCheckStatus(res, {
-                    status: 500
-                });
-                progress.hide();
-                publish.show();
-                console.log(res.responseText);
-            });
-        });
-    </script>
+    <script src="/rix/assets/js/page/categories.js"></script>
 @append
