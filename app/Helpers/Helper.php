@@ -3,19 +3,20 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
+
 class Helper
 {
     static function uniqImg($options = [], $uniq = '')
     {
-       $defaults = [
-           'prefix' => 'img_',
-           'extension' => '',
-       ];
-       $options = array_merge($defaults,$options);
-       if(empty($uniq))
-           return uniqid($options['prefix']);
-       else
-           return $uniq.".".$options['extension'];
+        $defaults = [
+            'prefix'    => 'img_',
+            'extension' => '',
+        ];
+        $options = array_merge($defaults, $options);
+        if (empty($uniq))
+            return uniqid($options['prefix']);
+        else
+            return $uniq . "." . $options['extension'];
     }
 
     static function srcImage($img = '')
@@ -34,27 +35,47 @@ class Helper
         }
     }
 
-    static function renderImages($images)
+    static function render($data,$variable,$blade)
     {
-        $view = view('rix.layouts.components.media.images', compact('images'))->render();
-        return response()->json(['html' => $view, 'data' => $images->toArray()['data']]);
+        $view = view($blade)->with($variable,$data)->render();
+        return response()->json(['html' => $view, 'data' => $data]);
     }
 
-    static function changeDateFormat(){
+
+    static function changeDateFormat()
+    {
         $months = __('date');
         $month = $months[date('m') - 1];
         return date('j ') . $month . date(' Y ');
     }
 
-    static function fileSize($size){
-            if($size >= 1073741824)
-                $size=round($size/1073741824)." GB";
-            elseif($size >= 1048576 )
-                $size=round($size/1048576)." MB";
-            elseif ($size >= 1024)
-                $size=round($size/1024)." KB";
-            else
-                $size = $size. " B";
-            return $size;
+    static function fileSize($size)
+    {
+        if ($size >= 1073741824)
+            $size = round($size / 1073741824) . " GB";
+        elseif ($size >= 1048576)
+            $size = round($size / 1048576) . " MB";
+        elseif ($size >= 1024)
+            $size = round($size / 1024) . " KB";
+        else
+            $size = $size . " B";
+        return $size;
+    }
+
+    static function response($status, $message = '', $options = [])
+    {
+        $defaults = [
+            'json'   => false,
+            'custom' => [],
+            'errors' => '',
+        ];
+        $options = array_merge($defaults, $options);
+        $send = ['status' => $status, 'message' => $message];
+        if (!$status)
+            $send['errors'] = $options['errors'];
+
+        if ($options['custom'] !== null)
+            $send['content'] = $options['custom'];
+        return $options['json'] ? json_encode($send) : $send;
     }
 }

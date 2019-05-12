@@ -27,7 +27,7 @@ $("[data-checkboxes]").each(function() {
     }
   });
 });
-
+/*
 $("#sortable-table tbody").sortable({
   handle: '.sort-handler'
-});
+});*/

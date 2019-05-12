@@ -13,9 +13,10 @@ class GalleryController extends Controller
 
     public function get_gallery(Request $request)
     {
-        $images = Gallery::get_gallery(['id', 'image_name', 'image_data', 'created_at'], config('definitions.MODAL_GALLERY_PAGINATE'));
+        $paginate = $request->ajax() ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
+        $images = Gallery::get_gallery(['id', 'image_name', 'image_data', 'created_at'], $paginate);
         if ($request->ajax())
-            return Helper::renderImages($images);
+            return Helper::render($images, 'images', 'rix.layouts.components.media.images');
         return view('rix.media.gallery', compact('images'));
     }
 
@@ -51,9 +52,10 @@ class GalleryController extends Controller
                     File::delete(public_path(config('definitions.PUBLIC_PATH') . $imageName));
                     return ['status' => false, 'message' => 'Yükleme Başarısız'];
                 }
-                return ['status' => true,'message' => 'Yükleme Başarılı','data' => $insert];
+                return ['status' => true, 'message' => 'Yükleme Başarılı', ['data' => $insert]];
             } else {
                 return ['status' => false, 'message' => 'Yükleme Başarısız'];
+
             }
         }
         return view('rix.media.new_media');
@@ -69,6 +71,7 @@ class GalleryController extends Controller
                 return ['status' => true, 'message' => 'Resim Silindi'];
         }
         return ['status' => false, 'message' => 'Resim Silinemedi'];
+
     }
 
     public function update_media(Request $request)
@@ -77,8 +80,8 @@ class GalleryController extends Controller
             $data = json_encode($request->input('data'));
             $id = $request->input('id');
             if (Gallery::where('id', $id)->update(['image_data' => $data]))
-                return ['status' => true, 'message' => 'Başarıyla Güncellendi'];
+                return Helper::response(true, 'Başarıyla Güncellendi');
         }
-        return ['status' => false, 'message' => 'Güncelleme Başarısız'];
+        return Helper::response(false, 'Güncelleme Başarısız');
     }
 }

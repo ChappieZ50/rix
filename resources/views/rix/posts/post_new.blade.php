@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="/rix/assets/modules/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="/rix/assets/modules/codemirror/theme/duotone-dark.css">
 <link rel="stylesheet" href="/rix/assets/modules/selectric/public/selectric.css">
-<link rel="stylesheet" href="/rix/assets/css/custom.css">
 <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
 
 @endsection
@@ -70,7 +69,7 @@
             </div>
             <div class="collapse show" id="mycard-collapse">
                 <div class="card-body">
-                    @include('rix.layouts.components.blog.cards.general')
+                    @include('rix.layouts.components.posts.cards.general')
                 </div>
             </div>
         </div>
@@ -84,7 +83,7 @@
             </div>
             <div class="collapse show" id="mycard-collapse3">
                 <div class="card-body">
-                    @include('rix.layouts.components.blog.cards.seo')
+                    @include('rix.layouts.components.posts.cards.seo')
                 </div>
             </div>
         </div>
@@ -100,7 +99,7 @@
             </div>
             <div class="collapse show" id="mycard-collapse1">
                 <div class="card-body">
-                    @include('rix.layouts.components.blog.cards.featured-image')
+                    @include('rix.layouts.components.posts.cards.featured-image')
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
             </div>
             <div class="collapse show" id="mycard-collapse2">
                 <div class="card-body">
-                    @include('rix.layouts.components.blog.cards.categories-tags')
+                    @include('rix.layouts.components.posts.cards.categories-tags')
                 </div>
             </div>
         </div>
@@ -128,7 +127,7 @@
             </div>
             <div class="collapse show" id="mycard-collapse4">
                 <div class="card-body">
-                    @include('rix.layouts.components.blog.cards.publish')
+                    @include('rix.layouts.components.posts.cards.publish')
                 </div>
             </div>
         </div>

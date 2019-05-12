@@ -9,10 +9,15 @@
         <ul class="sidebar-menu">
             @php $add = new \App\Helpers\Pages(); @endphp
             {!! $add->setHeader("Genel") !!}
-            @php 
+            @php
                 $add->setPage('Anasayfa','rix_home','ion ion-flame');
                 $add->setSubPage('Ortam','ion ion-ios-camera-outline',[['Resimler','rix_gallery'],['Yeni Ekle','rix_new_media']]);
-                $add->setSubPage('Blog','ion ion-pin',[['Yazılar','rix_posts'],['Yazı Ekle','rix_new_post']]);
+                $add->setSubPage('Yazılar','ion ion-pin',[
+                    ['Bütün Yazılar','rix_posts'],
+                    ['Yazı Ekle','rix_new_post'],
+                    ['Kategoriler','rix_categories'],
+                    ['Etiketler','rix_tags']
+                ]);
                 $add->renderPages();
             @endphp
         </ul>

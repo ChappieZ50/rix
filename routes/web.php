@@ -21,11 +21,17 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     Route::post('update_media','Rix\GalleryController@update_media')->name('rix_update_media');
 
     // Posts
-    Route::get('posts','Rix\BlogController@get_posts')->name('rix_posts');
-
+    Route::get('posts','Rix\Posts\PostsController@get_posts')->name('rix_posts');
     // New Post
-    Route::get('new_post','Rix\BlogController@new_post')->name('rix_new_post');
-    Route::post('new_post','Rix\BlogController@add_new_post')->name('rix_add_new_post');
+    Route::get('new_post','Rix\Posts\PostsController@new_post')->name('rix_new_post');
+    Route::post('new_post','Rix\Posts\PostsController@add_new_post')->name('rix_add_new_post');
+    // Categories
+    Route::get('categories','Rix\Posts\CategoriesController@get_categories')->name('rix_categories');
+    Route::post('categories','Rix\Posts\CategoriesController@new_category')->name('rix_new_category');
+    // Tags
+    Route::get('tags','Rix\Posts\TagsController@get_tags')->name('rix_tags');
+    Route::post('tags','Rix\Posts\TagsController@new_tag')->name('rix_new_tag');
+
 });
 
 Route::get('/', function () {

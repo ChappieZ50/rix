@@ -66,7 +66,7 @@ $(function () {
             $("body.layout-2 #sidebar-wrapper").stick_in_parent({
                 parent: $('body')
             });
-            $("body.layout-2 #sidebar-wrapper").stick_in_parent({ recalc_every: 1 });
+            $("body.layout-2 #sidebar-wrapper").stick_in_parent({recalc_every: 1});
         }
     }
     sidebar_sticky();
@@ -375,7 +375,7 @@ $(function () {
                 ["color", ["color"]],
                 ["para", ["ul", "ol", "paragraph"]],
                 ["table", ["table"]],
-                ["insert", ["link","picture", "video"]],
+                ["insert", ["link", "picture", "video"]],
                 ["view", ["codeview", "help", "fullscreen"]],
             ],
         });
@@ -596,13 +596,13 @@ $(function () {
     if (jQuery().daterangepicker) {
         if ($(".datepicker").length) {
             $('.datepicker').daterangepicker({
-                locale: { format: 'YYYY-MM-DD' },
+                locale: {format: 'YYYY-MM-DD'},
                 singleDatePicker: true,
             });
         }
         if ($(".datetimepicker").length) {
             $('.datetimepicker').daterangepicker({
-                locale: { format: 'YYYY-MM-DD hh:mm' },
+                locale: {format: 'YYYY-MM-DD hh:mm'},
                 singleDatePicker: true,
                 timePicker: true,
                 timePicker24Hour: true,
@@ -610,7 +610,7 @@ $(function () {
         }
         if ($(".daterange").length) {
             $('.daterange').daterangepicker({
-                locale: { format: 'YYYY-MM-DD' },
+                locale: {format: 'YYYY-MM-DD'},
                 drops: 'down',
                 opens: 'right'
             });
@@ -627,3 +627,45 @@ $(function () {
         });
     }
 });
+
+function ajaxCheckStatus(res, options) {
+    let defaults = {
+        successTitle: 'Başarılı',
+        successMessage: 'Başarıyla Eklendi',
+        errorTitle: 'Eklenemedi',
+        errorMessage: 'Hata! Lütfen işaretlenmiş alanları doldurun.',
+        status: 200,
+    };
+    options = $.extend(defaults, options);
+    if (options.status === 500) {
+        iziToast.error({
+            title: 'Hata !',
+            message: 'Beklenmeyen bir hata meydana geldi !',
+            position: 'topRight',
+        });
+    } else {
+        if (res.status === false) {
+            $('.invalid-feedback').html('');
+            $.each(res.errors, function (index, value) {
+                $.each(value, function (i, v) {
+                    let invalidFeedback = $('.invalid-feedback[data-name=' + index + ']');
+                    invalidFeedback.show();
+                    invalidFeedback.html(v);
+                });
+            });
+            let content = {
+                title: options.errorTitle,
+                message: res.message.length > 0 ? res.message : options.errorMessage,
+                position: 'topRight',
+            };
+            iziToast.warning(content);
+        } else {
+            $('.invalid-feedback').html('');
+            iziToast.success({
+                title: options.successTitle,
+                message: options.successMessage,
+                position: 'topRight',
+            });
+        }
+    }
+}

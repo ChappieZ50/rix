@@ -46,9 +46,6 @@ class Pages
         if (!empty($this->multiple)) {
             $multiple = $this->multiple;
             foreach ($multiple as $value) {
-                /*echo "<pre>";
-                print_r($value['submenu']);
-                echo "</pre>";*/
                 foreach($value['submenu'] as $submenu){
                     if(Route::is($submenu[1])){
                         $route = $submenu[1];

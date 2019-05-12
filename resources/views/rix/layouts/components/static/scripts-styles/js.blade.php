@@ -2,6 +2,8 @@
     var update_media = "{{route('rix_update_media')}}";
     var delete_image = "{{route('rix_delete_image')}}";
     var add_post = "{{route('rix_add_new_post')}}";
+    var add_category = "{{route('rix_new_category')}}";
+    var add_tag = "{{route('rix_new_tag')}}";
 </script>
 <!-- General JS Scripts -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

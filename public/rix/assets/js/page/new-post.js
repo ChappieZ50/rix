@@ -1,8 +1,5 @@
 $(document).on('click', '#publish', function () {
-    let progress = $('.btn-progress');
-    let publish = $(this);
-    publish.hide();
-    progress.show();
+    // inputs
     let title = $('input[name=title]').val(),
         slug = $('input[name=slug]').val(),
         content = $('.summernote').summernote('code'),
@@ -15,48 +12,25 @@ $(document).on('click', '#publish', function () {
         tags = $('input[name=tags]').val(),
         status = $('input[name=status]').val(),
         featured = $('input[name=featured]').val(),
-        slider = $('input[name=slider]').val();
-    /*    console.log({
-            title: title,
-            slug: slug,
-            content: content,
-            summary: summary,
-            seo_title: seo_title,
-            seo_description: seo_description,
-            seo_keywords: seo_keywords,
-            featured_image: featured_image,
-            categories: categories,
-            tags: tags,
-            status: status,
-            featured: featured,
-            slider: slider
-        });*/
+        slider = $('input[name=slider]').val(),
+        // ------------------------
+        progress = $('.btn-progress'),
+        publish = $(this);
+
+    publish.hide();
+    progress.show();
     simplePost({
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
     }, add_post).done(function (res) {
         progress.hide();
         publish.show();
-        if (res.status === false) {
-            $('.invalid-feedback').html('');
-            $.each(res.errors, function (index, value) {
-                $.each(value, function (i, v) {
-                    let invalidFeedback = $('.invalid-feedback[data-name=' + index + ']');
-                    invalidFeedback.show();
-                    invalidFeedback.html(v);
-                });
-            });
-             iziToast.warning({
-                 title: 'Yazı Eklenemedi',
-                 message: 'Hata! Lütfen işaretlenmiş alanları doldurun.',
-                 position: 'topRight',
-             });
-        } else {
-            iziToast.success({
-                title: 'Yazı Başarıyla Eklendi.',
-                message: res.message,
-                position: 'topRight',
-            });
-        }
+        ajaxCheckStatus(res, {
+            successMessage:  'Yazı Başarıyla Eklendi',
+        });
+    }).fail(function (res) {
+        ajaxCheckStatus(res, {
+            status:500
+        });
     });
 });

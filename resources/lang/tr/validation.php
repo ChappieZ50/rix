@@ -146,7 +146,7 @@ return [
 
     'attributes' => [
         'title'           => 'Başlık',
-        'slug'            => 'Url',
+        'slug'            => 'Slug',
         'content'         => 'İçerik',
         'summary'         => 'Özet',
         'featured_image'  => 'Öne Çıkan Resim',
@@ -154,6 +154,8 @@ return [
         'seo_description' => 'Seo Açıklama',
         'seo_keywords'    => 'Seo Anahtar Kelimeler',
         'tags'            => 'Etiketler',
-        'categories'      => 'Kategoriler'
+        'categories'      => 'Kategoriler',
+        'name'            => 'İsim',
+        'parent_category' => 'Alt Kategori'
     ],
 ];
