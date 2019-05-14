@@ -24,7 +24,15 @@
                     <td>{{$tag->name}}</td>
                     <td>{{$tag->slug}}</td>
                     <td>{{$tag->readable_date}}</td>
-                    <td><a href="#" class="btn btn-secondary">Düzenle</a></td>
+                    <td>
+                        <div class="btn-group dropleft">
+                            <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu dropleft">
+                                <a class="dropdown-item has-icon" href="#"><i class="far fa-edit"></i> Düzenle</a>
+                                <a class="dropdown-item has-icon" href="javascript:;" id="deleteInTable" style="color:red;"><i class="far fa-trash-alt"></i> Sil</a>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
         </table>

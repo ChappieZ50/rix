@@ -19,6 +19,7 @@ function stringToSlug(s, opt) {
         }
     }
 
+    // noinspection JSDuplicatedDeclaration
     var char_map = {
         // Latin
         'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE', 'Ç': 'C',
@@ -107,4 +108,14 @@ function stringToSlug(s, opt) {
 
     return opt.lowercase ? s.toLowerCase() : s;
 }
-
+function progressForPublish(status = 0) {
+    let progress = $('.btn-progress'),
+        publish = $('#publish');
+    if (status === 0) {
+        publish.show();
+        progress.hide();
+    } else {
+        publish.hide();
+        progress.show();
+    }
+}

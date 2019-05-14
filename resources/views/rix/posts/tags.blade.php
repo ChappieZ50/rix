@@ -6,6 +6,7 @@
 
 @section('general_css')
     <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/rix/assets/css/custom.css">
 @endsection
 
 @section('js')

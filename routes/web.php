@@ -28,6 +28,7 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     // Categories
     Route::get('categories','Rix\Posts\CategoriesController@get_categories')->name('rix_categories');
     Route::post('categories','Rix\Posts\CategoriesController@new_category')->name('rix_new_category');
+    Route::delete('categories','Rix\Posts\CategoriesController@delete_category')->name('rix_delete_category');
     // Tags
     Route::get('tags','Rix\Posts\TagsController@get_tags')->name('rix_tags');
     Route::post('tags','Rix\Posts\TagsController@new_tag')->name('rix_new_tag');

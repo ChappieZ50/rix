@@ -157,3 +157,11 @@
         }
     }
 }
+.custom-btn-dark{
+    background: transparent;
+    border:1px solid #191d21;
+    &:hover{
+        background: #191d21 !important;
+        color:#fff;
+    }
+}

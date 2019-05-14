@@ -65,23 +65,40 @@ class Posts
     /*
      * Only for categories
      */
-    static function parentCategories($term_id, $main = '', $taxonomy = 'category')
+    static function parentCategories($term_id, $main = '', $loop = true, $taxonomy = 'category')
     {
-        static $parentCategories =  [];
+        static $parentCategories = [];
         $record = (array)DB::table('rix_terms')
             ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
             ->where([
                 'rix_term_taxonomy.taxonomy' => $taxonomy,
-                'rix_term_taxonomy.parent'  => $term_id,])
+                'rix_term_taxonomy.parent'   => $term_id,])
             ->select(['rix_terms.term_id', 'rix_terms.name', 'rix_terms.slug', 'rix_term_taxonomy.count', 'rix_terms.readable_date', 'rix_term_taxonomy.parent'])
             ->get()->toArray();
         if (!empty($record)) {
             $parentCategories[] = $record;
-            foreach ($record as $item) {
-                return self::parentCategories($item->term_id, $main);
+            if ($loop === true) {
+                foreach ($record as $item) {
+                    return self::parentCategories($item->term_id, $main);
+                }
+            } else {
+                return ['main' => $main, 'records' => array_reduce($parentCategories, 'array_merge', [])];
             }
         } else {
-            return ['main' => $main, 'records' => array_reduce($parentCategories,'array_merge',[])];
+            return ['main' => $main, 'records' => array_reduce($parentCategories, 'array_merge', [])];
         }
+    }
+    /*
+     * Only for categories
+     */
+    static function getRendered(){
+        $records = Posts::getRecords(['taxonomy' => 'category']);
+        $data = [
+            'for_table'   => $records->paginate(20),
+            'for_parents' => $records->get()->toArray()
+        ];
+        $forTable = Posts::renderCategories($data, 'categories', 'rix.layouts.components.posts.categories.table');
+        $forParents = Posts::renderCategories($data, 'categories', 'rix.layouts.components.posts.categories.parents');
+        return ['table' => $forTable, 'parents' => $forParents];
     }
 }
