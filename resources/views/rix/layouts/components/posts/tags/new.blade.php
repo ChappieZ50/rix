@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card newTag">
     <div class="card-header">
         <h4>Etiket Ekle</h4>
     </div>

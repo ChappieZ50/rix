@@ -50,14 +50,15 @@
     })
 </script>
 @endsection
+
 @section('section_header_top')
 <div class="section-header-back">
     <a href="{{route('rix_posts')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
 </div>
 @endsection
-@section('content')
 
-<div class="row">
+@section('content')
+<div class="row newPost">
     <div class="col-xl-9 col-lg-12">
         <div class="card">
             <div class="card-header">

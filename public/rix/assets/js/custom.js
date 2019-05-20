@@ -108,9 +108,9 @@ function stringToSlug(s, opt) {
 
     return opt.lowercase ? s.toLowerCase() : s;
 }
-function progressForPublish(status = 0) {
-    let progress = $('.btn-progress'),
-        publish = $('#publish');
+function progressForPublish(status = 0,area = '', customClass = '') {
+    let progress = $(area + ' .btn-progress'),
+        publish = customClass.length > 0 ? $(area + ' ' + customClass) : $(area + ' #publish');
     if (status === 0) {
         publish.show();
         progress.hide();

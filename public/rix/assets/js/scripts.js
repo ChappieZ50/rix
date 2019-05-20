@@ -635,6 +635,7 @@ function ajaxCheckStatus(res, options) {
         errorTitle: 'Eklenemedi',
         errorMessage: 'Hata! Lütfen işaretlenmiş alanları doldurun.',
         status: 200,
+        area: '',
     };
     options = $.extend(defaults, options);
     if (options.status === 500) {
@@ -645,10 +646,10 @@ function ajaxCheckStatus(res, options) {
         });
     } else {
         if (res.status === false) {
-            $('.invalid-feedback').html('');
+            $(options.area + ' .invalid-feedback').html('');
             $.each(res.errors, function (index, value) {
                 $.each(value, function (i, v) {
-                    let invalidFeedback = $('.invalid-feedback[data-name=' + index + ']');
+                    let invalidFeedback = $(options.area + ' .invalid-feedback[data-name=' + index + ']');
                     invalidFeedback.show();
                     invalidFeedback.html(v);
                 });
@@ -660,7 +661,7 @@ function ajaxCheckStatus(res, options) {
             };
             iziToast.warning(content);
         } else {
-            $('.invalid-feedback').html('');
+            $(options.area + ' .invalid-feedback').html('');
             iziToast.success({
                 title: options.successTitle,
                 message: options.successMessage,

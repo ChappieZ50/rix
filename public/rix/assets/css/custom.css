@@ -179,3 +179,8 @@
   color: #fff;
 }
 
+.invalid-feedback {
+  font-weight: bold;
+  color: Red;
+}
+

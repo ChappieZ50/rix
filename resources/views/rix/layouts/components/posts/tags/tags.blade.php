@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card newTag">
     <div class="d-flex justify-content-start align-items-start p-3">
         <select class="form-control" name="action" style="border-radius: 0 !important;height: 30px;padding: 5px;width: 140px;">
             <option value="0">Seçilene Uygula</option>
             <option value="delete">Sil</option>
         </select>
-        <button class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" type="submit">Uygula</button>
+        <button class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" id="deleteInTable" type="button">Uygula</button>
     </div>
     <div class="card-header">
         <h4>Etiketler</h4>

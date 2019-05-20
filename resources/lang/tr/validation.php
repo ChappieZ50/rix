@@ -156,6 +156,9 @@ return [
         'tags'            => 'Etiketler',
         'categories'      => 'Kategoriler',
         'name'            => 'İsim',
-        'parent_category' => 'Alt Kategori'
+        'parent_category' => 'Alt Kategori',
+        'slider'          => 'Slider',
+        'status'          => 'Durum',
+        'featured'        => 'Öne Çıkan',
     ],
 ];

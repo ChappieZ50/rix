@@ -36,7 +36,7 @@ class GalleryController extends Controller
                 'size'                   => $file->getSize(),
                 'extension'              => $file->getClientOriginalExtension(),
                 'url'                    => Helper::srcImage($imageName),
-                'formatedDate'           => Helper::changeDateFormat(),
+                'formatedDate'           => Helper::readableDateFormat(),
                 'noExtensionName'        => $noExtensionName,
                 'imageSizeHumanReadable' => Helper::fileSize($file->getSize()),
                 'image_title'            => '',
@@ -52,7 +52,7 @@ class GalleryController extends Controller
                     File::delete(public_path(config('definitions.PUBLIC_PATH') . $imageName));
                     return ['status' => false, 'message' => 'Yükleme Başarısız'];
                 }
-                return ['status' => true, 'message' => 'Yükleme Başarılı', ['data' => $insert]];
+                return ['status' => true, 'message' => 'Yükleme Başarılı', 'data' => $insert];
             } else {
                 return ['status' => false, 'message' => 'Yükleme Başarısız'];
 
@@ -77,7 +77,7 @@ class GalleryController extends Controller
     public function update_media(Request $request)
     {
         if ($request->ajax()) {
-            $data = json_encode($request->input('data'));
+            $data = $request->input('data');
             $id = $request->input('id');
             if (Gallery::where('id', $id)->update(['image_data' => $data]))
                 return Helper::response(true, 'Başarıyla Güncellendi');

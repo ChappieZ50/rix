@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    protected $table = 'gallery';
+    protected $table = 'rix_gallery';
     protected $guarded = [];
 
     static function get_gallery($select = ['*'], $paginate,$order = 'desc')

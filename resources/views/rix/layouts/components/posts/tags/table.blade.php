@@ -4,8 +4,8 @@
             <tr>
                 <th>
                     <div class="custom-checkbox custom-control text-center">
-                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                        <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                        <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input" id="checkbox-records">
+                        <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
                     </div>
                 </th>
                 <th>İsim</th>
@@ -17,7 +17,7 @@
                 <tr>
                     <td class="p-0 text-center">
                         <div class="custom-checkbox custom-control">
-                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" value="{{$tag->term_id}}" id="checkbox-{{$tag->term_id}}">
+                            <input type="checkbox" data-checkbox="records" class="custom-control-input" value="{{$tag->term_id}}" id="checkbox-{{$tag->term_id}}">
                             <label for="checkbox-{{$tag->term_id}}" class="custom-control-label">&nbsp;</label>
                         </div>
                     </td>
@@ -29,7 +29,8 @@
                             <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropleft">
                                 <a class="dropdown-item has-icon" href="#"><i class="far fa-edit"></i> Düzenle</a>
-                                <a class="dropdown-item has-icon" href="javascript:;" id="deleteInTable" style="color:red;"><i class="far fa-trash-alt"></i> Sil</a>
+                                <a class="dropdown-item has-icon" href="javascript:;" id="singleDeleteInTable" style="color:red;" data-id="{{$tag->term_id}}"><i class="far fa-trash-alt"></i> Sil</a>
+                                <a class="dropdown-item has-icon" href="#" target="_blank"><i class="fas fa-share"></i> Git</a>
                             </div>
                         </div>
                     </td>

@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\Models\Terms\Terms;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Helper;
 
@@ -13,18 +14,23 @@ class Posts
     static function getRecords($options = [], $render = false, $taxonomy = '', $blade = '')
     {
         $defaults = [
-            'select'       => ['*'],
-            'taxonomy'     => '',
-            'paginate'     => 20,
-            'order_column' => 'rix_terms.created_at',
-            'order_type'   => 'desc',
+            'selectTerms'        => ['*'],
+            'selectTermTaxonomy' => ['*'],
+            'taxonomy'           => '',
+            'paginate'           => 20,
+            'termTaxonomyOrder'  => 'term_taxonomy_id',
+            'termsOrder'         => 'created_at',
+            'order_type'         => 'desc',
         ];
         $options = array_merge($defaults, $options);
-        $data = DB::table('rix_terms')
-            ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-            ->where('rix_term_taxonomy.taxonomy', $options['taxonomy'])
-            ->select($options['select'])
-            ->orderBy($options['order_column'], $options['order_type']);
+        $data = Terms::with('termTaxonomy')
+            ->whereHas('termTaxonomy', function ($query) use ($options) {
+                $query->where('taxonomy', $options['taxonomy'])
+                    ->select($options['selectTermTaxonomy'])
+                    ->orderBy($options['termTaxonomyOrder'], $options['order_type']);
+            })->select($options['selectTerms'])
+            ->orderBy($options['termsOrder'], $options['order_type']);
+
         $data = $options['taxonomy'] === 'post_tag' ? $data->paginate($options['paginate']) : $data;
 
         return $render
@@ -34,20 +40,21 @@ class Posts
 
     static function findExistRecord($taxonomy, $name, $slug, $parent = 0)
     {
-        $term = DB::table('rix_terms')
-            ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-            ->where([
-                'rix_term_taxonomy.taxonomy' => $taxonomy,
-                'rix_term_taxonomy.parent'   => $parent,
-                'rix_terms.name'             => $name
-            ])
-            ->orWhere('rix_term_taxonomy.taxonomy', $taxonomy)
-            ->where([
-                'rix_term_taxonomy.parent' => $parent,
-                'rix_terms.slug'           => $slug
-            ])
-            ->count();
-
+        $term = Terms::with('termTaxonomy')
+            ->whereHas('termTaxonomy', function ($query) use ($taxonomy, $parent) {
+                $query->where([
+                    'taxonomy' => $taxonomy,
+                    'parent'   => $parent
+                ]);
+            })
+            ->where('name', $name)
+            ->orWhereHas('termTaxonomy', function ($query) use ($taxonomy, $parent) {
+                $query->where([
+                    'taxonomy' => $taxonomy,
+                    'parent'   => $parent,
+                ]);
+            })
+            ->where('slug',$slug)->count();
         return DB::table('rix_terms')->count() > 0 && $term > 0 ? 0 : 1;
     }
 
@@ -57,7 +64,8 @@ class Posts
     static function renderCategories($data, $variable, $blade)
     {
         $view = view($blade)->with([
-            $variable => $data
+            $variable  => $data,
+            'editItem' => ''
         ])->render();
         return response()->json(['html' => $view, 'data' => $data]);
     }
@@ -68,13 +76,13 @@ class Posts
     static function parentCategories($term_id, $main = '', $loop = true, $taxonomy = 'category')
     {
         static $parentCategories = [];
-        $record = (array)DB::table('rix_terms')
-            ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-            ->where([
-                'rix_term_taxonomy.taxonomy' => $taxonomy,
-                'rix_term_taxonomy.parent'   => $term_id,])
-            ->select(['rix_terms.term_id', 'rix_terms.name', 'rix_terms.slug', 'rix_term_taxonomy.count', 'rix_terms.readable_date', 'rix_term_taxonomy.parent'])
-            ->get()->toArray();
+        $record =  Terms::with('termTaxonomy')
+            ->whereHas('termTaxonomy',function ($query) use ($taxonomy,$term_id){
+                $query->where([
+                    'taxonomy' => $taxonomy,
+                    'parent' => $term_id
+                ])->select(['count','parent']);
+            })->select(['term_id', 'name', 'slug', 'readable_date'])->get()->toArray();
         if (!empty($record)) {
             $parentCategories[] = $record;
             if ($loop === true) {
@@ -88,17 +96,15 @@ class Posts
             return ['main' => $main, 'records' => array_reduce($parentCategories, 'array_merge', [])];
         }
     }
+
     /*
      * Only for categories
      */
-    static function getRendered(){
+    static function getRendered()
+    {
         $records = Posts::getRecords(['taxonomy' => 'category']);
-        $data = [
-            'for_table'   => $records->paginate(20),
-            'for_parents' => $records->get()->toArray()
-        ];
-        $forTable = Posts::renderCategories($data, 'categories', 'rix.layouts.components.posts.categories.table');
-        $forParents = Posts::renderCategories($data, 'categories', 'rix.layouts.components.posts.categories.parents');
-        return ['table' => $forTable, 'parents' => $forParents];
+        $tableItem = Posts::renderCategories($records->paginate(20), 'tableItems', 'rix.layouts.components.posts.categories.table');
+        $parentItem = Posts::renderCategories($records->get(), 'parentItems', 'rix.layouts.components.posts.categories.parents');
+        return ['table' => $tableItem, 'parents' => $parentItem];
     }
 }

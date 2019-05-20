@@ -7,7 +7,6 @@
 
 {{--  JS --}}
 @section('js')
-    <script> var route = "{{route('rix_new_media')}}"; </script>
     <script src="/rix/assets/js/page/components-multiple-upload.js"></script>
 @append
 

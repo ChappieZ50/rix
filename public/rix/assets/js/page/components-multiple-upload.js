@@ -1,6 +1,6 @@
 "use strict";
 Dropzone.autoDiscover = false;
-var dropzone = new Dropzone("#dropzone", {
+new Dropzone("#dropzone", {
     dictDefaultMessage: "Yüklemek istediğiniz resmi sürükleyin veya seçin",
     dictFallbackMessage: "Tarayıcınız sürükle bırak eklentisini desteklemiyor.",
     dictFileTooBig: "Dosya çok büyük ({{filesize}}MiB). Maximum : {{maxFilesize}}MiB.",
@@ -27,8 +27,6 @@ var dropzone = new Dropzone("#dropzone", {
             } else {
                 let decode = $.parseJSON(response.data.image_data);
                 $('.modal-media-items h1').hide();
-
-
                 $('.modal-media-items').prepend(
                     '<div class="imagecheck-item">' +
                     '<label class="imagecheck mb-4">' +
@@ -39,11 +37,11 @@ var dropzone = new Dropzone("#dropzone", {
                     '</label>' +
                     '</div>'
                 );
-                loadImageData({0: response.data});
+                loadImageData({data:response});
             }
         });
         this.on("error", function (file, response) {
-            $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response.errors.image);
+            $(file.previewElement).addClass("dz-error").find('.dz-error-message').text(response);
         });
     }
 });

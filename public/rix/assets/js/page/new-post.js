@@ -1,4 +1,4 @@
-$(document).on('click', '#publish', function () {
+$(document).on('click', '.newPost #publish', function () {
     // inputs
     let title = $('input[name=title]').val(),
         slug = $('input[name=slug]').val(),
@@ -14,23 +14,15 @@ $(document).on('click', '#publish', function () {
         featured = $('input[name=featured]').val(),
         slider = $('input[name=slider]').val(),
         // ------------------------
-        progress = $('.btn-progress'),
-        publish = $(this);
-
-    publish.hide();
-    progress.show();
+        area = '.newPost';
+    progressForPublish(1, area);
     simplePost({
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
     }, add_post).done(function (res) {
-        progress.hide();
-        publish.show();
-        ajaxCheckStatus(res, {
-            successMessage:  'Yazı Başarıyla Eklendi',
-        });
+        progressForPublish(0, area);
+        ajaxCheckStatus(res, {successMessage: 'Yazı Başarıyla Eklendi',area:area});
     }).fail(function (res) {
-        ajaxCheckStatus(res, {
-            status:500
-        });
+        ajaxCheckStatus(res, {status: 500});
     });
 });

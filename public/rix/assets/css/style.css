@@ -1585,7 +1585,7 @@ h6 .badge {
     width: 450px;
     opacity: 0;
     visibility: hidden;
-    transition: all .5s; }
+     }
 .navbar .form-inline .search-result:before {
     position: absolute;
     top: -26px;
@@ -2359,11 +2359,11 @@ pre {
     font-size: 24px;
     margin-top: 3px;
     color: #34395e; }
-.section .section-header .section-header-back {
+.section-header-back {
     margin-right: 15px; }
-.section .section-header .section-header-back .btn:hover {
-    background-color: #6777ef;
-    color: #fff; }
+.section-header-back .btn:hover {
+    background-color: #6777ef !important;
+    color: #fff !important; }
 .section .section-header .section-header-button {
     margin-left: 20px; }
 .section .section-header .section-header-breadcrumb {
@@ -2462,11 +2462,6 @@ pre {
     background-color: #fff;
     z-index: 880;
     left: 0; }
-.main-sidebar,
-.navbar,
-.main-content,
-.main-footer {
-    transition: all .5s; }
 
 body.sidebar-gone .main-sidebar {
     left: -250px; }

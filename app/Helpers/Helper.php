@@ -35,14 +35,14 @@ class Helper
         }
     }
 
-    static function render($data,$variable,$blade)
+    static function render($data, $variable, $blade)
     {
-        $view = view($blade)->with($variable,$data)->render();
+        $view = view($blade)->with($variable, $data)->render();
         return response()->json(['html' => $view, 'data' => $data]);
     }
 
 
-    static function changeDateFormat()
+    static function readableDateFormat()
     {
         $months = __('date');
         $month = $months[date('m') - 1];
@@ -77,5 +77,17 @@ class Helper
         if ($options['custom'] !== null)
             $send['content'] = $options['custom'];
         return $options['json'] ? json_encode($send) : $send;
+    }
+
+    static function write($value, $key)
+    {
+        if (!is_array($key))
+            return isset($value->$key) ? $value->$key : '';
+        foreach ($key as $item) {
+            if (isset($value->$item))
+                $value = $value->$item;
+
+        }
+        return $value;
     }
 }
