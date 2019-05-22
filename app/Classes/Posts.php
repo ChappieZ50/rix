@@ -11,31 +11,34 @@ class Posts
     /*
      * For Categories And Tags Controller
      */
-    static function getRecords($options = [], $render = false, $taxonomy = '', $blade = '')
+    static function getRecords($options = [])
     {
         $defaults = [
             'selectTerms'        => ['*'],
             'selectTermTaxonomy' => ['*'],
             'taxonomy'           => '',
             'paginate'           => 20,
+            'doPaginate'         => false,
             'termTaxonomyOrder'  => 'term_taxonomy_id',
             'termsOrder'         => 'created_at',
             'order_type'         => 'desc',
+            'get'                => false,
+            'response'           => false,
         ];
         $options = array_merge($defaults, $options);
+
         $data = Terms::with('termTaxonomy')
             ->whereHas('termTaxonomy', function ($query) use ($options) {
                 $query->where('taxonomy', $options['taxonomy'])
                     ->select($options['selectTermTaxonomy'])
                     ->orderBy($options['termTaxonomyOrder'], $options['order_type']);
-            })->select($options['selectTerms'])
+            })
+            ->select($options['selectTerms'])
             ->orderBy($options['termsOrder'], $options['order_type']);
 
-        $data = $options['taxonomy'] === 'post_tag' ? $data->paginate($options['paginate']) : $data;
-
-        return $render
-            ? Helper::response(true, '', ['custom' => Helper::render($data, $taxonomy, $blade)])
-            : $data;
+        $data = $options['doPaginate'] ? $data->paginate($options['paginate']) : $data;
+        $data = $options['get'] && !$options['doPaginate'] ? $data->get() : $data;
+        return $options['response'] ? Helper::response(true,) :$data;
     }
 
     static function findExistRecord($taxonomy, $name, $slug, $parent = 0)
@@ -54,7 +57,7 @@ class Posts
                     'parent'   => $parent,
                 ]);
             })
-            ->where('slug',$slug)->count();
+            ->where('slug', $slug)->count();
         return DB::table('rix_terms')->count() > 0 && $term > 0 ? 0 : 1;
     }
 
@@ -73,28 +76,18 @@ class Posts
     /*
      * Only for categories
      */
-    static function parentCategories($term_id, $main = '', $loop = true, $taxonomy = 'category')
+    static function parentCategories($term_id, $main = '', $toArray = true)
     {
-        static $parentCategories = [];
-        $record =  Terms::with('termTaxonomy')
-            ->whereHas('termTaxonomy',function ($query) use ($taxonomy,$term_id){
+        $record = Terms::with('termTaxonomy')
+            ->whereHas('termTaxonomy', function ($query) use ($term_id) {
                 $query->where([
-                    'taxonomy' => $taxonomy,
-                    'parent' => $term_id
-                ])->select(['count','parent']);
-            })->select(['term_id', 'name', 'slug', 'readable_date'])->get()->toArray();
-        if (!empty($record)) {
-            $parentCategories[] = $record;
-            if ($loop === true) {
-                foreach ($record as $item) {
-                    return self::parentCategories($item->term_id, $main);
-                }
-            } else {
-                return ['main' => $main, 'records' => array_reduce($parentCategories, 'array_merge', [])];
-            }
-        } else {
-            return ['main' => $main, 'records' => array_reduce($parentCategories, 'array_merge', [])];
-        }
+                    'taxonomy' => 'category',
+                    'parent'   => $term_id
+                ])->select(['count', 'parent']);
+            })->select(['term_id', 'name', 'slug', 'readable_date'])->get();
+        $record = $toArray ? $record->toArray() : $record;
+        $data = ['main' => $main, 'records' => $record];
+        return $toArray ? $data : (object)$data;
     }
 
     /*

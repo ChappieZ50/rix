@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                @if(!empty($parentCategories['records']))
+                @if(!empty($parentCategories->records))
                     <div class="d-flex justify-content-start align-items-start p-3">
                         <select class="form-control" name="action" data-area="#parents" style="border-radius: 0 !important;height: 30px;padding: 5px;width: 140px;">
                             <option>Seçilene Uygula</option>
@@ -11,12 +11,12 @@
                         <button class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" type="button" id="deleteInParents">Uygula</button>
                     </div>
                 @endif
-                <h5 class="modal-title" id="exampleModalLongTitle">{{!empty($parentCategories['main']) ? $parentCategories['main'] : null}}</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">{{!empty($parentCategories->main) ? $parentCategories->main : null}}</h5>
 
             </div>
             <div class="modal-body">
                 <div class="table-responsive" id="parents">
-                    @if(!empty($parentCategories['records']))
+                    @if(!$parentCategories->records->isEmpty())
                         <table class="table table-striped">
                             <tr>
                                 <th>
@@ -31,7 +31,7 @@
                                 <th>Oluşturma Tarihi</th>
                                 <th>İşlem</th>
                             </tr>
-                            @foreach($parentCategories['records'] as $category)
+                            @foreach($parentCategories->records as $category)
                                 <tr>
                                     <td class="p-0 text-center">
                                         <div class="custom-checkbox custom-control">

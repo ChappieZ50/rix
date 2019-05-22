@@ -20,7 +20,7 @@ class TagsController extends Controller
         $tags = Posts::getRecords([
             'taxonomy'    => 'post_tag',
             'selectTerms' => $this->selectTerms,
-            'paginate'    => 10
+            'doPaginate'  => true,
         ]);
         return view('rix.posts.tags', compact('tags'));
     }
@@ -39,11 +39,8 @@ class TagsController extends Controller
                     'readable_date' => Helper::readableDateFormat()
                 ])->termTaxonomy()->create(['taxonomy' => 'post_tag']);
                 if ($done) {
-                    return Posts::getRecords(
-                        ['taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms],
-                        true, 'tags',
-                        'rix.layouts.components.posts.tags.table');
-
+                    $records = Posts::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms, 'doPaginate' => true]);
+                    return Helper::render($records, 'tags', 'rix.layouts.components.posts.tags.table');
                 }
                 return Helper::response(false, 'Bir hata meydana geldi');
             }
@@ -59,10 +56,8 @@ class TagsController extends Controller
             $ids = !is_array($ids) ? [$ids] : $ids;
             TermRelationships::whereIn('term_taxonomy_id', $ids)->delete();
             if (TermTaxonomy::whereIn('term_id', $ids)->delete() && Terms::destroy($ids)) {
-                return Posts::getRecords(
-                    ['taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms],
-                    true, 'tags',
-                    'rix.layouts.components.posts.tags.table');
+                $records = Posts::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms, 'doPaginate' => true]);
+                return Helper::render($records, 'tags', 'rix.layouts.components.posts.tags.table');
             }
             return Helper::response(false, 'Silinemedi');
         }

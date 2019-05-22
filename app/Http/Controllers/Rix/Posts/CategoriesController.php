@@ -15,9 +15,18 @@ class CategoriesController extends Controller
 {
     public function get_categories(Request $request)
     {
-        if ($request->ajax() && !empty($request->input('term_id'))) {
-            $parents = Posts::parentCategories($request->input('term_id'), $request->input('main'));
-            return Posts::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
+        if ($request->ajax()) {
+            $action = $request->input('action');
+            if ($action == 'search') {
+                if ($request->input('value') && !empty($request->input('value')))
+                    return $this->search($request->input('value'));
+            } elseif ($action == 'getParents' && !empty($request->input('term_id'))) {
+                $parents = Posts::parentCategories($request->input('term_id'), $request->input('main'), false);
+                return Posts::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
+            } elseif ($action == 'getTable') {
+                $records = Posts::getRecords(['taxonomy' => 'category', 'doPaginate' => true]);
+                return Posts::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
+            }
         }
         $categories = Posts::getRecords(['taxonomy' => 'category']);
         $view = [
@@ -67,7 +76,7 @@ class CategoriesController extends Controller
             $ids = $request->input('ids');
             $ids = is_array($ids) ? $ids : [$ids];
             foreach ($ids as $id) {
-                $record = Posts::parentCategories($id, '', false);
+                $record = Posts::parentCategories($id);
                 if (empty($record['records'])) {
                     $data['noParent'][] = $id;
                 } else {
@@ -137,5 +146,15 @@ class CategoriesController extends Controller
             }
         }
         return Helper::response(false, '', ['errors' => $validator->errors()]);
+    }
+
+    private function search($value)
+    {
+        $data = Terms::whereHas('termTaxonomy', function ($query) {
+            return $query->where('taxonomy', 'category');
+        })->where(function ($query) use ($value) {
+            return $query->where('name', 'like', '%' . $value . '%')->orWhere('slug', 'like', '%' . Str::slug($value) . '%');
+        })->orderBy('created_at', 'desc')->paginate(20);
+        return Posts::renderCategories($data, 'tableItems', 'rix.layouts.components.posts.categories.table');
     }
 }

@@ -9,9 +9,10 @@ $(document).on('click', '.newTag #publish', function () {
     simplePost({
         name: name, slug: slug
     }, add_tag).done(function (res) {
+        console.log(res);
         ajaxCheckStatus(res, {successMessage: 'Etiket Başarıyla Eklendi',area:area});
         if (res.status !== false) {
-            $('#tags').html(res.content.original.html).promise().done(function () {
+            $('#tags').html(res.html).promise().done(function () {
                 progressForPublish(0, area);
                 $('input[name=name],input[name=slug]').val('');
             });
@@ -27,7 +28,7 @@ $(document).on('click', '.newTag #publish', function () {
 function deleteTags(ids) {
     simplePost({ids: ids}, add_tag, 'delete').done(function (res) {
         ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi',area:'.newTag'});
-        $('#tags').html(res.content.original.html);
+        $('#tags').html(res.html);
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
         console.log(res.responseText);
