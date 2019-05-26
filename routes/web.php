@@ -22,6 +22,7 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
 
     // Posts
     Route::get('posts','Rix\Posts\PostsController@get_posts')->name('rix_posts');
+    Route::delete('posts','Rix\Posts\PostsController@delete_post')->name('rix_delete_post');
     // New Post
     Route::get('new_post','Rix\Posts\PostsController@new_post')->name('rix_new_post');
     Route::post('new_post','Rix\Posts\PostsController@add_new_post')->name('rix_add_new_post');

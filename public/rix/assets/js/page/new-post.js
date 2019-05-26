@@ -19,10 +19,11 @@ $(document).on('click', '.newPost #publish', function () {
     simplePost({
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
-    }, add_post).done(function (res) {
+    }, post).done(function (res) {
         progressForPublish(0, area);
         ajaxCheckStatus(res, {successMessage: 'Yazı Başarıyla Eklendi',area:area});
     }).fail(function (res) {
+        console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
     });
 });

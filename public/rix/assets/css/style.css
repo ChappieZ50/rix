@@ -941,7 +941,7 @@ table tr:hover .table-links {
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, 0.02); }
 
-@media (max-width: 575.98px) {
+@media (max-width: 830px) {
     .table-responsive table {
         min-width: 800px; } }
 

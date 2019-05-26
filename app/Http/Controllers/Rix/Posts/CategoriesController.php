@@ -16,10 +16,10 @@ class CategoriesController extends Controller
     public function get_categories(Request $request)
     {
         if ($request->ajax()) {
-            $action = $request->input('action');
+            $action = $request['action'];
             if ($action == 'search') {
                 if ($request->input('value') && !empty($request->input('value')))
-                    return $this->search($request->input('value'));
+                    return Posts::search($request->input('value'),'category','tableItems','rix.layouts.components.posts.categories.table');
             } elseif ($action == 'getParents' && !empty($request->input('term_id'))) {
                 $parents = Posts::parentCategories($request->input('term_id'), $request->input('main'), false);
                 return Posts::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
@@ -28,6 +28,7 @@ class CategoriesController extends Controller
                 return Posts::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
             }
         }
+
         $categories = Posts::getRecords(['taxonomy' => 'category']);
         $view = [
             'tableItems'  => $categories->paginate(20),
@@ -59,7 +60,7 @@ class CategoriesController extends Controller
                     'readable_date' => Helper::readableDateFormat()
                 ])->termTaxonomy()->create(['taxonomy' => 'category', 'parent' => $parent,]);
                 if ($done)
-                    return Posts::getRendered();
+                    return Posts::getRenderedCategories();
             } else {
                 return Helper::response(false, 'Kategori daha önceden eklenmiş');
             }
@@ -104,9 +105,8 @@ class CategoriesController extends Controller
 
     private function deleteAll($ids)
     {
-        TermRelationships::whereIn('term_taxonomy_id', $ids)->delete();
-        if (TermTaxonomy::whereIn('term_id', $ids)->delete() && Terms::destroy($ids))
-            return Posts::getRendered();
+        if (Terms::destroy($ids))
+            return Posts::getRenderedCategories();
         return Helper::response(false, 'Silinemedi');
     }
 
@@ -139,22 +139,14 @@ class CategoriesController extends Controller
                         'parent' => $parent
                     ]);
                 if ($update)
-                    return Posts::getRendered();
+                    return Posts::getRenderedCategories();
 
             } else {
-                return Helper::response(false, 'Değişiklik yapmadınız');
+                return Helper::response(false, 'Kategori Zaten Mevcut');
             }
         }
         return Helper::response(false, '', ['errors' => $validator->errors()]);
     }
 
-    private function search($value)
-    {
-        $data = Terms::whereHas('termTaxonomy', function ($query) {
-            return $query->where('taxonomy', 'category');
-        })->where(function ($query) use ($value) {
-            return $query->where('name', 'like', '%' . $value . '%')->orWhere('slug', 'like', '%' . Str::slug($value) . '%');
-        })->orderBy('created_at', 'desc')->paginate(20);
-        return Posts::renderCategories($data, 'tableItems', 'rix.layouts.components.posts.categories.table');
-    }
+
 }

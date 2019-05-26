@@ -14,9 +14,19 @@ use Illuminate\Support\Str;
 
 class PostsController extends Controller
 {
-    public function get_posts()
+    public function get_posts(Request $request)
     {
-        return view('rix.posts.posts');
+        $viewData = Posts::getViewData();
+        $type = $request->get('type');
+        if ($type == 'closed')
+            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'closed']);
+        elseif ($type == 'trash')
+            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'trash']);
+        else
+            $records = Posts::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]);
+
+        $viewData['posts'] = $records->paginate(20);
+        return view('rix.posts.posts')->with($viewData);
     }
 
     public function new_post(Request $request)
@@ -25,18 +35,14 @@ class PostsController extends Controller
         if ($request->ajax())
             return Helper::render($images, 'images', 'rix.layouts.component.media.images');
         $categories = Posts::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
-        $tags = Posts::getRecords(['taxonomy' => 'post_tag', 'select' => ['rix_terms.term_id', 'rix_terms.name']]);
+        $tags = Posts::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => ['term_id', 'name']]);
         return view('rix.posts.post_new')->with([
-            'images'     => $images,
+            'images'      => $images,
             'parentItems' => $categories->get(),
-            'tags'       => $tags
+            'tags'        => $tags->get()
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return array|false|string
-     */
     public function add_new_post(Request $request)
     {
         $validate = [
@@ -66,7 +72,7 @@ class PostsController extends Controller
                 'seo_description' => $request->input('seo_description'),
                 'seo_keywords'    => $request->input('seo_keywords'),
                 'featured_image'  => $request->input('featured_image'),
-                'status'          => $request->input('status'),
+                'status'          => $request->input('status') ? 'open' : 'closed',
                 'featured'        => $request->input('featured'),
                 'slider'          => $request->input('slider'),
                 'url'             => url('/' . $slug),
@@ -95,27 +101,61 @@ class PostsController extends Controller
         return Helper::response(false, '', ['errors' => $validator->errors()]);
     }
 
+    public function delete_post(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->input('action') == 'toTrash')
+                return $this->toTrash($request);
+            elseif ($request->input('action') == 'deletePermanently')
+                return $this->deletePermanently($request);
+
+        }
+    }
+
+    private function toTrash($request)
+    {
+        $data = $request->input('data');
+        if ($data) {
+            $posts = new \App\Models\Posts();
+            foreach ($data as $item) {
+                $update = $posts->where('post_id', $item['id'])->update([
+                    'status'        => 'trash',
+                    'before_status' => $item['status']
+                ]);
+                if (!$update)
+                    return Helper::response(false, 'Bazı Yazılar Çöpe Taşınamadı');
+            }
+            return ['posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar()];
+
+        }
+    }
+
+    private function deletePermanently($request)
+    {
+        $data = is_array($request->input('data')) ? $request->input('data') : [$request->input('data')];
+        if (\App\Models\Posts::destroy($data))
+            return ['posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar()];
+
+        return Helper::response(false, 'Silinemedi');
+    }
+
     private function connectTerm($tag, $postID, $justConnect = false, $id = '')
     {
 
         if (!$justConnect) {
-            $term = \DB::table('rix_terms')
-                ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                ->where([
-                    'rix_term_taxonomy.taxonomy' => 'post_tag',
-                    'rix_terms.name'             => $tag['value']
-                ])
-                ->orWhere('rix_term_taxonomy.taxonomy', 'post_tag')
-                ->where('rix_terms.slug', Str::slug($tag['value']))
-                ->select('rix_term_taxonomy.term_taxonomy_id')
-                ->first();
+            $term = Terms::with('termTaxonomy')->whereHas('termTaxonomy', function ($query) {
+                return $query->where('taxonomy', 'post_tag')->select('term_taxonomy_id');
+            })->where(function ($query) use ($tag) {
+                return $query->where('name', $tag['value'])->orWhere('slug', Str::slug($tag['value']));
+            })->first();
             if (!empty($term))
-                return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $term->term_taxonomy_id]);
+                return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $term->termTaxonomy->term_taxonomy_id]);
             else
                 return $this->insertTerm($tag, $postID);
         }
         return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $id]);
     }
+
 
     private function insertTerm($tag, $postID)
     {

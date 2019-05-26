@@ -184,3 +184,81 @@
   color: Red;
 }
 
+.table-pages-bar {
+  padding: 5px 10px 0 20px;
+  display: inline-block;
+}
+
+.table-pages-bar a {
+  color: #0073aa;
+  text-decoration: none;
+}
+
+.table-pages-bar a .count {
+  color: #555d66;
+  font-weight: 400;
+}
+
+.table-pages-bar a:hover {
+  color: #00adf5;
+}
+
+.table-pages-bar .page-active {
+  color: black;
+  font-weight: bold;
+}
+
+.comment {
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none !important;
+}
+
+.comment .comment-count {
+  box-sizing: border-box;
+  display: block;
+  padding: 0 8px;
+  min-width: 24px;
+  height: 2em;
+  border-radius: 5px;
+  background-color: #72777c;
+  color: #fff;
+  font-size: 11px;
+  line-height: 21px;
+  text-align: center;
+}
+
+.comment .comment-count:after {
+  content: "";
+  display: block;
+  margin-left: 8px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #72777c;
+  border-right: 5px solid transparent;
+}
+
+.post-categories a {
+  text-decoration: none;
+  color: #0073aa;
+  font-size: 13px;
+  line-height: 1.5em;
+  margin-left: 4px;
+}
+
+.post-categories a:hover {
+  color: #0fb2d6;
+}
+
+.post-tags a {
+  text-decoration: none;
+  color: #0073aa;
+  font-size: 13px;
+  line-height: 1.5em;
+  margin-left: 4px;
+}
+
+.post-tags a:hover {
+  color: #0fb2d6;
+}
+

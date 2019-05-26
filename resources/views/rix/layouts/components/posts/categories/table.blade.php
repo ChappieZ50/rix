@@ -1,6 +1,6 @@
 <div class="table-responsive" id="categories">
     @if(!empty($tableItems))
-        <table class="table table-striped">
+        <table class="table table-striped" style="margin-top: 20px !important;">
             <tr>
                 <th>
                     <div class="custom-checkbox custom-control text-center">

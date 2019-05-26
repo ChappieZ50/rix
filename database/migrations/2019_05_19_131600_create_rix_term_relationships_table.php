@@ -15,9 +15,9 @@ class CreateRixTermRelationshipsTable extends Migration
     {
         Schema::create('rix_term_relationships', function (Blueprint $table) {
             $table->bigIncrements('term_relationships_id');
-            $table->foreign('post_id')->references('post_id')->on('rix_posts');
+            $table->foreign('post_id')->references('post_id')->on('rix_posts')->onDelete('cascade');
             $table->unsignedBigInteger('post_id');
-            $table->foreign('term_taxonomy_id')->references('term_taxonomy_id')->on('rix_term_taxonomy');
+            $table->foreign('term_taxonomy_id')->references('term_taxonomy_id')->on('rix_term_taxonomy')->onDelete('cascade');
             $table->unsignedBigInteger('term_taxonomy_id');
         });
     }

@@ -24,11 +24,11 @@ class CreateRixPostsTable extends Migration
             $table->text('seo_description');
             $table->text('seo_keywords')->nullable();
             $table->integer('featured')->default(0);
-            $table->integer('status')->default(1);
+            $table->string('status',10)->default('open');
+            $table->string('before_status',10)->nullable();
             $table->integer('slider')->default(0);
             $table->text('url')->nullable();
             $table->string('readable_date',25);
-            $table->softDeletes();
             $table->timestamps();
         });
     }
