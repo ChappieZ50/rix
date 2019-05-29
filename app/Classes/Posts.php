@@ -35,10 +35,6 @@ class Posts
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
         return $records;
-<<<<<<< HEAD
-=======
-
->>>>>>> 5c16b5ef7f31118b701fa76c01470daf8b26478f
     }
 
     static function getPostCount($column = '', $value = '')
