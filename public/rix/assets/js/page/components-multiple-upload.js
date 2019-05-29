@@ -30,7 +30,7 @@ new Dropzone("#dropzone", {
                 $('.modal-media-items').prepend(
                     '<div class="imagecheck-item">' +
                     '<label class="imagecheck mb-4">' +
-                    '<input name="imagecheck" type="radio" value="' + response.data.id + '" class="imagecheck-input" />' +
+                    '<input name="imagecheck" type="radio" value="' + response.data.image_id + '" class="imagecheck-input" />' +
                     '<figure class="imagecheck-figure">' +
                     '<img src="' + decode.url + '" class="imagecheck-image">' +
                     '</figure>' +

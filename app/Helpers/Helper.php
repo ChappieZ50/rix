@@ -90,4 +90,29 @@ class Helper
         }
         return $value;
     }
+
+    static function getTerms($taxonomy, $terms)
+    {
+        $i = 0;
+        foreach ($terms as $term) {
+            if ($term->termTaxonomy->taxonomy == $taxonomy) {
+                $params = ['action' => 'edit', 'id' => $term->termTaxonomy->term_id];
+                $route = $taxonomy == 'category' ? route('rix_categories', $params) : route('rix_tags', $params);
+                $i++;
+                echo '<a href="' . $route . '" target="_blank">' . $term->termTaxonomy->terms->name . '</a>, ';
+            }
+        }
+        return $i <= 0 ? '—' : null;
+    }
+
+    static function longText($str, $options = [])
+    {
+        $defaults = [
+            'len' => 50,
+            'start' => 0,
+        ];
+
+        $options = array_merge($defaults, $options);
+        return strlen($str) > $options['len'] ? substr($str, $options['start'], $options['len']) . "..." : $str;
+    }
 }

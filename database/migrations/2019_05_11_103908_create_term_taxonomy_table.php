@@ -15,7 +15,7 @@ class CreateTermTaxonomyTable extends Migration
     {
         Schema::create('rix_term_taxonomy', function (Blueprint $table) {
             $table->bigIncrements('term_taxonomy_id');
-            $table->foreign('term_id')->references('term_id')->on('rix_terms');
+            $table->foreign('term_id')->references('term_id')->on('rix_terms')->onDelete('cascade');
             $table->unsignedBigInteger('term_id');
             $table->string('taxonomy',50);
             $table->unsignedInteger('parent')->default(0);

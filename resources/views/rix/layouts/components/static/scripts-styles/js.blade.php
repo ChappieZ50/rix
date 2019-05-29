@@ -1,10 +1,11 @@
 <script>
     var update_media = "{{route('rix_update_media')}}";
     var delete_image = "{{route('rix_delete_image')}}";
-    var add_post = "{{route('rix_add_new_post')}}";
-    var add_category = "{{route('rix_new_category')}}";
-    var add_tag = "{{route('rix_new_tag')}}";
+    var post = "{{route('rix_add_new_post')}}";
+    var category = "{{route('rix_new_category')}}";
+    var tag = "{{route('rix_new_tag')}}";
     var route = "{{route('rix_new_media')}}";
+    var posts = "{{route('rix_posts')}}"
 </script>
 <!-- General JS Scripts -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

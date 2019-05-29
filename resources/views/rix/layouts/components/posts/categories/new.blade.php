@@ -1,15 +1,15 @@
-<div class="card">
+<div class="card newCategory">
     <div class="card-header">
         @if($editItem)
             <div class="section-header-back">
                 <a href="{{route('rix_categories')}}" class="btn btn-icon ml-0" style="border-radius: 3px;padding:3px 15px;"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h4>{{\App\Helpers\Helper::write($editItem,'name')}} | Düzenleniyor</h4>
+            <h4><span>{{\App\Helpers\Helper::write($editItem,'name')}}</span> | Düzenleniyor</h4>
         @else
             <h4>Kategori Ekle</h4>
         @endif
     </div>
-    <div class="card-body newCategory">
+    <div class="card-body">
         <div class="form-group">
             <label>İsim</label>
             <input type="text" class="form-control" name="name" id="txt_src" value="{{\App\Helpers\Helper::write($editItem,'name')}}">

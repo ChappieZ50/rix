@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Rix\Posts;
 
-use App\Models\Terms\TermRelationships;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
-use App\Classes\Posts;
+use App\Classes\CategoriesAndTags as Categories;
 use App\Models\Terms\Terms;
 use App\Models\Terms\TermTaxonomy;
 use Illuminate\Support\Str;
@@ -16,19 +15,20 @@ class CategoriesController extends Controller
     public function get_categories(Request $request)
     {
         if ($request->ajax()) {
-            $action = $request->input('action');
+            $action = $request['action'];
             if ($action == 'search') {
                 if ($request->input('value') && !empty($request->input('value')))
-                    return $this->search($request->input('value'));
+                    return Categories::search($request->input('value'),'category','tableItems','rix.layouts.components.posts.categories.table');
             } elseif ($action == 'getParents' && !empty($request->input('term_id'))) {
-                $parents = Posts::parentCategories($request->input('term_id'), $request->input('main'), false);
-                return Posts::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
+                $parents = Categories::parentCategories($request->input('term_id'), $request->input('main'), false);
+                return Categories::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
             } elseif ($action == 'getTable') {
-                $records = Posts::getRecords(['taxonomy' => 'category', 'doPaginate' => true]);
-                return Posts::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
+                $records = Categories::getRecords(['taxonomy' => 'category', 'doPaginate' => true]);
+                return Categories::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
             }
         }
-        $categories = Posts::getRecords(['taxonomy' => 'category']);
+
+        $categories = Categories::getRecords(['taxonomy' => 'category']);
         $view = [
             'tableItems'  => $categories->paginate(20),
             'parentItems' => $categories->get(),
@@ -52,14 +52,14 @@ class CategoriesController extends Controller
             $name = $request->input('name');
             $slug = Str::slug($request->input('slug'));
             $parent = $request->input('parent');
-            if (Posts::findExistRecord('category', $name, $slug, $parent)) {
+            if (Categories::findExistRecord('category', $name, $slug, $parent)) {
                 $done = Terms::create([
                     'name'          => $name,
                     'slug'          => $slug,
                     'readable_date' => Helper::readableDateFormat()
                 ])->termTaxonomy()->create(['taxonomy' => 'category', 'parent' => $parent,]);
                 if ($done)
-                    return Posts::getRendered();
+                    return Categories::getRenderedCategories();
             } else {
                 return Helper::response(false, 'Kategori daha önceden eklenmiş');
             }
@@ -76,7 +76,7 @@ class CategoriesController extends Controller
             $ids = $request->input('ids');
             $ids = is_array($ids) ? $ids : [$ids];
             foreach ($ids as $id) {
-                $record = Posts::parentCategories($id);
+                $record = Categories::parentCategories($id);
                 if (empty($record['records'])) {
                     $data['noParent'][] = $id;
                 } else {
@@ -104,9 +104,8 @@ class CategoriesController extends Controller
 
     private function deleteAll($ids)
     {
-        TermRelationships::whereIn('term_taxonomy_id', $ids)->delete();
-        if (TermTaxonomy::whereIn('term_id', $ids)->delete() && Terms::destroy($ids))
-            return Posts::getRendered();
+        if (Terms::destroy($ids))
+            return Categories::getRenderedCategories();
         return Helper::response(false, 'Silinemedi');
     }
 
@@ -120,7 +119,7 @@ class CategoriesController extends Controller
             $slug = Str::slug($request->input('slug'));
             $parent = $request->input('parent');
             $id = $request->input('id');
-            if (Posts::findExistRecord('category', $name, $slug, $parent)) {
+            if (Categories::findExistRecord('category', $name, $slug, $parent)) {
                 $termParent = TermTaxonomy::where([
                     'parent' => $id,
                 ])->select(['parent', 'term_id'])->get();
@@ -139,22 +138,14 @@ class CategoriesController extends Controller
                         'parent' => $parent
                     ]);
                 if ($update)
-                    return Posts::getRendered();
+                    return Categories::getRenderedCategories();
 
             } else {
-                return Helper::response(false, 'Değişiklik yapmadınız');
+                return Helper::response(false, 'Kategori Zaten Mevcut');
             }
         }
         return Helper::response(false, '', ['errors' => $validator->errors()]);
     }
 
-    private function search($value)
-    {
-        $data = Terms::whereHas('termTaxonomy', function ($query) {
-            return $query->where('taxonomy', 'category');
-        })->where(function ($query) use ($value) {
-            return $query->where('name', 'like', '%' . $value . '%')->orWhere('slug', 'like', '%' . Str::slug($value) . '%');
-        })->orderBy('created_at', 'desc')->paginate(20);
-        return Posts::renderCategories($data, 'tableItems', 'rix.layouts.components.posts.categories.table');
-    }
+
 }

@@ -7,7 +7,7 @@ $(document).on('click', '.newPost #publish', function () {
         seo_title = $('input[name=seo_title]').val(),
         seo_description = $('textarea[name=seo_description]').val(),
         seo_keywords = $('input[name=seo_keywords]').val(),
-        featured_image = $('input[name=featured_image]').val(),
+        featured_image = $('#preview_selected_image').attr('data-id'),
         categories = $('select[name=categories]').val(),
         tags = $('input[name=tags]').val(),
         status = $('input[name=status]').val(),
@@ -19,10 +19,11 @@ $(document).on('click', '.newPost #publish', function () {
     simplePost({
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
-    }, add_post).done(function (res) {
+    }, post).done(function (res) {
         progressForPublish(0, area);
         ajaxCheckStatus(res, {successMessage: 'Yazı Başarıyla Eklendi',area:area});
     }).fail(function (res) {
+        console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
     });
 });

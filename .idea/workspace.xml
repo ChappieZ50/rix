@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="4674fd2e-b950-49e3-b72a-52d5ec258699" name="Default Changelist" comment="Save">
       <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Classes/Posts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Classes/Posts.php" afterDir="false" />
+=======
+    <list default="true" id="4674fd2e-b950-49e3-b72a-52d5ec258699" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Classes/CategoriesAndTags.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1c046811-22b0-458b-afb2-d6228701beb7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1c046811-22b0-458b-afb2-d6228701beb7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Classes/Posts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Classes/Posts.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Rix/GalleryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Rix/GalleryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/TagsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/TagsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Gallery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Gallery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/rix/assets/js/media-modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/rix/assets/js/media-modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/rix/assets/js/page/components-multiple-upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/rix/assets/js/page/components-multiple-upload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/rix/assets/js/page/new-post.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/rix/assets/js/page/new-post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/rix/assets/js/page/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/rix/assets/js/page/posts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/media/images.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/media/images.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/tags-select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/tags-select.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/general.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/general.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table-content.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table-content.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/table-pages-bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/table-pages-bar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/posts/post.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,49 +79,105 @@
     <select />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="119" column="41" selection-start-line="119" selection-start-column="41" selection-end-line="119" selection-end-column="41" />
+              <folding>
+                <element signature="e#50#89#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Classes/Posts.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="543">
+              <caret line="171" column="48" selection-start-line="171" selection-start-column="25" selection-end-line="171" selection-end-column="48" />
+              <folding>
+                <element signature="e#31#54#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/post.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="575">
+              <caret line="130" column="70" selection-start-line="130" selection-start-column="70" selection-end-line="130" selection-end-column="70" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="10" column="93" lean-forward="true" selection-start-line="10" selection-start-column="93" selection-end-line="10" selection-end-column="93" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_posts">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Blade" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="Blade" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>filter-option</find>
-      <find>button</find>
-      <find>after</find>
-      <find>dropdown-toggle:after</find>
-      <find>outline</find>
-      <find>hover</find>
-      <find>btn-light</find>
-      <find>color</find>
-      <find>closest</find>
-      <find>$guarded</find>
-      <find>$posts</find>
-      <find>slug</find>
-      <find>provider</find>
-      <find>$category</find>
-      <find>categories</find>
-      <find>add_category</find>
-      <find>edit_ca</find>
-      <find>termTaxonomy</find>
+      <find>getRen</find>
+      <find>ajaxCheckStatus</find>
+      <find>i</find>
       <find>termRelationships</find>
-      <find>.fail</find>
-      <find>section-header-back</find>
-      <find>add</find>
-      <find>parent</find>
-      <find>parentCategories</find>
-      <find>-&gt;</find>
+      <find>Delete</find>
+      <find>dest</find>
+      <find>delete</find>
+      <find>restore</find>
+      <find>Posts</find>
+      <find>App</find>
+      <find>empty</find>
       <find>isEmpty</find>
-      <find>paginate</find>
-      <find>getRecords</find>
-      <find>parentItems</find>
-      <find>content</find>
+      <find>isEm</find>
+      <find>multiple</find>
+      <find>Posts::</find>
+      <find>find</find>
+      <find>exi</find>
+      <find>get_gallery</find>
+      <find>gall</find>
+      <find>get_ga</find>
+      <find>id</find>
+      <find>imagecheck-input</find>
+      <find>toAr</find>
+      <find>toArray</find>
+      <find>req</find>
+      <find>Request</find>
+      <find>imade_id</find>
+      <find>post_new</find>
+      <find>taxonomy</find>
+      <find>featured_image</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,57 +186,64 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/rix/assets/css/tagify.css" />
-        <option value="$PROJECT_DIR$/public/rix/assets/js/page/components-multiple-upload.js" />
-        <option value="$PROJECT_DIR$/public/rix/assets/js/media-modal.js" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/general.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/posts/tags.blade.php" />
-        <option value="$PROJECT_DIR$/public/rix/assets/js/scripts.js" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/new.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/tags.blade.php" />
-        <option value="$PROJECT_DIR$/../../stisla/pages/forms-advanced-form.html" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags.blade.php" />
-        <option value="$PROJECT_DIR$/public/rix/assets/js/bootstrap-select.min.js" />
-        <option value="$PROJECT_DIR$/public/rix/assets/css/bootstrap-select.css" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_11_102045_create_term_relationships_table.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_02_114615_create_gallery_table.php" />
-        <option value="$PROJECT_DIR$/app/Models/Gallery.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php" />
-        <option value="$PROJECT_DIR$/resources/lang/tr/validation.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/GalleryController.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_131504_create_rix_posts_table.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/tags-select.blade.php" />
-        <option value="$PROJECT_DIR$/public/rix/assets/js/page/new-post.js" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_131600_create_rix_term_relationships_table.php" />
-        <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/app/Models/Terms/TermTaxonomy.php" />
-        <option value="$PROJECT_DIR$/app/Models/Posts.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/table.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php" />
-        <option value="$PROJECT_DIR$/app/Models/Terms/TermRelationships.php" />
-        <option value="$PROJECT_DIR$/app/Models/Terms/Terms.php" />
-        <option value="$PROJECT_DIR$/app/Helpers/Helper.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/table.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/rix/posts/categories.blade.php" />
-        <option value="$PROJECT_DIR$/public/rix/assets/css/style.css" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/parents.blade.php" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/new.blade.php" />
         <option value="$PROJECT_DIR$/public/rix/assets/js/custom.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/parent-categories-modal.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/categories.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/tags.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/new.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/new.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/table.blade.php" />
+        <option value="$PROJECT_DIR$/app/Models/Terms/TermRelationships.php" />
+        <option value="$PROJECT_DIR$/resources/sass/custom.scss" />
+        <option value="$PROJECT_DIR$/public/rix/assets/css/style.css" />
+        <option value="$PROJECT_DIR$/app/Helpers/Helper.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/static/scripts-styles/js.blade.php" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/tags.js" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table-content.js" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/categories.js" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_131504_create_rix_posts_table.php" />
+        <option value="$PROJECT_DIR$/app/Models/Posts.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_05_11_103908_create_term_taxonomy_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_131600_create_rix_term_relationships_table.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/table.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/table.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/table-pages-bar.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/posts.js" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/app/Classes/Tags.php" />
+        <option value="$PROJECT_DIR$/app/Classes/Categories.php" />
+        <option value="$PROJECT_DIR$/app/Classes/CategoriesAndTags.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/TagsController.php" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/public/rix/assets/js/page/tags.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" />
         <option value="$PROJECT_DIR$/public/rix/assets/js/page/categories.js" />
         <option value="$PROJECT_DIR$/app/Classes/Posts.php" />
+=======
+        <option value="$PROJECT_DIR$/app/Models/Gallery.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/components-multiple-upload.js" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/media/images.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/GalleryController.php" />
+        <option value="$PROJECT_DIR$/app/Classes/Posts.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/posts/post_update.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table-content.blade.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/general.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/tags-select.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/new-post.js" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/media-modal.js" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       </list>
     </option>
   </component>
@@ -321,6 +415,41 @@
             <path>
               <item name="rix" type="b2602c69:ProjectViewProjectNode" />
               <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="page" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -363,6 +492,56 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="posts" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="layouts" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="posts" type="462c0819:PsiDirectoryNode" />
+              <item name="cards" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="layouts" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="posts" type="462c0819:PsiDirectoryNode" />
+              <item name="cards" type="462c0819:PsiDirectoryNode" />
+              <item name="categories-tags" type="462c0819:PsiDirectoryNode" />
+            </path>
+<<<<<<< HEAD
+=======
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="layouts" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="posts" type="462c0819:PsiDirectoryNode" />
+              <item name="posts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="posts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rix" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
           </expand>
           <select />
         </subPane>
@@ -374,7 +553,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../php-tests/oop" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -384,18 +563,19 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/rix/assets/js" />
-      <recent name="$PROJECT_DIR$/resources/views/rix/layouts/components/static/scripts-styles" />
-      <recent name="$PROJECT_DIR$/resources/views/rix/layouts" />
-      <recent name="$PROJECT_DIR$/resources/lang" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts" />
       <recent name="$PROJECT_DIR$/public/rix/assets/js" />
       <recent name="$PROJECT_DIR$/app/Classes" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts" />
       <recent name="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags" />
-      <recent name="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/rix/posts" />
+      <recent name="$PROJECT_DIR$/public/rix/assets/js" />
+      <recent name="$PROJECT_DIR$/resources/views/rix/layouts/components/static/scripts-styles" />
+      <recent name="$PROJECT_DIR$/resources/views/rix/layouts" />
+      <recent name="$PROJECT_DIR$/resources/lang" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -468,9 +648,23 @@
       <workItem from="1558258031820" duration="16253000" />
       <workItem from="1558339561318" duration="23430000" />
       <workItem from="1558437593647" duration="220000" />
+<<<<<<< HEAD
       <workItem from="1558524846673" duration="15036000" />
       <workItem from="1559122602123" duration="341000" />
       <workItem from="1559123151574" duration="655000" />
+=======
+      <workItem from="1558524846673" duration="15136000" />
+      <workItem from="1558597581834" duration="22756000" />
+      <workItem from="1558769816718" duration="8146000" />
+      <workItem from="1558853010194" duration="10123000" />
+      <workItem from="1558895030102" duration="6176000" />
+      <workItem from="1558952164352" duration="5924000" />
+      <workItem from="1558971008785" duration="114000" />
+      <workItem from="1558972238350" duration="1376000" />
+      <workItem from="1558974042750" duration="3000" />
+      <workItem from="1558974050461" duration="652000" />
+      <workItem from="1558979641943" duration="6134000" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1556713930375</created>
@@ -542,16 +736,38 @@
       <option name="project" value="LOCAL" />
       <updated>1558363363850</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Save">
+      <created>1558540228491</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1558540228491</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Save">
+      <created>1558869130371</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1558869130371</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="313414000" />
+=======
+    <option name="totallyTimeSpent" value="373922000" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
   </component>
   <component name="ToolWindowManager">
     <frame x="55" y="27" width="1311" height="741" extended-state="6" />
     <layout>
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21907014" />
+=======
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.184514" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="npm" order="3" side_tool="true" />
@@ -569,11 +785,16 @@
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50082374" side_tool="true" weight="0.22073579" />
       <window_info anchor="bottom" id="TypeScript" order="12" weight="0.32960895" />
       <window_info anchor="bottom" id="Database Console" order="13" weight="0.32998884" />
+      <window_info anchor="bottom" id="Thumbnails" order="14" weight="0.303233" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Mongo Explorer" order="3" weight="0.3294893" />
+<<<<<<< HEAD
       <window_info anchor="right" id="Database" order="4" weight="0.15996848" />
+=======
+      <window_info anchor="right" id="Database" order="4" weight="0.16035146" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,220 +810,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="Save" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_11_103908_create_term_taxonomy_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="16" column="33" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+=======
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_19_131600_create_rix_term_relationships_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="20" column="59" lean-forward="true" selection-start-line="20" selection-start-column="59" selection-end-line="20" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="180" column="19" lean-forward="true" selection-start-line="180" selection-start-column="19" selection-end-line="180" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasEvents.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="397" column="51" lean-forward="true" selection-start-line="397" selection-start-column="51" selection-end-line="397" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="84" lean-forward="true" selection-start-line="5" selection-start-column="84" selection-end-line="5" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/tags/table.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="32" column="127" selection-start-line="32" selection-start-column="127" selection-end-line="32" selection-end-column="127" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="59" column="27" lean-forward="true" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="27" />
-          <folding>
-            <element signature="e#50#89#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Gallery.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Terms/TermTaxonomy.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Terms/Terms.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Posts.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_4.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="142" column="42" selection-start-line="142" selection-start-column="42" selection-end-line="142" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/DataCollector/DataCollector.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="41" column="62" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/Core/Core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="1000" column="21" selection-start-line="1000" selection-start-column="21" selection-end-line="1000" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasRelationships.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="605" column="35" lean-forward="true" selection-start-line="605" selection-start-column="35" selection-end-line="605" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Terms/TermRelationships.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/bootstrap-select.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/categories.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="24" column="64" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="56" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/css/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/master.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="44" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="2360" column="21" lean-forward="true" selection-start-line="2360" selection-start-column="21" selection-end-line="2360" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/parents.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/new.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
-          <caret line="31" column="68" selection-start-line="31" selection-start-column="68" selection-end-line="31" selection-end-column="68" />
+          <caret line="18" column="34" lean-forward="true" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/custom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="115" column="24" lean-forward="true" selection-start-line="115" selection-start-column="24" selection-end-line="115" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!block;n#stringToSlug#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitattributes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.mix.js">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_term_relationships">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
@@ -811,62 +827,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_posts">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
+    <entry file="file://$PROJECT_DIR$/app/Models/Posts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/Assert/Functions.php">
+    <entry file="file://$PROJECT_DIR$/app/Models/Gallery.php">
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="1436" column="1" lean-forward="true" selection-start-line="1436" selection-start-column="1" selection-end-line="1436" selection-end-column="1" />
+        <state relative-caret-position="230">
+          <caret line="10" column="39" lean-forward="true" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/scripts.js">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="647" column="13" selection-start-line="647" selection-start-column="13" selection-end-line="647" selection-end-column="13" />
+        <state relative-caret-position="184">
+          <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/parent-categories-modal.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="83" selection-start-line="6" selection-start-column="83" selection-end-line="6" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/table.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="63" lean-forward="true" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/TagsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#50#89#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/page/tags.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="52" lean-forward="true" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Helpers/Helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="64" column="48" selection-start-line="64" selection-start-column="48" selection-end-line="64" selection-end-column="48" />
+        <state relative-caret-position="874">
+          <caret line="38" column="27" lean-forward="true" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -877,17 +863,203 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php">
+    <entry file="file://$PROJECT_DIR$/app/Helpers/Helper.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="215" column="6" lean-forward="true" selection-start-line="215" selection-start-column="6" selection-end-line="215" selection-end-column="6" />
+        <state relative-caret-position="203">
+          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php">
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/custom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="463" column="6" lean-forward="true" selection-start-line="463" selection-start-column="6" selection-end-line="463" selection-end-column="6" />
+        <state relative-caret-position="-1817">
+          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="620" column="57" lean-forward="true" selection-start-line="620" selection-start-column="57" selection-end-line="620" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/simple-post.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/stisla.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="32" lean-forward="true" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+          <folding>
+            <element signature="e#127#134#1" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/media/gallery.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/media/new_media.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/endless-scroll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/media-modal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1679">
+          <caret line="73" column="29" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/media/new_media.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="22" lean-forward="true" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/media/images.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/Core/Core_c.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-198">
+          <caret line="559" column="3" lean-forward="true" selection-start-line="559" selection-start-column="3" selection-end-line="559" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Migrations/DatabaseMigrationRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-368">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/DetectsDeadlocks.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/ConnectionResolverInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Broadcasting/BroadcastEvent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="85" column="29" selection-start-line="85" selection-start-column="29" selection-end-line="85" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Collection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="1899" column="38" lean-forward="true" selection-start-line="1899" selection-start-column="38" selection-end-line="1899" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Contracts/Support/Arrayable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/http-foundation/Request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="30" column="13" lean-forward="true" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Classes/CategoriesAndTags.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-943">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/Request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding>
+            <element signature="e#35#47#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/GalleryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="71" column="9" lean-forward="true" selection-start-line="71" selection-start-column="9" selection-end-line="71" selection-end-column="9" />
+          <folding>
+            <element signature="e#44#67#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="4" column="28" lean-forward="true" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/post_update.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="44" column="35" lean-forward="true" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/parents.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/posts/posts-table-content.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -898,6 +1070,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/general.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="20" column="6" lean-forward="true" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/page/components-multiple-upload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="17" column="42" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/page/bootstrap-modal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/page/new-post.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/media-modal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="129" column="12" lean-forward="true" selection-start-line="129" selection-start-column="12" selection-end-line="129" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#p#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/categories-select.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="27" lean-forward="true" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags/tags-select.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/categories-tags.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="14" lean-forward="true" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="119" column="41" selection-start-line="119" selection-start-column="41" selection-end-line="119" selection-end-column="41" />
+          <folding>
+            <element signature="e#50#89#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Classes/Posts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="171" column="48" selection-start-line="171" selection-start-column="25" selection-end-line="171" selection-end-column="48" />
+          <folding>
+            <element signature="e#31#54#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_gallery">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Concerns/BuildsQueries.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -949,6 +1208,43 @@
           <folding>
             <element signature="e#50#89#0#PHP" expanded="true" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="86" lean-forward="true" selection-start-line="12" selection-start-column="86" selection-end-line="12" selection-end-column="86" />
+          <folding>
+            <element signature="e#659#681#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/posts/post.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="130" column="70" selection-start-line="130" selection-start-column="70" selection-end-line="130" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_posts">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="93" lean-forward="true" selection-start-line="10" selection-start-column="93" selection-end-line="10" selection-end-column="93" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
         </state>
       </provider>
     </entry>

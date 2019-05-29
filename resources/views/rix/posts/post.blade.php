@@ -26,7 +26,7 @@
 <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
 {{-- <script>
    window.onbeforeunload = function () { return "alert" };
-</script> --}}
+</script>--}}
 @endsection
 
 {{-- JS --}}

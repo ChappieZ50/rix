@@ -1,6 +1,6 @@
 <div class="table-responsive" id="tags">
     @if(!empty($tags))
-        <table class="table table-striped">
+        <table class="table table-striped" style="margin-top: 20px !important;">
             <tr>
                 <th>
                     <div class="custom-checkbox custom-control text-center">
@@ -28,7 +28,7 @@
                         <div class="btn-group dropleft">
                             <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropleft">
-                                <a class="dropdown-item has-icon" href="#"><i class="far fa-edit"></i> Düzenle</a>
+                                <a class="dropdown-item has-icon" href="{{route('rix_tags',['action' => 'edit','id' => $tag->term_id])}}"><i class="far fa-edit"></i> Düzenle</a>
                                 <a class="dropdown-item has-icon" href="javascript:;" id="singleDeleteInTable" style="color:red;" data-id="{{$tag->term_id}}"><i class="far fa-trash-alt"></i> Sil</a>
                                 <a class="dropdown-item has-icon" href="#" target="_blank"><i class="fas fa-share"></i> Git</a>
                             </div>

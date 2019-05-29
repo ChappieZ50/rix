@@ -3,40 +3,47 @@
 namespace App\Http\Controllers\Rix\Posts;
 
 use App\Models\Terms\TermRelationships;
-use App\Models\Terms\Terms;
 use App\Models\Terms\TermTaxonomy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
 use App\Models\Gallery;
 use App\Classes\Posts;
+use App\Classes\CategoriesAndTags;
 use Illuminate\Support\Str;
+use App\Models\Posts as ModelPosts;
 
 class PostsController extends Controller
 {
-    public function get_posts()
+    public function get_posts(Request $request)
     {
-        return view('rix.posts.posts');
+        $type = $request->get('type');
+        $viewData = Posts::getViewData(['type' => $type]);
+        if ($type == 'closed')
+            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'closed']);
+        elseif ($type == 'trash')
+            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'trash']);
+        else
+            $records = Posts::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]);
+
+        $viewData['posts'] = $records->paginate(20);
+        return view('rix.posts.posts')->with($viewData);
     }
 
     public function new_post(Request $request)
     {
-        $images = Gallery::get_gallery(['id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+        $images = Gallery::get_gallery(['image_id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
         if ($request->ajax())
             return Helper::render($images, 'images', 'rix.layouts.component.media.images');
-        $categories = Posts::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
-        $tags = Posts::getRecords(['taxonomy' => 'post_tag', 'select' => ['rix_terms.term_id', 'rix_terms.name']]);
-        return view('rix.posts.post_new')->with([
-            'images'     => $images,
+        $categories = CategoriesAndTags::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
+        $tags = CategoriesAndTags::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => ['term_id', 'name']]);
+        return view('rix.posts.post')->with([
+            'images'      => $images,
             'parentItems' => $categories->get(),
-            'tags'       => $tags
+            'tags'        => $tags->get()
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return array|false|string
-     */
     public function add_new_post(Request $request)
     {
         $validate = [
@@ -52,11 +59,11 @@ class PostsController extends Controller
             'featured'        => 'integer',
             'slider'          => 'integer',
             'categories'      => 'required',
-            'tags'            => 'required',
+            'tags'            => 'required|notIn:[]',
         ];
         $validator = \Validator::make($request->all(), $validate);
         if (!$validator->fails()) {
-            $slug = $this->ifExistsSlug(Str::slug($request->input('slug')));
+            $slug = Posts::ifExistsSlug(Str::slug($request->input('slug')));
             $createPost = [
                 'title'           => $request->input('title'),
                 'slug'            => $slug,
@@ -66,13 +73,13 @@ class PostsController extends Controller
                 'seo_description' => $request->input('seo_description'),
                 'seo_keywords'    => $request->input('seo_keywords'),
                 'featured_image'  => $request->input('featured_image'),
-                'status'          => $request->input('status'),
+                'status'          => $request->input('status') ? 'open' : 'closed',
                 'featured'        => $request->input('featured'),
                 'slider'          => $request->input('slider'),
                 'url'             => url('/' . $slug),
                 'readable_date'   => Helper::readableDateFormat(),
             ];
-            $insert = \App\Models\Posts::create($createPost);
+            $insert = ModelPosts::create($createPost);
             if ($insert) {
                 // For Categories
                 $categories = $request->input('categories');
@@ -86,7 +93,7 @@ class PostsController extends Controller
                 if (!empty($tags) && is_array($tags)) {
                     foreach ($tags as $tag) {
                         if (isset($tag['value']))
-                            $this->connectTerm($tag, $insert->post_id);
+                            Posts::connectTerm($tag, $insert->post_id);
                     }
                 }
                 return Helper::response(true, '');
@@ -95,56 +102,43 @@ class PostsController extends Controller
         return Helper::response(false, '', ['errors' => $validator->errors()]);
     }
 
-    private function connectTerm($tag, $postID, $justConnect = false, $id = '')
+    public function delete_post(Request $request)
     {
+        if ($request->ajax()) {
+            if ($request->input('action') == 'toTrash')
+                return Posts::toTrash($request);
+            elseif ($request->input('action') == 'deletePermanently')
+                return Posts::deletePermanently($request);
 
-        if (!$justConnect) {
-            $term = \DB::table('rix_terms')
-                ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                ->where([
-                    'rix_term_taxonomy.taxonomy' => 'post_tag',
-                    'rix_terms.name'             => $tag['value']
-                ])
-                ->orWhere('rix_term_taxonomy.taxonomy', 'post_tag')
-                ->where('rix_terms.slug', Str::slug($tag['value']))
-                ->select('rix_term_taxonomy.term_taxonomy_id')
-                ->first();
-            if (!empty($term))
-                return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $term->term_taxonomy_id]);
-            else
-                return $this->insertTerm($tag, $postID);
         }
-        return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $id]);
     }
 
-    private function insertTerm($tag, $postID)
+    public function get_post(Request $request)
     {
-        $insert = Terms::create([
-            'name'          => $tag['value'],
-            'slug'          => Str::slug($tag['value']),
-            'readable_date' => Helper::readableDateFormat(),
-        ]);
-        if ($insert) {
-            $done = TermTaxonomy::create(['term_id' => $insert->term_id, 'taxonomy' => 'post_tag']);
-            if ($done)
-                return $this->connectTerm($tag, $postID, true, $done->term_taxonomy_id);
+        if ($request->get('action') == 'edit' && $request->get('id')) {
+
+            $data = Posts::findPostForUpdate($request->get('id'));
+            /*print_r($data->toArray());
+            die();*/
+            $images = Gallery::get_gallery(['image_id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+            $categories = CategoriesAndTags::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
+            $tags = CategoriesAndTags::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => ['term_id', 'name']]);
+            return view('rix.posts.post')->with([
+                'images'      => $images,
+                'parentItems' => $categories->get(),
+                'tags'        => $tags->get(),
+                'post'        => $data
+            ]);
         }
-        return false;
+        return redirect()->route('rix_posts');
     }
 
-    private function ifExistsSlug($slug, $prefix = '-')
+    public function update_post(Request $request)
     {
-        $i = 1;
-        $constSlug = $slug;
-        while (true) {
-            if (\App\Models\Posts::where('slug', $slug)->count() > 0) {
-                $i++;
-                $slug = $constSlug;
-                $slug .= $prefix . $i;
-            } else {
-                break;
-            }
+        if ($request->ajax()) {
+            if ($request->input('action') == 'restore')
+                return Posts::restorePost($request);
+
         }
-        return $i === 1 ? $constSlug : $slug;
     }
 }

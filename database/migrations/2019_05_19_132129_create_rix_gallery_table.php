@@ -14,7 +14,7 @@ class CreateRixGalleryTable extends Migration
     public function up()
     {
         Schema::create('rix_gallery', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('image_id');
             $table->text('image_name'); // Image Random Name
             $table->text('image_data'); // Image Data (Width,Height,Extension,Size,MimeType)
             $table->timestamps();
