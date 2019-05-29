@@ -1,4 +1,4 @@
-$(document).on('click', '.newPost #publish', function () {
+$(document).on('click', '.updatePost #update', function () {
     // inputs
     let title = $('input[name=title]').val(),
         slug = $('input[name=slug]').val(),
@@ -12,20 +12,24 @@ $(document).on('click', '.newPost #publish', function () {
         tags = $('input[name=tags]').val(),
         status = $('input[name=status]').val(),
         featured = $('input[name=featured]').val(),
-        slider = $('input[name=slider]').val(),
-        // ------------------------
-        area = '.newPost';
-    progressForPublish(1, area);
+        slider = $('input[name=slider]').val();
+
+    progressForPublish(1, '', '#update');
     simplePost({
+        action: 'update',
+        id: param('id'),
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
-    }, post).done(function (res) {
-        console.log(res);
-        progressForPublish(0, area);
-        ajaxCheckStatus(res, {successMessage: 'Yazı Başarıyla Eklendi',area:area});
+
+    }, posts, 'put').done(function (res) {
+        progressForPublish(0, '', '#update');
+        ajaxCheckStatus(res, {successMessage: 'Başarıyla Güncellendi'});
+        if (res.status !== false) {
+            console.log(res);
+        }
     }).fail(function (res) {
-        console.log(res.responseText);
-        progressForPublish(0, area);
+        progressForPublish(0, '', '#update');
         ajaxCheckStatus(res, {status: 500});
+        console.log(res.responseText);
     });
 });

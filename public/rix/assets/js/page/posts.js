@@ -42,10 +42,6 @@ function restore(data) {
     }
 }
 
-function param(name) {
-    return (location.search.split(name + '=')[1] || '').split('&')[0];
-}
-
 $(document).on('click', '#singleToTrash', function () {
     if (confirm('Silmek istediğinizden emin misiniz ?'))
         deletePost([{id: $(this).attr('data-id'), status: $(this).attr('data-status')}])
@@ -68,7 +64,7 @@ $(document).on('click', '#apply', function () {
                     deletePost(data, {action: 'deletePermanently', successMessage: 'Silindi'});
             }
         }
-    }else if(select.val() === 'restore' && select.attr('data-area') === '#posts'){
+    } else if (select.val() === 'restore' && select.attr('data-area') === '#posts') {
         let data = $('#posts input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
             return this.value;
         }).get();
@@ -82,7 +78,8 @@ $(document).on('click', '#restore', function () {
     restore(id)
 });
 
-async function parseRendered(response) {
+function parseRendered(response) {
     let posts = $('#posts');
     posts.html(response);
 }
+

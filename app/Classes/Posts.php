@@ -9,6 +9,7 @@ use App\Models\Terms\TermRelationships;
 use App\Models\Terms\TermTaxonomy;
 use App\Helpers\Helper;
 use Illuminate\Support\Str;
+
 class Posts
 {
 
@@ -22,8 +23,8 @@ class Posts
             'whereInPostColumn' => '',
             'whereInPostValue'  => '',
         ];
-        $options = array_merge($defaults, $options);
-        $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
+        $options  = array_merge($defaults, $options);
+        $records  = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
         // Other Way
         /*$records = ModelPosts::with([
             'termRelationships' => function ($query) {
@@ -50,10 +51,10 @@ class Posts
 
     static function getRenderedPosts($type = '')
     {
-        $records = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : 			  self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
-        $viewData = self::getViewData(['type' => $type]);
+        $records           = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
+        $viewData          = self::getViewData(['type' => $type]);
         $viewData['posts'] = $records->paginate(20);
-        $posts = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
+        $posts             = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
         return $posts;
     }
 
@@ -75,6 +76,7 @@ class Posts
     {
         return self::renderPosts(self::getViewData($custom), 'rix.layouts.components.posts.posts.table-pages-bar');
     }
+
     static function toTrash($request)
     {
         $data = $request->input('data');
@@ -100,7 +102,9 @@ class Posts
 
         return Helper::response(false, 'Silinemedi');
     }
-    static function restorePost($request){
+
+    static function restorePost($request)
+    {
         $data = is_array($request->input('data')) ? $request->input('data') : [$request->input('data')];
         foreach ($data as $id) {
             $beforeStatus = ModelPosts::where('post_id', $id)->select('before_status')->first();
@@ -108,6 +112,100 @@ class Posts
                 return Helper::response(false, 'Bir Sorun Oluştu ve Bazı Yazılar Çöpten Taşınamadı');
         }
         return ['posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar(['type' => $request->input('currentType')])];
+    }
+
+    static function ifExistsSlug($slug, $prefix = '-')
+    {
+        $i         = 1;
+        $constSlug = $slug;
+        while (true) {
+            if (ModelPosts::where('slug', $slug)->count() > 0) {
+                $i++;
+                $slug = $constSlug;
+                $slug .= $prefix . $i;
+            } else {
+                break;
+            }
+        }
+        return $i === 1 ? $constSlug : $slug;
+    }
+
+    static function findPostForUpdate($id)
+    {
+        $record = ModelPosts::with([
+            'termRelationships' => function ($query) {
+                $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
+                    ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
+                    ->select('post_id', 'rix_terms.term_id', 'rix_terms.name', 'rix_term_taxonomy.taxonomy');
+            }])->where('post_id', $id)->first();
+        if (!empty($record)) {
+            $featuredImage = Gallery::where('image_id', $record->featured_image)->first();
+            if (!empty($featuredImage))
+                $record->selected_featured_image = $featuredImage;
+            return $record;
+        }
+        return false;
+
+    }
+
+    static function validatePost($request,$validate = [])
+    {
+        $defaultValidate = [
+            'title'           => 'required|max:255',
+            'slug'            => 'required|max:255',
+            'content'         => 'required',
+            'summary'         => 'required',
+            'seo_title'       => 'required|max:255',
+            'seo_description' => 'required',
+            'seo_keywords'    => 'nullable',
+            'featured_image'  => 'required|integer',
+            'status'          => 'required|integer',
+            'featured'        => 'integer',
+            'slider'          => 'integer',
+            'categories'      => 'required',
+            'tags'            => 'required|notIn:[]',
+        ];
+        $validate = array_merge($defaultValidate , $validate);
+        $validator =  \Validator::make($request->all(), $validate);
+        return $validator->errors();
+    }
+    static function requestData($request,$data = []){
+        $slug = self::ifExistsSlug(Str::slug($request->input('slug')));
+        $defaults = [
+            'title'           => $request->input('title'),
+            'slug'            => $slug,
+            'content'         => json_encode($request->input('content')),
+            'summary'         => $request->input('summary'),
+            'seo_title'       => $request->input('seo_title'),
+            'seo_description' => $request->input('seo_description'),
+            'seo_keywords'    => $request->input('seo_keywords'),
+            'featured_image'  => $request->input('featured_image'),
+            'status'          => $request->input('status') ? 'open' : 'closed',
+            'featured'        => $request->input('featured'),
+            'slider'          => $request->input('slider'),
+            'url'             => url('/' . $slug),
+            'readable_date'   => Helper::readableDateFormat(),
+        ];
+        $data = array_merge($defaults,$data);
+        return $data;
+    }
+    static function insertOrConnectTerms($request,$id){
+        // For Categories
+        $categories = $request->input('categories');
+        if (!empty($categories) && is_array($categories)) {
+            foreach ($categories as $category)
+                if (TermTaxonomy::where(['taxonomy' => 'category', 'term_taxonomy_id' => $category])->count() > 0)
+                    TermRelationships::create(['post_id' => $id, 'term_taxonomy_id' => $category]);
+        }
+        // For Tags
+        $tags = json_decode($request->input('tags'), true);
+        if (!empty($tags) && is_array($tags)) {
+            foreach ($tags as $tag) {
+                if (isset($tag['value']))
+                    self::connectTerm($tag, $id);
+            }
+        }
+        return Helper::response(true, '');
     }
 
     static function connectTerm($tag, $postID, $justConnect = false, $id = '')
@@ -141,37 +239,5 @@ class Posts
                 return self::connectTerm($tag, $postID, true, $done->term_taxonomy_id);
         }
         return false;
-    }
-
-    static function ifExistsSlug($slug, $prefix = '-')
-    {
-        $i = 1;
-        $constSlug = $slug;
-        while (true) {
-            if (ModelPosts::where('slug', $slug)->count() > 0) {
-                $i++;
-                $slug = $constSlug;
-                $slug .= $prefix . $i;
-            } else {
-                break;
-            }
-        }
-        return $i === 1 ? $constSlug : $slug;
-    }
-    static function findPostForUpdate($id){
-        $record = ModelPosts::with([
-            'termRelationships' => function ($query) {
-                $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
-                    ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                    ->select('post_id','rix_terms.term_id','rix_terms.name','rix_term_taxonomy.taxonomy');
-            }])->where('post_id',$id)->first();
-        if(!empty($record)){
-            $featuredImage = Gallery::where('image_id',$record->featured_image)->first();
-            if(!empty($featuredImage))
-                $record->selected_featured_image = $featuredImage;
-            return $record;
-        }
-        return false;
-
     }
 }

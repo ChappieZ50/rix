@@ -6,7 +6,7 @@
 @append
 
 @section('js')
-    @isset($post) @foreach($post->termRelationships as $relation)  @php($arr[] = $relation->name) @endforeach @endisset
+    @isset($post) @foreach($post->termRelationships as $relation)  @if($relation->taxonomy == 'post_tag')@php($arr[] = $relation->name)  @endif @endforeach @endisset
     <script>
         let tags = document.querySelector('input[name=tags]');
         let tagify = new Tagify(tags, {
