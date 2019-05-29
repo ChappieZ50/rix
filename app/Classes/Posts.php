@@ -38,7 +38,7 @@ class Posts
 
         $data = $options['doPaginate'] ? $data->paginate($options['paginate']) : $data;
         $data = $options['get'] && !$options['doPaginate'] ? $data->get() : $data;
-        return $options['response'] ? Helper::response(true,) :$data;
+        return $options['response'] ? Helper::response(true) :$data;
     }
 
     static function findExistRecord($taxonomy, $name, $slug, $parent = 0)
