@@ -24,21 +24,6 @@ class Posts
         ];
         $options = array_merge($defaults, $options);
         $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
-
-<<<<<<< HEAD
-        $data = Terms::with('termTaxonomy')
-            ->whereHas('termTaxonomy', function ($query) use ($options) {
-                $query->where('taxonomy', $options['taxonomy'])
-                    ->select($options['selectTermTaxonomy'])
-                    ->orderBy($options['termTaxonomyOrder'], $options['order_type']);
-            })
-            ->select($options['selectTerms'])
-            ->orderBy($options['termsOrder'], $options['order_type']);
-
-        $data = $options['doPaginate'] ? $data->paginate($options['paginate']) : $data;
-        $data = $options['get'] && !$options['doPaginate'] ? $data->get() : $data;
-        return $options['response'] ? Helper::response(true) :$data;
-=======
         // Other Way
         /*$records = ModelPosts::with([
             'termRelationships' => function ($query) {
@@ -50,7 +35,7 @@ class Posts
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
         return $records;
->>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
+
     }
 
     static function getPostCount($column = '', $value = '')
@@ -66,7 +51,7 @@ class Posts
 
     static function getRenderedPosts($type = '')
     {
-        $records = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
+        $records = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : 			  self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
         $viewData = self::getViewData(['type' => $type]);
         $viewData['posts'] = $records->paginate(20);
         $posts = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
