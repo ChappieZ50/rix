@@ -6,16 +6,22 @@
 @append
 
 @section('js')
-    @isset($post) @foreach($post->termRelationships as $relation)  @if($relation->taxonomy == 'post_tag')@php($arr[] = $relation->name)  @endif @endforeach @endisset
     <script>
         let tags = document.querySelector('input[name=tags]');
         let tagify = new Tagify(tags, {
-            whitelist: [@if(!empty($tags)) @foreach($tags as $tag) "{{$tag->name}}", @endforeach @endif],
+            whitelist: [@if(!empty($tags)) @foreach($tags as $tag) {"value": "{{$tag->name}}", "id": "{{$tag->term_id}}"}, @endforeach @endif],
         });
-        tagify.addTags('{{isset($arr) ? rtrim(implode(',',$arr),',') : null}}')
+        let activeTags = [];
+        @isset($post)
+        @foreach($post->termRelationships as $relation)
+        @if($relation->taxonomy == 'post_tag')
+        activeTags.push({"value": "{{$relation->name}}", "id": "{{$relation->term_id}}"});
+        @endif
+        @endforeach
+        @endisset
+        tagify.addTags(activeTags);
     </script>
 @append
-
 @section('css')
     <link rel="stylesheet" href="/rix/assets/css/tagify.css">
 @append

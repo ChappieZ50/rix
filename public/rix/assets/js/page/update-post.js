@@ -24,9 +24,7 @@ $(document).on('click', '.updatePost #update', function () {
     }, posts, 'put').done(function (res) {
         progressForPublish(0, '', '#update');
         ajaxCheckStatus(res, {successMessage: 'Başarıyla Güncellendi'});
-        if (res.status !== false) {
-            console.log(res);
-        }
+        console.log(res);
     }).fail(function (res) {
         progressForPublish(0, '', '#update');
         ajaxCheckStatus(res, {status: 500});

@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 
 class Posts
 {
+    static $postID = 'a';
 
     static function getPosts($options = [])
     {
@@ -23,8 +24,8 @@ class Posts
             'whereInPostColumn' => '',
             'whereInPostValue'  => '',
         ];
-        $options  = array_merge($defaults, $options);
-        $records  = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
+        $options = array_merge($defaults, $options);
+        $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
         // Other Way
         /*$records = ModelPosts::with([
             'termRelationships' => function ($query) {
@@ -51,10 +52,10 @@ class Posts
 
     static function getRenderedPosts($type = '')
     {
-        $records           = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
-        $viewData          = self::getViewData(['type' => $type]);
+        $records = $type == 'open' || empty($type) ? self::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]) : self::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => $type]);
+        $viewData = self::getViewData(['type' => $type]);
         $viewData['posts'] = $records->paginate(20);
-        $posts             = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
+        $posts = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
         return $posts;
     }
 
@@ -116,7 +117,7 @@ class Posts
 
     static function ifExistsSlug($slug, $prefix = '-')
     {
-        $i         = 1;
+        $i = 1;
         $constSlug = $slug;
         while (true) {
             if (ModelPosts::where('slug', $slug)->count() > 0) {
@@ -148,7 +149,7 @@ class Posts
 
     }
 
-    static function validatePost($request,$validate = [])
+    static function validatePost($request, $validate = [])
     {
         $defaultValidate = [
             'title'           => 'required|max:255',
@@ -165,11 +166,13 @@ class Posts
             'categories'      => 'required',
             'tags'            => 'required|notIn:[]',
         ];
-        $validate = array_merge($defaultValidate , $validate);
-        $validator =  \Validator::make($request->all(), $validate);
+        $validate = array_merge($defaultValidate, $validate);
+        $validator = \Validator::make($request->all(), $validate);
         return $validator->errors();
     }
-    static function requestData($request,$data = []){
+
+    static function requestData($request, $data = [])
+    {
         $slug = self::ifExistsSlug(Str::slug($request->input('slug')));
         $defaults = [
             'title'           => $request->input('title'),
@@ -186,58 +189,87 @@ class Posts
             'url'             => url('/' . $slug),
             'readable_date'   => Helper::readableDateFormat(),
         ];
-        $data = array_merge($defaults,$data);
+        $data = array_merge($defaults, $data);
         return $data;
     }
-    static function insertOrConnectTerms($request,$id){
-        // For Categories
+
+    static function termRelations($request, $postID = '')
+    {
+        self::$postID = $postID;
+        $tags = json_decode($request->input('tags'));
         $categories = $request->input('categories');
-        if (!empty($categories) && is_array($categories)) {
-            foreach ($categories as $category)
-                if (TermTaxonomy::where(['taxonomy' => 'category', 'term_taxonomy_id' => $category])->count() > 0)
-                    TermRelationships::create(['post_id' => $id, 'term_taxonomy_id' => $category]);
+        if ($request->input('action') == 'update') {
+            $tagIDS = [];
+            foreach ($tags as $tag)
+                if (isset($tag->id))
+                    $tagIDS[] = $tag->id;
+
+            TermRelationships::whereHas('posts', function ($query) {
+                return $query->where('post_id', self::$postID);
+            })->whereHas('termTaxonomy', function ($query) use ($tagIDS) {
+                return $query->where('taxonomy', 'post_tag')->whereNotIn('term_id', $tagIDS);
+            })->delete();
+
         }
-        // For Tags
-        $tags = json_decode($request->input('tags'), true);
-        if (!empty($tags) && is_array($tags)) {
+        if (is_array($tags)) {
             foreach ($tags as $tag) {
-                if (isset($tag['value']))
-                    self::connectTerm($tag, $id);
+                if (isset($tag->value)) {
+
+                    $term = Terms::with('termTaxonomy')->whereHas('termTaxonomy', function ($query) use ($tag) {
+                        $query->where('taxonomy', 'post_tag')->select('term_taxonomy_id');
+                    })->select('term_id');
+                    if (!isset($term->id))
+                        $term = $term->where('name', $tag->value)->first();
+                    else
+                        $term = $term->where('term_id', $tag->id)->first();
+                    if (!empty($term))
+                        self::connectTerms($term->termTaxonomy->term_taxonomy_id);
+                    else
+                        self::insertTerms($tag);
+                }
             }
         }
-        return Helper::response(true, '');
+        if (is_array($categories)) {
+            TermRelationships::whereHas('posts', function ($query) {
+                return $query->where('post_id', self::$postID);
+            })->whereHas('termTaxonomy', function ($query) use ($categories) {
+                return $query->where('taxonomy', 'category')->whereNotIn('term_id', $categories);
+            })->delete();
+            foreach ($categories as $category) {
+                $term = TermTaxonomy::where('term_id', $category)->select('term_taxonomy_id')->first();
+                if (!empty($term))
+                    self::connectTerms($term->term_taxonomy_id);
+            }
+        }
     }
 
-    static function connectTerm($tag, $postID, $justConnect = false, $id = '')
+    static function connectTerms($taxonomyID)
     {
-
-        if (!$justConnect) {
-            $term = Terms::with('termTaxonomy')->whereHas('termTaxonomy', function ($query) {
-                return $query->where('taxonomy', 'post_tag')->select('term_taxonomy_id');
-            })->where(function ($query) use ($tag) {
-                return $query->where('name', $tag['value'])->orWhere('slug', Str::slug($tag['value']));
-            })->first();
-            if (!empty($term))
-                return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $term->termTaxonomy->term_taxonomy_id]);
-            else
-                return self::insertTerm($tag, $postID);
-        }
-        return TermRelationships::create(['post_id' => $postID, 'term_taxonomy_id' => $id]);
+        if (TermRelationships::where(['post_id' => self::$postID, 'term_taxonomy_id' => $taxonomyID])->count() <= 0)
+            return TermRelationships::create([
+                'post_id'          => self::$postID,
+                'term_taxonomy_id' => $taxonomyID
+            ]);
+        return null;
     }
 
-
-    static function insertTerm($tag, $postID)
+    static function insertTerms($tag)
     {
-        $insert = Terms::create([
-            'name'          => $tag['value'],
-            'slug'          => Str::slug($tag['value']),
-            'readable_date' => Helper::readableDateFormat(),
-        ]);
-        if ($insert) {
-            $done = TermTaxonomy::create(['term_id' => $insert->term_id, 'taxonomy' => 'post_tag']);
-            if ($done)
-                return self::connectTerm($tag, $postID, true, $done->term_taxonomy_id);
+        if (isset($tag->value)) {
+            $slug = Str::slug($tag->value);
+            $term = new Terms();
+            $term->name = $tag->value;
+            $term->slug = $slug;
+            $term->readable_date = Helper::readableDateFormat();
+            $term->save();
+            $insert = $term->termTaxonomy()->create([
+                'taxonomy' => 'post_tag'
+            ]);
+            if ($insert)
+                return self::connectTerms($insert->term_taxonomy_id);
+
         }
+
         return false;
     }
 }
