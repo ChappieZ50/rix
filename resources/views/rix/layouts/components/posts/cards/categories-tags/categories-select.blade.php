@@ -1,7 +1,18 @@
 <select class="form-control p-0" name="categories" id="select_picker" multiple="multiple" data-live-search="true" title='Seçin'>
-    @include('rix.layouts.components.posts.categories.parents')
+    @isset($post))
+        @if(!empty($parentItems))
+            @foreach($parentItems as $item)
+                <option value="{{$item->term_id}}"
+                @foreach($post->termRelationships as $relation)
+                   @if($relation->term_id === $item->term_id) selected @endif
+                @endforeach
+                >{{$item->name}}</option>
+            @endforeach
+        @endif
+    @else
+        @include('rix.layouts.components.posts.categories.parents')
+    @endisset
 </select>
-
 @section('js')
     <script src="/rix/assets/js/bootstrap-select.min.js"></script>
     <script>

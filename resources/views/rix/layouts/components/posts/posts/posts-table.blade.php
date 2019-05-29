@@ -18,7 +18,7 @@
             @include('rix.layouts.components.posts.posts.posts-table-content')
         @endif
     </table>
-    <div class="pagination float-right mr-3">{{$posts->links()}}</div>
+    <div class="pagination float-right mr-3">{{$posts->appends($_GET)->links()}}</div>
     @if($posts->isEmpty())
         <div class="pl-3 pb-3">
             <span style="font-size: 15px;color:gray;">Yazı Bulunamadı.</span>

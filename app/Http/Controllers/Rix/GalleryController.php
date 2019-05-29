@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
 
 namespace App\Http\Controllers\Rix;
 
@@ -14,7 +14,7 @@ class GalleryController extends Controller
     public function get_gallery(Request $request)
     {
         $paginate = $request->ajax() ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
-        $images = Gallery::get_gallery(['id', 'image_name', 'image_data', 'created_at'], $paginate);
+        $images = Gallery::get_gallery(['image_id', 'image_name', 'image_data', 'created_at'], $paginate);
         if ($request->ajax())
             return Helper::render($images, 'images', 'rix.layouts.components.media.images');
         return view('rix.media.gallery', compact('images'));
@@ -64,8 +64,8 @@ class GalleryController extends Controller
     public function delete_image(Request $request)
     {
         $image_id = $request->input('image_id');
-        $images = Gallery::select(['id', 'image_name']);
-        $images = is_array($image_id) ? $images->whereIn('id', $image_id)->get()->toArray() : $images->where('id', $image_id)->get()->toArray();
+        $images = Gallery::select(['image_id', 'image_name']);
+        $images = is_array($image_id) ? $images->whereIn('image_id', $image_id)->get()->toArray() : $images->where('image_id', $image_id)->get()->toArray();
         if (Helper::deleteImage($images)) {
             if (Gallery::destroy($request->input('image_id')))
                 return ['status' => true, 'message' => 'Resim Silindi'];
@@ -79,7 +79,7 @@ class GalleryController extends Controller
         if ($request->ajax()) {
             $data = $request->input('data');
             $id = $request->input('id');
-            if (Gallery::where('id', $id)->update(['image_data' => $data]))
+            if (Gallery::where('image_id', $id)->update(['image_data' => $data]))
                 return Helper::response(true, 'Başarıyla Güncellendi');
         }
         return Helper::response(false, 'Güncelleme Başarısız');

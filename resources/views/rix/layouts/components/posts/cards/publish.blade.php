@@ -1,21 +1,21 @@
 <div class="post-publish w-100">
     <div class="form-group m-3 d-inline-block">
         <label>
-            <input type="checkbox" name="status" class="custom-switch-input" checked value="1">
+            <input type="checkbox" name="status" class="custom-switch-input" @isset($post) {{$post->status == 'open' ? 'checked value="1"' : 'value="0"'}}  @else checked value="1"  @endisset>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Durum</span>
         </label>
     </div>
     <div class="form-group m-3 d-inline-block">
         <label>
-            <input type="checkbox" name="featured" class="custom-switch-input" value="0">
+            <input type="checkbox" name="featured" class="custom-switch-input" @isset($post) {{$post->featured == 1 ? 'checked value="1"' : 'value="0"'}} @else value="0" @endisset>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Öne Çıkart</span>
         </label>
     </div>
     <div class="form-group m-3 d-inline-block">
         <label>
-            <input type="checkbox" name="slider" class="custom-switch-input" value="0">
+            <input type="checkbox" name="slider" class="custom-switch-input" @isset($post) {{$post->slider == 1 ? 'checked value="1"' : 'value="0"'}} @else value="0" @endisset>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Slider'a Ekle</span>
         </label>

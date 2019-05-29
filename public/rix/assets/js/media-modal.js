@@ -53,7 +53,7 @@ function infiniteScroll() {
     })
 }
 
-function loadImageData(data, newUpload = false) {
+function loadImageData(data) {
     let title = $('.inputs input[name=image_title]');
     let alt = $('.inputs input[name=image_alt]');
     let content = $('.media-details .content');
@@ -62,21 +62,21 @@ function loadImageData(data, newUpload = false) {
         if ($(this).is(':checked')) {
             let radioID = $(this).val();
             $.each(data.data, function (index, value) {
-                if (radioID == value.id) {
+                if (radioID == value.image_id) {
                     let image_data = $.parseJSON(value.image_data);
                     $('.details .date').text(image_data.formatedDate);
                     $('.details .size').text(image_data.imageSizeHumanReadable);
                     $('.details .pixels').text(image_data.width + "x" + image_data.height + " pixel");
-                    $('#delete_image').attr('data-delete', value.id);
+                    $('#delete_image').attr('data-delete', value.image_id);
                     $('.content .image img').attr('src', image_data.url);
                     $('.inputs input[name=image_url]').val(image_data.url);
-                    selectImage.attr('data-id', value.id);
+                    selectImage.attr('data-id', value.image_id);
                     selectImage.attr('data-url', image_data.url);
                     title.val(image_data.image_title);
                     alt.val(image_data.image_alt);
-                    title.attr('data-id', value.id);
-                    alt.attr('data-id', value.id);
-                    focusoutUpdate(value.id, image_data, data, index);
+                    title.attr('data-id', value.image_id);
+                    alt.attr('data-id', value.image_id);
+                    focusoutUpdate(value.image_id, image_data, data, index);
                     content.show();
                 }
             });
@@ -124,14 +124,11 @@ $(document).on('click', '#select_image', function () {
     let id = $(this).attr('data-id');
     let url = $(this).attr('data-url');
     if ($(this).attr('data-position') == 'summernote') {
-        $('.note-editable').append('<p><img src="' + url + '" style="width:50%;"></p>')
+        $('.note-editable').append('<p><img src="' + url + '" style="width:50%;"></p>');
         $('.modal').modal('hide');
 
     } else {
-        $('#image-preview').html(
-            '<img src="' + url + '" />' +
-            '<input type="hidden" name="featured_image" value="' + id + '" />'
-        );
+        $('#preview_selected_image').attr('src',url).attr('data-id',id).show();
     }
     $('#mediaModal').modal('toggle');
 });

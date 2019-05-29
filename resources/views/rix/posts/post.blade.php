@@ -24,9 +24,9 @@
 <script src="/rix/assets/modules/codemirror/mode/javascript/javascript.js"></script>
 <script src="/rix/assets/js/page/new-post.js"></script>
 <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
- <script>
+{{-- <script>
    window.onbeforeunload = function () { return "alert" };
-</script>
+</script>--}}
 @endsection
 
 {{-- JS --}}

@@ -26,6 +26,9 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     // New Post
     Route::get('new_post','Rix\Posts\PostsController@new_post')->name('rix_new_post');
     Route::post('new_post','Rix\Posts\PostsController@add_new_post')->name('rix_add_new_post');
+    // Update Post
+    Route::get('post','Rix\Posts\PostsController@get_post')->name('rix_post');
+    Route::put('post','Rix\Posts\PostsController@update_post')->name('rix_update_post');
     // Categories
     Route::get('categories','Rix\Posts\CategoriesController@get_categories')->name('rix_categories');
     Route::post('categories','Rix\Posts\CategoriesController@new_category')->name('rix_new_category');

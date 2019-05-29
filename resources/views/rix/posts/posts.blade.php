@@ -36,7 +36,7 @@
                     <option value="trash">Çöpe Taşı</option>
                 @endif
             </select>
-            <button type="button" class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" id="multipleDelete">Uygula</button>
+            <button type="button" class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" id="apply">Uygula</button>
         </div>
         <div class="table-pages-bar" id="tablePagesBar">
             @include('rix.layouts.components.posts.posts.table-pages-bar')

@@ -7,7 +7,7 @@ $(document).on('click', '.newPost #publish', function () {
         seo_title = $('input[name=seo_title]').val(),
         seo_description = $('textarea[name=seo_description]').val(),
         seo_keywords = $('input[name=seo_keywords]').val(),
-        featured_image = $('input[name=featured_image]').val(),
+        featured_image = $('#preview_selected_image').attr('data-id'),
         categories = $('select[name=categories]').val(),
         tags = $('input[name=tags]').val(),
         status = $('input[name=status]').val(),
