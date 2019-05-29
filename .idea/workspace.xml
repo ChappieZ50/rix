@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="4674fd2e-b950-49e3-b72a-52d5ec258699" name="Default Changelist" comment="Save">
+      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Classes/Posts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Classes/Posts.php" afterDir="false" />
+=======
     <list default="true" id="4674fd2e-b950-49e3-b72a-52d5ec258699" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/app/Classes/CategoriesAndTags.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/1c046811-22b0-458b-afb2-d6228701beb7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1c046811-22b0-458b-afb2-d6228701beb7.xml" afterDir="false" />
@@ -29,6 +37,7 @@
       <change beforePath="$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/posts/post.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/rix/posts/posts.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,16 +62,16 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - rix@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="rix@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - rix@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="rix@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - rix@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="rix@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="rix: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
@@ -70,6 +79,9 @@
     <select />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+=======
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/PostsController.php">
@@ -123,6 +135,7 @@
         </entry>
       </file>
     </leaf>
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -205,6 +218,12 @@
         <option value="$PROJECT_DIR$/app/Classes/CategoriesAndTags.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/TagsController.php" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/tags.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php" />
+        <option value="$PROJECT_DIR$/public/rix/assets/js/page/categories.js" />
+        <option value="$PROJECT_DIR$/app/Classes/Posts.php" />
+=======
         <option value="$PROJECT_DIR$/app/Models/Gallery.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_05_19_132129_create_rix_gallery_table.php" />
         <option value="$PROJECT_DIR$/resources/views/rix/posts/post_new.blade.php" />
@@ -224,6 +243,7 @@
         <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/seo.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/publish.blade.php" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       </list>
     </option>
   </component>
@@ -343,6 +363,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -494,6 +515,8 @@
               <item name="cards" type="462c0819:PsiDirectoryNode" />
               <item name="categories-tags" type="462c0819:PsiDirectoryNode" />
             </path>
+<<<<<<< HEAD
+=======
             <path>
               <item name="rix" type="b2602c69:ProjectViewProjectNode" />
               <item name="rix" type="462c0819:PsiDirectoryNode" />
@@ -518,11 +541,11 @@
               <item name="rix" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -625,6 +648,11 @@
       <workItem from="1558258031820" duration="16253000" />
       <workItem from="1558339561318" duration="23430000" />
       <workItem from="1558437593647" duration="220000" />
+<<<<<<< HEAD
+      <workItem from="1558524846673" duration="15036000" />
+      <workItem from="1559122602123" duration="341000" />
+      <workItem from="1559123151574" duration="655000" />
+=======
       <workItem from="1558524846673" duration="15136000" />
       <workItem from="1558597581834" duration="22756000" />
       <workItem from="1558769816718" duration="8146000" />
@@ -636,6 +664,7 @@
       <workItem from="1558974042750" duration="3000" />
       <workItem from="1558974050461" duration="652000" />
       <workItem from="1558979641943" duration="6134000" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1556713930375</created>
@@ -725,15 +754,23 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="313414000" />
+=======
     <option name="totallyTimeSpent" value="373922000" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="25" width="1873" height="1055" extended-state="6" />
-    <editor active="true" />
+    <frame x="55" y="27" width="1311" height="741" extended-state="6" />
     <layout>
+<<<<<<< HEAD
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21907014" />
+=======
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.184514" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -744,7 +781,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32960895" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49917626" weight="0.25195095" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49917626" weight="0.2512479" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50082374" side_tool="true" weight="0.22073579" />
       <window_info anchor="bottom" id="TypeScript" order="12" weight="0.32960895" />
       <window_info anchor="bottom" id="Database Console" order="13" weight="0.32998884" />
@@ -753,7 +790,11 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Mongo Explorer" order="3" weight="0.3294893" />
+<<<<<<< HEAD
+      <window_info anchor="right" id="Database" order="4" weight="0.15996848" />
+=======
       <window_info anchor="right" id="Database" order="4" weight="0.16035146" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,6 +810,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="Save" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_11_103908_create_term_taxonomy_table.php">
+=======
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_19_131600_create_rix_term_relationships_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
@@ -791,6 +835,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Gallery.php">
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="10" column="39" lean-forward="true" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
@@ -1111,6 +1156,59 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Concerns/BuildsQueries.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="80" column="42" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://1c046811-22b0-458b-afb2-d6228701beb7/schema/rix/table/rix_gallery">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/ef7b8997-daa0-4007-9781-60024bcb492b/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/rix/assets/js/page/categories.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="177" column="6" selection-start-line="177" selection-start-column="6" selection-end-line="177" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Classes/Posts.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
+          <folding>
+            <element signature="e#31#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/categories/categories.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Rix/Posts/CategoriesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="157" selection-start-line="157" selection-end-line="157" />
+          <folding>
+            <element signature="e#50#89#0#PHP" expanded="true" />
+          </folding>
+=======
     <entry file="file://$PROJECT_DIR$/resources/views/rix/layouts/components/posts/cards/featured-image.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -1146,6 +1244,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="10" column="93" lean-forward="true" selection-start-line="10" selection-start-column="93" selection-end-line="10" selection-end-column="93" />
+>>>>>>> f73c3a8cfe983a574607693d6783346fa0e87dd3
         </state>
       </provider>
     </entry>
