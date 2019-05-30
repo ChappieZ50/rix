@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class Posts
 {
-    static $postID = 'a';
+    static $postID;
 
     static function getPosts($options = [])
     {
@@ -26,14 +26,6 @@ class Posts
         ];
         $options = array_merge($defaults, $options);
         $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
-        // Other Way
-        /*$records = ModelPosts::with([
-            'termRelationships' => function ($query) {
-                $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
-                    ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                    ->select('term_relationships_id','post_id','rix_terms.name','rix_terms.slug','rix_terms.term_id','rix_term_taxonomy.term_taxonomy_id','rix_term_taxonomy.taxonomy');
-            }])->orderBy($options['orderByColumn'], $options['orderByType']);*/
-
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
         return $records;
@@ -115,12 +107,13 @@ class Posts
         return ['posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar(['type' => $request->input('currentType')])];
     }
 
-    static function ifExistsSlug($slug, $prefix = '-')
+    static function ifExistsSlug($slug, $prefix = '-', $postID = '')
     {
         $i = 1;
         $constSlug = $slug;
         while (true) {
-            if (ModelPosts::where('slug', $slug)->count() > 0) {
+            $post = empty($postID) ? ModelPosts::where('slug', $slug)->count() : ModelPosts::whereNotIn('post_id', [$postID])->where('slug', $slug)->count();
+            if ($post > 0) {
                 $i++;
                 $slug = $constSlug;
                 $slug .= $prefix . $i;
@@ -173,7 +166,10 @@ class Posts
 
     static function requestData($request, $data = [])
     {
-        $slug = self::ifExistsSlug(Str::slug($request->input('slug')));
+        if ($request->input('action') == 'update')
+            $slug = self::ifExistsSlug(Str::slug($request->input('slug')),'-', $request->input('id'));
+        else
+            $slug = self::ifExistsSlug(Str::slug($request->input('slug')));
         $defaults = [
             'title'           => $request->input('title'),
             'slug'            => $slug,
@@ -199,15 +195,12 @@ class Posts
         $tags = json_decode($request->input('tags'));
         $categories = $request->input('categories');
         if ($request->input('action') == 'update') {
-            $tagIDS = [];
-            foreach ($tags as $tag)
-                if (isset($tag->id))
-                    $tagIDS[] = $tag->id;
 
+            // Only deleting tags
             TermRelationships::whereHas('posts', function ($query) {
                 return $query->where('post_id', self::$postID);
-            })->whereHas('termTaxonomy', function ($query) use ($tagIDS) {
-                return $query->where('taxonomy', 'post_tag')->whereNotIn('term_id', $tagIDS);
+            })->whereHas('termTaxonomy', function ($query) {
+                return $query->where('taxonomy', 'post_tag');
             })->delete();
 
         }

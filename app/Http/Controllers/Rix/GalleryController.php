@@ -16,7 +16,7 @@ class GalleryController extends Controller
         $paginate = $request->ajax() ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
         $images = Gallery::get_gallery(['image_id', 'image_name', 'image_data', 'created_at'], $paginate);
         if ($request->ajax())
-            return Helper::render($images, 'images', 'rix.layouts.components.media.images');
+            return Helper::render($images, 'images', 'rix.layouts.components.images');
         return view('rix.media.gallery', compact('images'));
     }
 

@@ -28,9 +28,9 @@
         <script src="/rix/assets/js/page/new-post.js"></script>
     @endisset
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
-    {{-- <script>
+     <script>
        window.onbeforeunload = function () { return "alert" };
-    </script>--}}
+    </script>
 @endsection
 
 {{-- JS --}}

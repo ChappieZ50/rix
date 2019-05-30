@@ -51,7 +51,7 @@
                                         <label class="col-form-label col-12">URL</label>
                                         <div class="col-12">
                                             <input type="text" class="form-control" readonly
-                                                value="deneme-resim-asdzxc_imgdeneme-resim-asdzxc_img.jpg"
+                                                value=""
                                                 name="image_url">
                                         </div>
                                     </div>

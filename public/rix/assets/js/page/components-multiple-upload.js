@@ -37,7 +37,9 @@ new Dropzone("#dropzone", {
                     '</label>' +
                     '</div>'
                 );
-                loadImageData({data:response});
+                if (typeof loadImageData == 'function')
+                    loadImageData({data: response});
+
             }
         });
         this.on("error", function (file, response) {
