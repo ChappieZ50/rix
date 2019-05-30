@@ -46,7 +46,6 @@ class PostsController extends Controller
         $validator = Posts::validatePost($request);
         if ($validator->isEmpty()) {
             $createPost = Posts::requestData($request);
-            return Posts::termRelations($request,1);
             $insert     = ModelPosts::create($createPost);
             if ($insert)
                 return Posts::termRelations($request, $insert->post_id);
@@ -96,12 +95,11 @@ class PostsController extends Controller
                 $validator = Posts::validatePost($request);
                 if ($validator->isEmpty()) {
                      $updateData = Posts::requestData($request);
-                    return Posts::termRelations($request,1);
-                   /* $update     = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
+                    $update     = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
                     if ($update)
-                        return Posts::insertOrConnectTerms($request, $request->input('id'));
+                        return Posts::termRelations($request, $request->input('id'));
                     else
-                        return Helper::response(false, 'Bir sorun oluştu');*/
+                        return Helper::response(false, 'Bir sorun oluştu');
                 }
                 return Helper::response(false, '', ['errors' => $validator]);
             }

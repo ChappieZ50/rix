@@ -241,6 +241,8 @@ class Posts
                     self::connectTerms($term->term_taxonomy_id);
             }
         }
+
+        return Helper::response(true);
     }
 
     static function connectTerms($taxonomyID)
