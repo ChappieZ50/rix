@@ -13,7 +13,7 @@ class GalleryController extends Controller
 
     public function get_gallery(Request $request)
     {
-        $paginate = $request->ajax() ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
+        $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
         $images = Gallery::get_gallery(['image_id', 'image_name', 'image_data', 'created_at'], $paginate);
         if ($request->ajax()){
             $blade = $request->input('action') == 'forGallery' ? 'rix.layouts.components.media.gallery-images' : 'rix.layouts.components.images';

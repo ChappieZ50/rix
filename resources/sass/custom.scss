@@ -310,8 +310,9 @@
                text-align: center;
              img{
                  display: block;
-                 width: 100%;
                  margin: 0 auto 0 auto;
+                 max-width: 100% !important;
+                 max-height: 100% !important;
              }
 
            }

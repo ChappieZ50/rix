@@ -23,24 +23,24 @@
                             <div class="form-group row mb-4">
                                 <label class="col-form-label col-12">URL</label>
                                 <div class="col-12">
-                                    <input type="text" class="form-control" readonly="" value="" name="image_url">
+                                    <input type="text" class="form-control" readonly="" name="image_url">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label col-12">Başlık</label>
                                 <div class="col-12">
-                                    <input type="text" class="form-control" name="image_title" data-originalvalue="">
+                                    <input type="text" class="form-control" name="image_title">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label col-12">Altyazı</label>
                                 <div class="col-12">
-                                    <input type="text" class="form-control" name="image_alt" data-originalvalue="">
+                                    <input type="text" class="form-control" name="image_alt">
                                 </div>
                             </div>
                         </div>
                         <div class="actions">
-                            <a href="javascript:;" data-id="" class="delete">Kalıcı olarak sil</a>
+                            <a href="javascript:;"  class="delete">Kalıcı olarak sil</a>
                         </div>
                     </div>
                 </div>

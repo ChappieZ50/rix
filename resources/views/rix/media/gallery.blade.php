@@ -10,9 +10,11 @@
 {{--  CSS --}}
 @section('css')
     <link rel="stylesheet" href="/rix/assets/css/custom.css">
+    <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
 @endsection
 
 @section('general_js')
+    <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
     <script>
         $('#imageDetails').appendTo("body");
     </script>
