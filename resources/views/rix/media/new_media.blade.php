@@ -4,6 +4,12 @@
 
 @section('title','Yeni Ekle - Rix Admin')
 
+@section('section_header_top')
+    <div class="section-header-back">
+        <a href="{{route('rix_gallery')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+    </div>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-12">

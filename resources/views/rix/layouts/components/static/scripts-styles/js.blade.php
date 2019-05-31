@@ -1,10 +1,11 @@
 <script>
     var update_media = "{{route('rix_update_media')}}";
     var delete_image = "{{route('rix_delete_image')}}";
+    var gallery = "{{route('rix_gallery')}}";
     var post = "{{route('rix_add_new_post')}}";
     var category = "{{route('rix_new_category')}}";
     var tag = "{{route('rix_new_tag')}}";
-    var route = "{{route('rix_new_media')}}";
+    var new_image = "{{route('rix_new_media')}}";
     var posts = "{{route('rix_posts')}}"
 </script>
 <!-- General JS Scripts -->

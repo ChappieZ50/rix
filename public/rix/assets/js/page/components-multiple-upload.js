@@ -11,7 +11,7 @@ new Dropzone("#dropzone", {
     dictCancelUploadConfirmation: "Yüklemeyi iptal etmek istediğinizden emin misiniz?",
     dictRemoveFile: "Dosyayı Sil",
     dictMaxFilesExceeded: "Daha fazla dosya yükleyemezsiniz.",
-    url: route,
+    url: new_image,
     maxFilesize: 3,
     maxFiles: 20,
     paramName: 'image',
