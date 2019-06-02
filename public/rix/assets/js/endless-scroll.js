@@ -202,6 +202,7 @@ EndlessScroll = (function() {
       case 'next':
         margin = innerWrap.height() - $(target).height() <= $(target).scrollTop() + this.options.inflowPixels;
         if (margin) {
+          console.log('worked');
           target.scrollTop(innerWrap.height() - $(target).height() - this.options.inflowPixels);
         }
         break;
