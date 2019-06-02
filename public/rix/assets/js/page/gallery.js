@@ -1,3 +1,4 @@
+localStorage.removeItem('selectedImage');
 $(document).on('click', '#imageDetailsBtn', function () {
     let id = $(this).attr('data-id'),
         setS = JSON.parse(localStorage.getItem('imagesData'));
@@ -14,18 +15,40 @@ $(document).on('click', '#imageDetailsBtn', function () {
                 $('input[name=image_url]').val(imageData.url);
                 $('input[name=image_title]').val(imageData.image_title);
                 $('input[name=image_alt]').val(imageData.image_alt);
-                $('a.delete').attr('data-id', id);
                 localStorage.setItem('selectedImage', JSON.stringify({id: value.image_id, data: imageData, set: i}));
             }
         });
     });
+});
+$(document).on('click', '.actions .delete', function () {
+    let images = JSON.parse(localStorage.getItem('imagesData')),
+        selectedImage = JSON.parse(localStorage.getItem('selectedImage'));
+    if (confirm('Kalıcı olarak silmek istiyor musunuz ?')) {
+        simplePost({image_id: selectedImage.id}, delete_image, 'delete').done(function (res) {
+            ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi'});
+            $.each(images[selectedImage.set], function (index, value) {
+                if (value.image_id == selectedImage.id)
+                    delete images[selectedImage.set][index];
+            });
+            images = JSON.stringify({
+                [selectedImage.set]: images[selectedImage.set].filter(function () {
+                    return true
+                })
+            });
+            $('#imageDetails').modal('hide');
+            localStorage.setItem('imagesData', images);
+            localStorage.removeItem('selectedImage');
+            $('.media-details-btn[data-id=' + selectedImage.id + ']').remove();
+        }).fail(function (res) {
+            ajaxCheckStatus(res, {status: 500});
+        })
+    }
 });
 let set = 0;
 simplePost({action: 'forGallery'}, gallery).done(function (res) {
     $('.gallery').html(res.html);
     localStorage.setItem('imagesData', JSON.stringify({0: res.data.data}));
 });
-
 
 let page = 2,
     url = gallery + '?page=' + page;
@@ -41,6 +64,7 @@ $(document).endlessScroll({
         });
     }
 });
+
 $('.image-details-area .inputs input').on('focus', function () {
     $(this).attr('data-originalValue', $(this).val());
 }).on('blur', function () {
