@@ -11,6 +11,7 @@ function deletePost(data, options = {}) {
             currentType: param('type').length <= 0 ? 'open' : param('type'),
             data: data,
         }, posts, 'delete').done(function (res) {
+            console.log(res);
             ajaxCheckStatus(res, {successMessage: options.successMessage, errorTitle: options.errorTitle});
             if (res.status !== false) {
                 parseRendered(res.posts.original.html);

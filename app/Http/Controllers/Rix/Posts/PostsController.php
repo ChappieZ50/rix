@@ -71,8 +71,6 @@ class PostsController extends Controller
         if ($request->get('action') == 'edit' && $request->get('id')) {
 
             $data = Posts::findPostForUpdate($request->get('id'));
-            return $data;
-            die();
             if(!empty($data)){
                 $images     = Gallery::get_gallery(['image_id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
                 $categories = CategoriesAndTags::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
