@@ -52,36 +52,23 @@ simplePost({action: 'forGallery'}, gallery).done(function (res) {
 
 let page = 2,
     scrollLoad = true;
-
-$(window).scroll(function () {
-    if (scrollLoad && $(window).scrollTop() >= $(document).height() - $(window).height() - 50) {
-        scrollLoad = false;
-        let url = gallery + '?page=' + page;
-        simplePost({action: 'forGallery'}, url, 'get').done(function (res) {
-            set = page - 1;
-            $('.gallery').append(res.html);
-            let stored = JSON.parse(localStorage.getItem('imagesData')),
-                newImageData = {[set]: res.data.data};
-            localStorage.setItem('imagesData', JSON.stringify(Object.assign(stored, newImageData)));
-            if(res.data.last_page !== page)
-                scrollLoad = true;
-            page++;
-        });
+$(document).endlessScroll({
+    callback: function () {
+        if (scrollLoad) {
+            let url = gallery + '?page=' + page;
+            simplePost({action: 'forGallery'}, url, 'get').done(function (res) {
+                set = page - 1;
+                $('.gallery').append(res.html);
+                let stored = JSON.parse(localStorage.getItem('imagesData')),
+                    newImageData = {[set]: res.data.data};
+                localStorage.setItem('imagesData', JSON.stringify(Object.assign(stored, newImageData)));
+                if (res.data.last_page <= page)
+                    scrollLoad = false;
+                page++;
+            });
+        }
     }
 });
-/*$(document).endlessScroll({
-    callback: function () {
-        let url = gallery + '?page=' + page;
-        simplePost({action: 'forGallery'}, url, 'get').done(function (res) {
-            set = page - 1;
-            $('.gallery').append(res.html);
-            let stored = JSON.parse(localStorage.getItem('imagesData')),
-                newImageData = {[set]: res.data.data};
-            localStorage.setItem('imagesData', JSON.stringify(Object.assign(stored, newImageData)));
-            page++;
-        });
-    },
-});*/
 
 $('.image-details-area .inputs input').on('focus', function () {
     $(this).attr('data-originalValue', $(this).val());
@@ -95,6 +82,8 @@ $('.image-details-area .inputs input').on('focus', function () {
             id: image.id,
             data: JSON.stringify(image.data)
         }, update_media).done(function () {
+            if(name === 'image_title')
+                $('.details .filename span').text(image.data[name]);
             updateSelectedImage();
         }).fail(function (res) {
             ajaxCheckStatus(res, {status: 500});

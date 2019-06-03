@@ -31,47 +31,22 @@ function infiniteScroll() {
     let page = 2,
         url = $('#add_image').data('url'),
         scrollLoad = true;
-    $('.media-content').scroll(function () {
-        console.log({
-            documentHeight: $(document).height(),
-            mediaHeight: $('.media-content').height(),
-            mediaScrollTop: $('.media-content').scrollTop(),
-            itemsHeight:$('.modal-media-items').height()
-        });
-        /*if (scrollLoad && $(window).scrollTop() >= $(document).height() - $(window).height() - 50) {
-            scrollLoad = false;
-            simplePost({}, url + '?page=' + page, 'get').done(function (res) {
-                if(res.data.last_page !== page)
-                    scrollLoad = true;
-                if (res.html.length > 0) {
-                    $('.modal-media-items').append(res.html);
-                    loadImageData(res.data)
-                }
-                page++;
-            })
-        }*/
-    });
-    /*$('.media-content').endlessScroll({
+    $('.media-content').endlessScroll({
+        inflowPixels: 50,
         callback: function () {
-            $.ajax({
-                type: 'get',
-                url: url + '?page=' + page,
-                success: function (res) {
+            if (scrollLoad) {
+                simplePost({}, url + '?page=' + page, 'get').done(function (res) {
                     if (res.html.length > 0) {
                         $('.modal-media-items').append(res.html);
-                        page++;
-                        loadImageData(res.data)
+                        loadImageData(res.data);
                     }
-                },
-                error: function (res) {
-                    console.log({
-                        status: 'Error',
-                        response: res
-                    });
-                }
-            });
+                    if (res.data.last_page <= page)
+                        scrollLoad = false;
+                    page++;
+                })
+            }
         }
-    })*/
+    })
 }
 
 function loadImageData(data) {
