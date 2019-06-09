@@ -21,8 +21,11 @@
 @endsection
 
 @section('section_header_bottom')
-    <div class="section-header-button">
-        <a href="{{route('rix_new_media')}}" class="btn btn-primary">Yeni Ekle</a>
+    <div class="section-header-items w-100">
+        <div class="section-header-button">
+            <a href="{{route('rix_new_media')}}" class="btn btn-primary">Yeni Ekle</a>
+        </div>
+        <button type="button" class="btn btn-primary" id="bulk_select">Toplu Seç</button>
     </div>
 @endsection
 
