@@ -22,6 +22,7 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
 
     // Posts
     Route::get('posts','Rix\Posts\PostsController@get_posts')->name('rix_posts');
+    Route::post('posts','Rix\Posts\PostsController@get_posts')->name('rix_posts');
     Route::delete('posts','Rix\Posts\PostsController@delete_post')->name('rix_delete_post');
     Route::put('posts','Rix\Posts\PostsController@update_post')->name('rix_update_post');
 
@@ -41,6 +42,8 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     Route::post('tags','Rix\Posts\TagsController@new_tag')->name('rix_new_tag');
     Route::delete('tags','Rix\Posts\TagsController@delete_tags')->name('rix_delete_tags');
     Route::put('tags','Rix\Posts\TagsController@update_tag')->name('rix_update_tag');
+    // Comments
+    Route::get('comments','Rix\CommentsController@get_comments')->name('rix_comments');
 
 });
 

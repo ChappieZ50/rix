@@ -6,7 +6,7 @@
         </button>
     </div>
     <div id="image-preview" class="mx-auto d-flex justify-content-center align-items-center" style="display: block;">
-        @isset($post)
+        @if(isset($post) && isset($post->selected_featured_image->image_data))
             @php($imageData = json_decode($post->selected_featured_image->image_data))
             <img src="{{$imageData->url}}" id="preview_selected_image" data-id="{{$post->selected_featured_image->image_id}}">
         @else

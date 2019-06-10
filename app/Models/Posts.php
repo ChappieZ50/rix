@@ -13,4 +13,8 @@ class Posts extends Model
     public function termRelationships(){
         return $this->hasMany('App\Models\Terms\TermRelationships','post_id');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comments','post_id');
+    }
 }

@@ -14,26 +14,26 @@ class PostsController extends Controller
 {
     public function get_posts(Request $request)
     {
-        $type     = $request->get('type');
-        $viewData = Posts::getViewData(['type' => $type]);
-        if ($type == 'closed')
-            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'closed']);
-        elseif ($type == 'trash')
-            $records = Posts::getPosts(['wherePostColumn' => 'status', 'wherePostValue' => 'trash']);
-        else
-            $records = Posts::getPosts(['whereInPostColumn' => 'status', 'whereInPostValue' => ['closed', 'open']]);
-
-        $viewData['posts'] = $records->paginate(20);
+        $type = $request->get('type');
+        $viewData = Posts::getViewData([ 'type' => $type ]);
+        if ($request->ajax() && $request->input('action') === 'search' && !empty($request->input('value'))) {
+            $search = Posts::search($request->input('value'),Posts::pageType($request->input('currentType')));
+            $viewData['posts'] = $search->paginate(20);
+            return Posts::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
+        } else {
+            $records = Posts::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => Posts::pageType($type) ]);
+            $viewData['posts'] = $records->paginate(20);
+        }
         return view('rix.posts.posts')->with($viewData);
     }
 
     public function new_post(Request $request)
     {
-        $images = Gallery::get_gallery(['image_id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+        $images = Gallery::get_gallery([ 'image_id', 'image_name' ], config('definitions.NEW_POST_GALLERY_PAGINATE'));
         if ($request->ajax())
             return Helper::render($images, 'images', 'rix.layouts.component.media.images');
-        $categories = CategoriesAndTags::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
-        $tags       = CategoriesAndTags::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => ['term_id', 'name']]);
+        $categories = CategoriesAndTags::getRecords([ 'taxonomy' => 'category', 'selectTerms' => [ 'term_id', 'name' ] ]);
+        $tags = CategoriesAndTags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => [ 'term_id', 'name' ] ]);
         return view('rix.posts.post')->with([
             'images'      => $images,
             'parentItems' => $categories->get(),
@@ -46,13 +46,13 @@ class PostsController extends Controller
         $validator = Posts::validatePost($request);
         if ($validator->isEmpty()) {
             $createPost = Posts::requestData($request);
-            $insert     = ModelPosts::create($createPost);
+            $insert = ModelPosts::create($createPost);
             if ($insert)
                 return Posts::termRelations($request, $insert->post_id);
             else
                 return Helper::response(false, 'Bir sorun oluştu');
         }
-        return Helper::response(false, '', ['errors' => $validator]);
+        return Helper::response(false, '', [ 'errors' => $validator ]);
     }
 
     public function delete_post(Request $request)
@@ -71,10 +71,10 @@ class PostsController extends Controller
         if ($request->get('action') == 'edit' && $request->get('id')) {
 
             $data = Posts::findPostForUpdate($request->get('id'));
-            if(!empty($data)){
-                $images     = Gallery::get_gallery(['image_id', 'image_name'], config('definitions.NEW_POST_GALLERY_PAGINATE'));
-                $categories = CategoriesAndTags::getRecords(['taxonomy' => 'category', 'selectTerms' => ['term_id', 'name']]);
-                $tags       = CategoriesAndTags::getRecords(['taxonomy' => 'post_tag', 'selectTerms' => ['term_id', 'name']]);
+            if (!empty($data)) {
+                $images = Gallery::get_gallery([ 'image_id', 'image_name' ], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+                $categories = CategoriesAndTags::getRecords([ 'taxonomy' => 'category', 'selectTerms' => [ 'term_id', 'name' ] ]);
+                $tags = CategoriesAndTags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => [ 'term_id', 'name' ] ]);
 
 
                 return view('rix.posts.post')->with([
@@ -96,14 +96,14 @@ class PostsController extends Controller
             if (!empty($request->input('id'))) {
                 $validator = Posts::validatePost($request);
                 if ($validator->isEmpty()) {
-                     $updateData = Posts::requestData($request);
-                    $update     = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
+                    $updateData = Posts::requestData($request);
+                    $update = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
                     if ($update)
                         return Posts::termRelations($request, $request->input('id'));
                     else
                         return Helper::response(false, 'Bir sorun oluştu');
                 }
-                return Helper::response(false, '', ['errors' => $validator]);
+                return Helper::response(false, '', [ 'errors' => $validator ]);
             }
             return Helper::response(false, 'Bir sorun oluştu');
         }

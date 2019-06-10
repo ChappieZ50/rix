@@ -204,17 +204,17 @@ class Posts
         return $data;
     }
 
-    static function fetchTerms($ids,$taxonomy = 'post_tag')
+    static function fetchTerms($ids, $taxonomy = 'post_tag')
     {
         $term = TermRelationships::whereHas('posts', function ($query) {
             return $query->where('post_id', self::$postID);
-        })->whereHas('termTaxonomy', function ($query) use ($ids,$taxonomy) {
-            return $query->where('taxonomy',$taxonomy )->whereNotIn('term_id', $ids);
+        })->whereHas('termTaxonomy', function ($query) use ($ids, $taxonomy) {
+            return $query->where('taxonomy', $taxonomy)->whereNotIn('term_id', $ids);
         });
         $taxonomyDecrement = $term->get();
-        if(is_object($taxonomyDecrement)){
-            foreach($taxonomyDecrement as $tax)
-                TermTaxonomy::where('term_taxonomy_id',$tax->term_taxonomy_id)->decrement('count');
+        if (is_object($taxonomyDecrement)) {
+            foreach ($taxonomyDecrement as $tax)
+                TermTaxonomy::where('term_taxonomy_id', $tax->term_taxonomy_id)->decrement('count');
         }
         return $term->delete();
     }
@@ -230,7 +230,7 @@ class Posts
                 if (isset($tag->id))
                     $tagIDS[] = $tag->id;
             self::fetchTerms($tagIDS);
-            self::fetchTerms($categories,'category');
+            self::fetchTerms($categories, 'category');
 
         }
         if (is_array($tags)) {
@@ -305,5 +305,22 @@ class Posts
             return $taxonomy->increment('count');
         else
             return $taxonomy->decrement('count');
+    }
+
+    static function search($value, $status)
+    {
+        $records = ModelPosts::where(function ($query) use ($value) {
+            return $query->where('title', 'like', '%' . $value . '%')->orWhere('slug', 'like', '%' . Str::slug($value) . '%');
+        })->whereIn('status', $status)
+            ->orderBy('created_at', 'desc');
+        return $records;
+    }
+
+    static function pageType($type)
+    {
+        if ($type != 'closed' && $type != 'trash')
+            $type = [ 'closed', 'open' ];
+
+        return !is_array($type) ? explode(',', $type) : $type;
     }
 }

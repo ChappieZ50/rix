@@ -79,6 +79,27 @@ $(document).on('click', '#restore', function () {
     restore(id)
 });
 
+$('#searchInPosts').keyup(function (e) {
+    if (e.keyCode === 13 && $.trim($(this).val()).length > 0)
+        searchInPosts($.trim($(this).val()));
+});
+$('#searchPostsBtn').on('click', function () {
+    let input = $('#searchInPosts');
+    if ($.trim(input.val()).length > 0)
+        searchInPosts($.trim(input.val()));
+});
+function searchInPosts(value) {
+    $('#closeSearch').show();
+    simplePost({action:'search',value:value,currentType:param('type').length <= 0 ? 'open' : param('type')},'posts').done(function (res) {
+        $('#postsTable').html(res.html);
+        console.log(res);
+    }).fail(function (res) {
+        console.log(res.responseText);
+    });
+}
+$('#closeSearch').on('click', function () {
+    location.reload();
+});
 function parseRendered(response) {
     let posts = $('#posts');
     posts.html(response);
