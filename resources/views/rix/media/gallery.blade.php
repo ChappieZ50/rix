@@ -22,10 +22,19 @@
 
 @section('section_header_bottom')
     <div class="section-header-items w-100">
-        <div class="section-header-button">
-            <a href="{{route('rix_new_media')}}" class="btn btn-primary">Yeni Ekle</a>
+        <div class="header-group">
+            <div class="section-header-button">
+                <a href="{{route('rix_new_media')}}" class="btn btn-primary">Yeni Ekle</a>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" id="bulk_select">Toplu Seç</button>
+      <div class="header-group">
+          <div class="bulk-select-group" style="display: none;">
+              <button type="button" class="btn btn-sm btn-outline-primary" id="dismiss">İptal</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" id="delete_selected">Seçilenleri Sil</button>
+              <button class="btn disabled btn-sm btn-danger btn-progress" id="delete_selected_progress" style="display: none;">Progress</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-primary" id="bulk_select">Toplu Seç</button>
+      </div>
     </div>
 @endsection
 

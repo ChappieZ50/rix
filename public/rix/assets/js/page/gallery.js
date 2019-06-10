@@ -46,8 +46,12 @@ $(document).on('click', '.actions .delete', function () {
 });
 let set = 0;
 simplePost({action: 'forGallery'}, gallery).done(function (res) {
-    $('.gallery').html(res.html);
-    localStorage.setItem('imagesData', JSON.stringify({0: res.data.data}));
+    if(res.html.length > 0){
+        $('.gallery').html(res.html);
+        localStorage.setItem('imagesData', JSON.stringify({0: res.data.data}));
+    }else{
+        $('.gallery').html('Resim eklenmemiş');
+    }
 });
 
 let page = 2,
@@ -65,6 +69,7 @@ $(document).endlessScroll({
                 if (res.data.last_page <= page)
                     scrollLoad = false;
                 page++;
+                changeSelectType();
             });
         }
     }
@@ -82,7 +87,7 @@ $('.image-details-area .inputs input').on('focus', function () {
             id: image.id,
             data: JSON.stringify(image.data)
         }, update_media).done(function () {
-            if(name === 'image_title')
+            if (name === 'image_title')
                 $('.details .filename span').text(image.data[name]);
             updateSelectedImage();
         }).fail(function (res) {
@@ -90,6 +95,55 @@ $('.image-details-area .inputs input').on('focus', function () {
         });
     }
 });
+$('#bulk_select').on('click', function () {
+    $(this).hide();
+    $('.bulk-select-group').show();
+    changeSelectType();
+});
+$('#dismiss').on('click', function () {
+    $('.bulk-select-group').hide();
+    $('#bulk_select').show();
+    changeSelectType();
+});
+$('#delete_selected').on('click', function () {
+    let data = [],
+        progress = $('#delete_selected_progress'),
+        delete_selected = $('#delete_selected');
+    $('input[name=imagecheck]:checked').each(function () {
+        data.push($(this).val());
+    });
+    if(data.length > 0){
+        if (confirm('Kalıcı olarak silmek istiyor musunuz ?')) {
+            progress.show();
+            delete_selected.hide();
+            simplePost({image_id: data}, delete_image, 'delete').done(function (res) {
+                if (res.status !== false) {
+                    location.reload();
+                } else {
+                    progress.show();
+                    delete_selected.hide();
+                    ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi'});
+                }
+            }).fail(function (res) {
+                progress.hide();
+                delete_selected.show();
+                ajaxCheckStatus(res, {status: 500});
+            });
+        }
+    }
+});
+
+function changeSelectType() {
+    let imageCheck = $('input[name=imagecheck]'),
+        detailsBtn = $('button[name=imageDetailsBtn]');
+    if ($('.bulk-select-group').is(':visible')) {
+        imageCheck.attr('type', 'checkbox');
+        detailsBtn.attr('data-toggle', '');
+    } else {
+        imageCheck.attr('type', 'hidden');
+        detailsBtn.attr('data-toggle', 'modal');
+    }
+}
 
 function updateSelectedImage() {
     let image = JSON.parse(localStorage.getItem('selectedImage'));
