@@ -22,4 +22,5 @@
 <!-- Template JS File -->
 <script src="/rix/assets/js/scripts.js"></script>
 <script src="/rix/assets/js/page/modules-ion-icons.js"></script>
+
 @yield("js")

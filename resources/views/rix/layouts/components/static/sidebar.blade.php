@@ -18,8 +18,9 @@
                         ['Kategoriler','rix_categories'],
                         ['Etiketler','rix_tags']
                    ]);
-                $add->setPage('Yorumlar','rix_comments','far fa-comment');
-                $add->setHeader("Site Ayarları");
+                $add->setPage('Yorumlar','rix_comments','ion ion-ios-chatbubble-outline',19);
+                $add->setPage('Mesajlar','rix_messages','ion ion-ios-email-outline',19);
+                $add->setPage('Bülten','rix_messages','fas fa-bullhorn',14);
             @endphp
         </ul>
     </aside>
