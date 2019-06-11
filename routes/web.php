@@ -44,6 +44,7 @@ Route::group(['prefix' => config('definitions.ADMIN_FOLDER').'/'],function(){
     Route::put('tags','Rix\Posts\TagsController@update_tag')->name('rix_update_tag');
     // Comments
     Route::get('comments','Rix\CommentsController@get_comments')->name('rix_comments');
+    Route::post('comments','Rix\CommentsController@action_comments')->name('rix_action_comments');
     // Messages
     Route::get('messages','Rix\MessagesController@get_messages')->name('rix_messages');
 

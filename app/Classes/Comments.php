@@ -2,22 +2,23 @@
 
 namespace App\Classes;
 
+use App\Helpers\Helper;
 use App\Models\Comments as ModelComments;
 
 class Comments
 {
     static function getTypeData($custom = [])
     {
-        $all = [ 'whereColumn' => 'status', 'whereValue' => [ 'approved', 'pending' ] ];
-        $pending = [ 'whereColumn' => 'status', 'whereValue' => 'pending' ];
-        $spam = [ 'whereColumn' => 'status', 'whereValue' => 'spam' ];
-        $approved = [ 'whereColumn' => 'status', 'whereValue' => 'approved' ];
+        $all      = ['whereColumn' => 'status', 'whereValue' => ['approved', 'pending']];
+        $pending  = ['whereColumn' => 'status', 'whereValue' => 'pending'];
+        $spam     = ['whereColumn' => 'status', 'whereValue' => 'spam'];
+        $approved = ['whereColumn' => 'status', 'whereValue' => 'approved'];
 
         if (isset($custom['post_id'])) {
-            $all = array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $all);
-            $pending = array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $pending);
-            $spam = array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $spam);
-            $approved = array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $approved);
+            $all      = array_merge(['wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id']], $all);
+            $pending  = array_merge(['wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id']], $pending);
+            $spam     = array_merge(['wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id']], $spam);
+            $approved = array_merge(['wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id']], $approved);
         }
         $typeData = [
             'all'      => self::getComments($all)->count(),
@@ -34,7 +35,7 @@ class Comments
     {
         $defaults = [
             'whereColumn'     => 'status',
-            'whereValue'      => [ 'approved', 'pending' ],
+            'whereValue'      => ['approved', 'pending'],
             'with'            => '',
             'withSelect'      => '',
             'wherePostColumn' => '',
@@ -42,11 +43,11 @@ class Comments
             'order'           => 'created_at',
             'orderBy'         => 'desc',
         ];
-        $options = array_merge($defaults, $options);
+        $options  = array_merge($defaults, $options);
         $comments = new ModelComments();
         if (!empty($options['whereColumn']) && !empty($options['whereValue'])) {
             $options['whereValue'] = !is_array($options['whereValue']) ? explode(',', $options['whereValue']) : $options['whereValue'];
-            $comments = $comments->whereIn($options['whereColumn'], $options['whereValue']);
+            $comments              = $comments->whereIn($options['whereColumn'], $options['whereValue']);
         }
         if (!empty($options['wherePostColumn']) && !empty($options['wherePostValue'])) {
             $comments = $comments->whereHas('post', function ($query) use ($options) {
@@ -54,7 +55,7 @@ class Comments
                 return $query->whereIn($options['wherePostColumn'], $options['wherePostValue']);
             });
         }
-        $comments = !empty($options['with']) ? $comments->with([$options['with'] => function ($query) use ($options){
+        $comments = !empty($options['with']) ? $comments->with([$options['with'] => function ($query) use ($options) {
             return $query->select(!empty($options['withSelect']) ? $options['withSelect'] : ['*']);
         }]) : $comments;
         return $comments->orderBy($options['order'], $options['orderBy']);
@@ -64,13 +65,12 @@ class Comments
     {
 
         $count = self::getTypeData($custom);
-        if (isset($custom['post_id'])) {
-            $comments = self::getComments(array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $options));
-        } else {
+        if (isset($custom['post_id']))
+            $comments = self::getComments(array_merge(['wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id']], $options));
+        else
             $comments = self::getComments($options);
-        }
         return [
-            'comments' => $comments->paginate(5),
+            'comments' => $comments,
             'count'    => $count
         ];
     }
@@ -78,12 +78,61 @@ class Comments
     static function findStatusOnParam($status)
     {
         if ($status == 'approved')
-            return [ 'whereValue' => 'approved' ];
+            return ['whereValue' => 'approved'];
         elseif ($status == 'pending')
-            return [ 'whereValue' => 'pending' ];
+            return ['whereValue' => 'pending'];
         elseif ($status == 'spam')
-            return [ 'whereValue' => 'spam' ];
+            return ['whereValue' => 'spam'];
         else
             return [];
+    }
+
+    static function doCommentAction($comments, $action)
+    {
+        $ids = self::getCommentIds($comments);
+        if ($action === 'approved' || $action === 'pending') {
+            $do = ModelComments::whereIn('comment_id', $ids)->update(['status' => $action, 'before_status' => null]);
+        } elseif ($action === 'spam' || $action === 'unspam') {
+            if (is_array($comments) || is_object($comments)) {
+                foreach ($comments as $comment) {
+                    $get = ModelComments::where('comment_id', $comment['id'])->first();
+                    $do  = ModelComments::where('comment_id', $comment['id'])->update([
+                        'before_status' => $action === 'unspam' ? null : $comment['status'],
+                        'status'        => $action === 'unspam' && isset($get->before_status) ? $get->before_status : $action
+                    ]);
+                }
+            }
+        } elseif ($action === 'delete') {
+            $do = ModelComments::destroy($ids);
+        }
+        if (isset($do) && $do)
+            return Helper::response(true, 'Başarıyla Güncellendi');
+        return Helper::response(false, 'Bir sorun oluştu!');
+    }
+
+    static function getCommentIds($comments)
+    {
+        $ids = [];
+        if (is_array($comments) || is_object($comments)) {
+            foreach ($comments as $comment) {
+                $ids[] = $comment['id'];
+            }
+        }
+        return $ids;
+    }
+
+    static function searchComment($value)
+    {
+        $search = ModelComments::where('name', 'like', '%' . $value . '%')
+            ->orWhere('comment', 'like', '%' . $value . '%')
+            ->orWhere('email', 'like', '%' . $value . '%')
+            ->paginate(1);
+        return ['comments' => $search, 'typeData'];
+    }
+
+    static function renderComments($viewData, $blade)
+    {
+        $view = view($blade)->with($viewData)->render();
+        return response()->json(['html' => $view]);
     }
 }

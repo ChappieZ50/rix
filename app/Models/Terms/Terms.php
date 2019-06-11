@@ -12,6 +12,6 @@ class Terms extends Model
 
     public function termTaxonomy()
     {
-        return $this->hasOne('App\Models\Terms\TermTaxonomy','term_id');
+        return $this->hasOne(TermTaxonomy::class,'term_id');
     }
 }

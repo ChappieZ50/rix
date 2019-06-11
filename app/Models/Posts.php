@@ -15,7 +15,7 @@ class Posts extends Model
     }
 
     public function comments(){
-        return $this->hasMany('App\Models\Comments','post_id');
+        return $this->hasMany(Comments::class,'post_id');
     }
 
     public function activity(){

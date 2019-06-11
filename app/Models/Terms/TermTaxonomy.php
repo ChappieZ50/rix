@@ -11,10 +11,10 @@ class TermTaxonomy extends Model
     public $timestamps = false;
     protected $primaryKey = 'term_taxonomy_id';
     public function terms(){
-        return $this->belongsTo('App\Models\Terms\Terms','term_id');
+        return $this->belongsTo(Terms::class,'term_id');
     }
     public function termRelationships()
     {
-        return $this->hasMany('App\Models\Terms\TermRelationships','term_taxonomy_id');
+        return $this->hasMany(TermRelationships::class,'term_taxonomy_id');
     }
 }

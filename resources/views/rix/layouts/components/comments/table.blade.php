@@ -3,7 +3,8 @@
         <tr>
             <th style="width: 10%;">
                 <div class="custom-checkbox custom-control text-center">
-                    <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input" id="checkbox-records">
+                    <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input"
+                           id="checkbox-records">
                     <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
                 </div>
             </th>
@@ -29,9 +30,8 @@
     <script src="/rix/assets/js/page/components-table.js"></script>
     <script>
         let pending = '{{isset($typeData->pending) ? $typeData->pending : 0}}';
-        if (pending > 0) {
+        if (pending > 0)
             $('#beepMessage').addClass('beep beep-sidebar custom-beep');
-        }
     </script>
 @append
 

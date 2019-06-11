@@ -12,10 +12,21 @@ class Comments extends Model
 
     public function post()
     {
-        return $this->belongsTo('App\Models\Posts','post_id');
+        return $this->belongsTo(Posts::class, 'post_id');
     }
 
-    public function activity(){
-        return $this->morphOne('App\Models\Activity','activityable','meta_type','meta_id');
+    public function activity()
+    {
+        return $this->morphOne(Activity::class, 'activityable', 'meta_type', 'meta_id');
     }
+
+    public function parent(){
+        return $this->belongsTo($this,'parent_comment');
+    }
+
+    public function children()
+    {
+        return $this->hasMany($this,'parent_comment');
+    }
+
 }

@@ -19,12 +19,13 @@ class CreateRixCommentsTable extends Migration
             $table->string('email', 255);
             $table->text('comment');
             $table->ipAddress('ip');
+            $table->foreign('parent_comment')->references('comment_id')->on('rix_comments');
+            $table->unsignedBigInteger('parent_comment')->nullable();
             $table->foreign('post_id')->references('post_id')->on('rix_posts')->onDelete('cascade');
             $table->unsignedBigInteger('post_id');
             $table->string('status', 30)->default('pending');
             $table->string('before_status', 30)->nullable();
             $table->string('readable_date', 30);
-            $table->unsignedInteger('parent_comment')->nullable();
             $table->timestamps();
         });
     }
