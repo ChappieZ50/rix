@@ -351,3 +351,8 @@
   align-items: center;
 }
 
+.custom-beep:after {
+  width: 9px !important;
+  height: 6px !important;
+}
+

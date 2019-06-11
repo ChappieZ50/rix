@@ -1,7 +1,19 @@
 @extends('rix.layouts.master')
+@section('page_title')
+    @if(Request::get('post'))
+        @isset($comments->toArray()['data'][0]['post']['title']) <a href="{{$comments->toArray()['data'][0]['post']['url']}}" target="_blank">{{\App\Helpers\Helper::longText($comments->toArray()['data'][0]['post']['title'],['len' => 30])}}</a>  Yazısının Yorumları @else Yorumlar  @endisset
+    @else
+        Yorumlar
+    @endif
+@endsection
+@if(Request::get('post'))
+@section('section_header_top')
+    <div class="section-header-back">
+        <a href="{{route('rix_comments')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+    </div>
+@endsection
 
-@section('page_title','Yorumlar')
-
+@endif
 @section('title','Yorumlar - Rix Admin')
 
 @section('general_css')
@@ -52,4 +64,5 @@
         </div>
     </div>
 @endsection
+
 

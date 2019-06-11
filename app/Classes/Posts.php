@@ -8,7 +8,6 @@ use App\Models\Terms\Terms;
 use App\Models\Terms\TermRelationships;
 use App\Models\Terms\TermTaxonomy;
 use App\Helpers\Helper;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Posts

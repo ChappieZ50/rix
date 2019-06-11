@@ -7,8 +7,8 @@
                     <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
                 </div>
             </th>
-            <th style="width: 40%;">İsim</th>
-            <th style="width: 15%;">Mesaj</th>
+            <th style="width: 15%;">İsim</th>
+            <th style="width: 40%;">Mesaj</th>
             <th style="width: 11%;">Oluşturma Tarihi</th>
             <th style="width: 6%;"><i class="fas fa-comment-alt" style="font-size: 20px;"></i></th>
             <th style="width: 5%;">İşlem</th>
