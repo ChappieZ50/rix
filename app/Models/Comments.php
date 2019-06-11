@@ -14,4 +14,8 @@ class Comments extends Model
     {
         return $this->belongsTo('App\Models\Posts','post_id');
     }
+
+    public function activity(){
+        return $this->morphOne('App\Models\Activity','activityable','meta_type','meta_id');
+    }
 }

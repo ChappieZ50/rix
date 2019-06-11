@@ -15,8 +15,7 @@ class CreateRixActivityTable extends Migration
     {
         Schema::create('rix_activity', function (Blueprint $table) {
             $table->bigIncrements('activity_id');
-            $table->unsignedInteger('meta_id');
-            $table->string('meta_key',30);
+            $table->morphs('meta');
             $table->text('meta_value');
             $table->timestamps();
         });

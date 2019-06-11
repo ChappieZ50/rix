@@ -17,4 +17,8 @@ class Posts extends Model
     public function comments(){
         return $this->hasMany('App\Models\Comments','post_id');
     }
+
+    public function activity(){
+        return $this->morphOne(Activity::class,'activityable','meta_type','meta_id');
+    }
 }
