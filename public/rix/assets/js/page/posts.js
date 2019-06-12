@@ -89,7 +89,8 @@ $('#searchPostsBtn').on('click', function () {
         searchInPosts($.trim(input.val()));
 });
 function searchInPosts(value) {
-    window.location.href = updateQueryStringParameter(current,'search', value);
+    let url = searchInTable(value);
+    window.location.href = posts + url;
 }
 function parseRendered(response) {
     let posts = $('#posts');

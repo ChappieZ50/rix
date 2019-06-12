@@ -8,7 +8,8 @@
         new_image = "{{route('rix_new_media')}}",
         posts = "{{route('rix_posts')}}",
         comments = "{{route('rix_comments')}}",
-        current = "{{route(Route::getCurrentRoute()->action['as'],Request::except('page'))}}";
+        current = "{{route(Route::getCurrentRoute()->action['as'],Request::except('page'))}}",
+        messages = "{{route('rix_messages')}}";
 
 </script>
 <!-- General JS Scripts -->

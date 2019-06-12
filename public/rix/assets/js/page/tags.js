@@ -95,7 +95,8 @@ $('#searchTagsBtn').on('click', function () {
         searchInTags($.trim(input.val()));
 });
 function searchInTags(value) {
-    window.location.href = updateQueryStringParameter(current,'search', value);
+    let url = searchInTable(value);
+    window.location.href = tags + url;
 }
 
 function closeSearch() {

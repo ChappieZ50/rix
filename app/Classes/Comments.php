@@ -75,18 +75,6 @@ class Comments
         ];
     }
 
-    static function findStatusOnParam($status)
-    {
-        if ($status == 'approved')
-            return ['whereValue' => 'approved'];
-        elseif ($status == 'pending')
-            return ['whereValue' => 'pending'];
-        elseif ($status == 'spam')
-            return ['whereValue' => 'spam'];
-        else
-            return [];
-    }
-
     static function doCommentAction($comments, $action)
     {
         $ids = self::getCommentIds($comments);
@@ -120,16 +108,6 @@ class Comments
         }
         return $ids;
     }
-
-    static function searchComment($value)
-    {
-        $search = ModelComments::where('name', 'like', '%' . $value . '%')
-            ->orWhere('comment', 'like', '%' . $value . '%')
-            ->orWhere('email', 'like', '%' . $value . '%')
-            ->paginate(1);
-        return ['comments' => $search, 'typeData'];
-    }
-
     static function renderComments($viewData, $blade)
     {
         $view = view($blade)->with($viewData)->render();

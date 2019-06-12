@@ -115,4 +115,11 @@ class Helper
         $options = array_merge($defaults, $options);
         return strlen($str) > $options['len'] ? substr($str, $options['start'], $options['len']) . "..." : $str;
     }
+
+    static function findStatusOnParam($status,$types)
+    {
+        if(in_array($status,$types))
+            return ['whereValue' => $status];
+        return [];
+    }
 }

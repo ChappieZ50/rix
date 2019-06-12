@@ -7,7 +7,7 @@ $('#apply').on('click', function () {
                 return {id: this.value, status: $(this).attr('data-status')};
             }).get();
             if (data.length > 0) {
-                doAction(data, value,comments);
+                doAction(data, value, messages);
             }
         }
     }
@@ -16,18 +16,22 @@ $('.actions a').on('click', function () {
     let action = $(this).attr('id'),
         dataID = $(this).closest('div').attr('data-id'),
         status = $(this).closest('div').attr('data-status');
-    doAction([{id: dataID, status: status}], action,comments);
+    doAction([{id: dataID, status: status}], action, messages);
 });
-$('#searchInComments').keyup(function (e) {
+$('#searchInMessages').keyup(function (e) {
     if (e.keyCode === 13 && $.trim($(this).val()).length > 0)
-        searchInComments($.trim($(this).val()));
+        searchInMessages($.trim($(this).val()));
 });
-$('#searchCommentBtn').on('click', function () {
-    let input = $('#searchInComments');
+$('#searchInMessagesBtn').on('click', function () {
+    let input = $('#searchInMessages');
     if ($.trim(input.val()).length > 0)
-        searchInComments($.trim(input.val()));
+        searchInMessages($.trim(input.val()));
 });
-function searchInComments(value) {
+
+function searchInMessages(value) {
     let url = searchInTable(value);
-    window.location.href = comments + url;
+    window.location.href = messages + url;
 }
+
+// Set your search every time
+// history.pushState(null, document.title, search.toSearch());

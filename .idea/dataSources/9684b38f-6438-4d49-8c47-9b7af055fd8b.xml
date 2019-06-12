@@ -924,454 +924,520 @@
     <table id="232" parent="5" name="rix_gallery">
       <Collation>utf8mb4_unicode_ci</Collation>
     </table>
-    <table id="233" parent="5" name="rix_posts">
+    <table id="233" parent="5" name="rix_messages">
       <Collation>utf8mb4_unicode_ci</Collation>
     </table>
-    <table id="234" parent="5" name="rix_term_relationships">
+    <table id="234" parent="5" name="rix_posts">
       <Collation>utf8mb4_unicode_ci</Collation>
     </table>
-    <table id="235" parent="5" name="rix_term_taxonomy">
+    <table id="235" parent="5" name="rix_term_relationships">
       <Collation>utf8mb4_unicode_ci</Collation>
     </table>
-    <table id="236" parent="5" name="rix_terms">
+    <table id="236" parent="5" name="rix_term_taxonomy">
       <Collation>utf8mb4_unicode_ci</Collation>
     </table>
-    <column id="237" parent="229" name="id">
+    <table id="237" parent="5" name="rix_terms">
+      <Collation>utf8mb4_unicode_ci</Collation>
+    </table>
+    <column id="238" parent="229" name="id">
       <Position>1</Position>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="238" parent="229" name="migration">
+    <column id="239" parent="229" name="migration">
       <Position>2</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="229" name="batch">
+    <column id="240" parent="229" name="batch">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="240" parent="229" name="PRIMARY">
+    <key id="241" parent="229" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="241" parent="230" name="activity_id">
+    <column id="242" parent="230" name="activity_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="230" name="meta_type">
+    <column id="243" parent="230" name="meta_type">
       <Position>2</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="230" name="meta_id">
+    <column id="244" parent="230" name="meta_id">
       <Position>3</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="230" name="meta_value">
+    <column id="245" parent="230" name="meta_value">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="230" name="created_at">
+    <column id="246" parent="230" name="created_at">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="230" name="updated_at">
+    <column id="247" parent="230" name="updated_at">
       <Position>6</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="247" parent="230" name="rix_activity_meta_type_meta_id_index">
+    <index id="248" parent="230" name="rix_activity_meta_type_meta_id_index">
       <ColNames>meta_type
 meta_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="248" parent="230" name="PRIMARY">
+    <key id="249" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>activity_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="249" parent="231" name="comment_id">
+    <column id="250" parent="231" name="comment_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="231" name="name">
+    <column id="251" parent="231" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="251" parent="231" name="email">
+    <column id="252" parent="231" name="email">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="231" name="comment">
+    <column id="253" parent="231" name="comment">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="231" name="ip">
+    <column id="254" parent="231" name="ip">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="254" parent="231" name="parent_comment">
+    <column id="255" parent="231" name="parent_comment">
       <Position>6</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="231" name="post_id">
+    <column id="256" parent="231" name="post_id">
       <Position>7</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="231" name="status">
+    <column id="257" parent="231" name="status">
       <Position>8</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;pending&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="231" name="before_status">
+    <column id="258" parent="231" name="before_status">
       <Position>9</Position>
       <DataType>varchar(30)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="231" name="readable_date">
+    <column id="259" parent="231" name="readable_date">
       <Position>10</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="231" name="created_at">
+    <column id="260" parent="231" name="created_at">
       <Position>11</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="260" parent="231" name="updated_at">
+    <column id="261" parent="231" name="updated_at">
       <Position>12</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="261" parent="231" name="rix_comments_parent_comment_foreign">
+    <index id="262" parent="231" name="rix_comments_parent_comment_foreign">
       <ColNames>parent_comment</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="262" parent="231" name="rix_comments_post_id_foreign">
+    <index id="263" parent="231" name="rix_comments_post_id_foreign">
       <ColNames>post_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="263" parent="231" name="PRIMARY">
+    <key id="264" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>comment_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="264" parent="231" name="rix_comments_parent_comment_foreign">
+    <foreign-key id="265" parent="231" name="rix_comments_parent_comment_foreign">
       <ColNames>parent_comment</ColNames>
       <RefSchemaName>rix</RefSchemaName>
       <RefTableName>rix_comments</RefTableName>
       <RefColNames>comment_id</RefColNames>
     </foreign-key>
-    <foreign-key id="265" parent="231" name="rix_comments_post_id_foreign">
+    <foreign-key id="266" parent="231" name="rix_comments_post_id_foreign">
       <ColNames>post_id</ColNames>
       <RefSchemaName>rix</RefSchemaName>
       <RefTableName>rix_posts</RefTableName>
       <RefColNames>post_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="266" parent="232" name="image_id">
+    <column id="267" parent="232" name="image_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="267" parent="232" name="image_name">
+    <column id="268" parent="232" name="image_name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="268" parent="232" name="image_data">
+    <column id="269" parent="232" name="image_data">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="232" name="created_at">
+    <column id="270" parent="232" name="created_at">
       <Position>4</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="232" name="updated_at">
+    <column id="271" parent="232" name="updated_at">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="271" parent="232" name="PRIMARY">
+    <key id="272" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>image_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="272" parent="233" name="post_id">
+    <column id="273" parent="233" name="message_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="233" name="title">
+    <column id="274" parent="233" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="233" name="slug">
+    <column id="275" parent="233" name="email">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="233" name="content">
+    <column id="276" parent="233" name="subject">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="233" name="message">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="233" name="status">
+      <Position>6</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="233" name="readable_date">
+      <Position>7</Position>
+      <DataType>varchar(25)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="233" name="before_status">
+      <Position>8</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="281" parent="233" name="created_at">
+      <Position>9</Position>
+      <DataType>timestamp|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="282" parent="233" name="updated_at">
+      <Position>10</Position>
+      <DataType>timestamp|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="283" parent="233" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>message_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="284" parent="234" name="post_id">
+      <Position>1</Position>
+      <DataType>bigint(20) unsigned|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="285" parent="234" name="title">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="286" parent="234" name="slug">
+      <Position>3</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="287" parent="234" name="content">
       <Position>4</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="233" name="summary">
+    <column id="288" parent="234" name="summary">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="233" name="featured_image">
+    <column id="289" parent="234" name="featured_image">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="233" name="seo_title">
+    <column id="290" parent="234" name="seo_title">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="233" name="seo_description">
+    <column id="291" parent="234" name="seo_description">
       <Position>8</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="233" name="seo_keywords">
+    <column id="292" parent="234" name="seo_keywords">
       <Position>9</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="233" name="featured">
+    <column id="293" parent="234" name="featured">
       <Position>10</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="233" name="status">
+    <column id="294" parent="234" name="status">
       <Position>11</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;open&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="233" name="before_status">
+    <column id="295" parent="234" name="before_status">
       <Position>12</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="233" name="slider">
+    <column id="296" parent="234" name="slider">
       <Position>13</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="233" name="url">
+    <column id="297" parent="234" name="url">
       <Position>14</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="233" name="readable_date">
+    <column id="298" parent="234" name="readable_date">
       <Position>15</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="233" name="created_at">
+    <column id="299" parent="234" name="created_at">
       <Position>16</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="233" name="updated_at">
+    <column id="300" parent="234" name="updated_at">
       <Position>17</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="289" parent="233" name="PRIMARY">
+    <key id="301" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>post_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="290" parent="234" name="term_relationships_id">
+    <column id="302" parent="235" name="term_relationships_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="234" name="post_id">
+    <column id="303" parent="235" name="post_id">
       <Position>2</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="234" name="term_taxonomy_id">
+    <column id="304" parent="235" name="term_taxonomy_id">
       <Position>3</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="293" parent="234" name="rix_term_relationships_post_id_foreign">
+    <index id="305" parent="235" name="rix_term_relationships_post_id_foreign">
       <ColNames>post_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="294" parent="234" name="rix_term_relationships_term_taxonomy_id_foreign">
+    <index id="306" parent="235" name="rix_term_relationships_term_taxonomy_id_foreign">
       <ColNames>term_taxonomy_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="295" parent="234" name="PRIMARY">
+    <key id="307" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>term_relationships_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="296" parent="234" name="rix_term_relationships_post_id_foreign">
+    <foreign-key id="308" parent="235" name="rix_term_relationships_post_id_foreign">
       <ColNames>post_id</ColNames>
       <RefSchemaName>rix</RefSchemaName>
       <RefTableName>rix_posts</RefTableName>
       <RefColNames>post_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="297" parent="234" name="rix_term_relationships_term_taxonomy_id_foreign">
+    <foreign-key id="309" parent="235" name="rix_term_relationships_term_taxonomy_id_foreign">
       <ColNames>term_taxonomy_id</ColNames>
       <RefSchemaName>rix</RefSchemaName>
       <RefTableName>rix_term_taxonomy</RefTableName>
       <RefColNames>term_taxonomy_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="298" parent="235" name="term_taxonomy_id">
+    <column id="310" parent="236" name="term_taxonomy_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="235" name="term_id">
+    <column id="311" parent="236" name="term_id">
       <Position>2</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="235" name="taxonomy">
+    <column id="312" parent="236" name="taxonomy">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="235" name="parent">
+    <column id="313" parent="236" name="parent">
       <Position>4</Position>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="235" name="count">
+    <column id="314" parent="236" name="count">
       <Position>5</Position>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="303" parent="235" name="rix_term_taxonomy_term_id_foreign">
+    <index id="315" parent="236" name="rix_term_taxonomy_term_id_foreign">
       <ColNames>term_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="304" parent="235" name="PRIMARY">
+    <key id="316" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>term_taxonomy_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="305" parent="235" name="rix_term_taxonomy_term_id_foreign">
+    <foreign-key id="317" parent="236" name="rix_term_taxonomy_term_id_foreign">
       <ColNames>term_id</ColNames>
       <RefSchemaName>rix</RefSchemaName>
       <RefTableName>rix_terms</RefTableName>
       <RefColNames>term_id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="306" parent="236" name="term_id">
+    <column id="318" parent="237" name="term_id">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="236" name="name">
+    <column id="319" parent="237" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="236" name="slug">
+    <column id="320" parent="237" name="slug">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="236" name="readable_date">
+    <column id="321" parent="237" name="readable_date">
       <Position>4</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="236" name="created_at">
+    <column id="322" parent="237" name="created_at">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="236" name="updated_at">
+    <column id="323" parent="237" name="updated_at">
       <Position>6</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="312" parent="236" name="PRIMARY">
+    <key id="324" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>term_id</ColNames>
       <Primary>1</Primary>

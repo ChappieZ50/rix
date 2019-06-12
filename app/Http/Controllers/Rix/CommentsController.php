@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
+    protected $types = ['approved','pending','spam'];
     public function get_comments(Request $request)
     {
         $type      = $request->get('status');
         $typeData  = ['type' => $type];
-        $paramType = Comments::findStatusOnParam($type);
+        $paramType = Helper::findStatusOnParam($type,$this->types);
         if ($request->get('post'))
             $typeData = array_merge(['post_id' => $request->get('post')], $typeData);
         $options = [

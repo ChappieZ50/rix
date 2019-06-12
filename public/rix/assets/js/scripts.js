@@ -676,14 +676,78 @@ $('#closeSearch').on('click', function () {
 function param(name) {
     return (location.search.split(name + '=')[1] || '').split('&')[0];
 }
+function Q (url) {
+    this.search = url.split('?')[1];
+    this.params = {};
+    this.search && this.search.split('&').forEach(pair => {
+        const split = pair.split('=');
+        this.params[split[0]] = split[1];
+    });
+}
+Q.prototype.getParam = function (param) {
+    return this.params[param];
+};
 
-function updateQueryStringParameter(uri, key, value) {
-    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-    if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + "=" + value + '$2');
+Q.prototype.setParam = function (param, value) {
+    if (!param) {
+        return this.toSearch();
     }
-    else {
-        return uri + separator + key + "=" + value;
+    if (!value) {
+        delete this.params[param];
+        return this.toSearch();
     }
+    this.params[param] = value;
+    return this.toSearch();
+};
+
+Q.prototype.toSearch = function () {
+    if (!this.search) {
+        return '';
+    }
+    return '?' + Object.keys(this.params)
+        .map(param => `${param}=${this.params[param]}`)
+        .join('&');
+};
+function searchInTable(value) {
+    const search = new Q(location.search);
+    search.setParam('search', value);
+    let params = parseParams(search.toSearch()),
+        finish = [];
+    $.each(params, function (i, v) {
+        i = i.replace('?', '');
+        if (i != 'page' && i != 'search')
+            finish[i] = v;
+        if (i == 'search')
+            value = v
+    });
+    let url = Object.keys(finish).map(function (k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(finish[k]);
+    }).join('&');
+    if (url === '=undefined' || url === 'undefined')
+        url = '?search=' + value;
+    else
+        url = '?' + url + '&search=' + value;
+    return url;
+}
+function parseParams(str) {
+    return str.split('&').reduce(function (params, param) {
+        var paramSplit = param.split('=').map(function (value) {
+            return decodeURIComponent(value.replace(/\+/g, ' '));
+        });
+        params[paramSplit[0]] = paramSplit[1];
+        return params;
+    }, {});
+}
+function doAction(data, action = '',url) {
+    simplePost({
+        data,
+        currentType: param('status').length <= 0 ? 'all' : param('status'),
+        action
+    }, url).done(function (res) {
+        if (res.status !== false)
+            location.reload();
+    }).fail(function (res) {
+        console.log(res.responseText);
+        ajaxCheckStatus(res, {status: 500});
+    })
 }

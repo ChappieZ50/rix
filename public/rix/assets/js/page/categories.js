@@ -165,7 +165,8 @@ $('#searchCategoriesBtn').on('click', function () {
 });
 
 function searchInCategories(value) {
-    window.location.href = updateQueryStringParameter(current,'search', value);
+    let url = searchInTable(value);
+    window.location.href = category + url;
 }
 
 function closeSearch() {
