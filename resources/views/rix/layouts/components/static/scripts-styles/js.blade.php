@@ -7,7 +7,8 @@
         tag = "{{route('rix_new_tag')}}",
         new_image = "{{route('rix_new_media')}}",
         posts = "{{route('rix_posts')}}",
-        comments = "{{route('rix_comments')}}";
+        comments = "{{route('rix_comments')}}",
+        current = "{{route(Route::getCurrentRoute()->action['as'],Request::except('page'))}}";
 
 </script>
 <!-- General JS Scripts -->

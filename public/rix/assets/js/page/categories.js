@@ -163,21 +163,9 @@ $('#searchCategoriesBtn').on('click', function () {
     if ($.trim(input.val()).length > 0)
         searchInCategories($.trim(input.val()));
 });
-$('#closeSearch').on('click', function () {
-    closeSearch();
-});
 
 function searchInCategories(value) {
-    $('#closeSearch').show();
-    simplePost({action: 'search', value: value}, category, 'get').done(function (res) {
-        $('#categoriesTable').html(res.html);
-        if (res.data.data.length <= 0)
-            $('#categories').after('<div class="text-center mb-3"><b><h6>Aradığınız kategori bulunamadı.</h6></b></div>');
-        console.log($('#categoriesTable').html());
-    }).fail(function (res) {
-        console.log(res.responseText);
-        ajaxCheckStatus(res, {status: 500});
-    })
+    window.location.href = updateQueryStringParameter(current,'search', value);
 }
 
 function closeSearch() {

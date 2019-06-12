@@ -89,17 +89,8 @@ $('#searchPostsBtn').on('click', function () {
         searchInPosts($.trim(input.val()));
 });
 function searchInPosts(value) {
-    $('#closeSearch').show();
-    simplePost({action:'search',value:value,currentType:param('type').length <= 0 ? 'open' : param('type')},'posts').done(function (res) {
-        $('#postsTable').html(res.html);
-        console.log(res);
-    }).fail(function (res) {
-        console.log(res.responseText);
-    });
+    window.location.href = updateQueryStringParameter(current,'search', value);
 }
-$('#closeSearch').on('click', function () {
-    location.reload();
-});
 function parseRendered(response) {
     let posts = $('#posts');
     posts.html(response);

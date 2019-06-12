@@ -16,13 +16,12 @@ class PostsController extends Controller
     {
         $type = $request->get('type');
         $viewData = Posts::getViewData([ 'type' => $type ]);
-        if ($request->ajax() && $request->input('action') === 'search' && !empty($request->input('value'))) {
-            $search = Posts::search($request->input('value'),Posts::pageType($request->input('currentType')));
-            $viewData['posts'] = $search->paginate(20);
-            return Posts::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
+        if ($request->get('search')) {
+            $search = Posts::search($request->get('search'),Posts::pageType($request->get('type')));
+            $viewData['posts'] = $search->paginate(1);
         } else {
             $records = Posts::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => Posts::pageType($type) ]);
-            $viewData['posts'] = $records->paginate(20);
+            $viewData['posts'] = $records->paginate(1);
         }
         return view('rix.posts.posts')->with($viewData);
     }

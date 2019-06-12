@@ -1,19 +1,19 @@
 <div class="table-responsive" id="categories">
-    @if(!empty($tableItems))
-        <table class="table table-striped" style="margin-top: 20px !important;">
-            <tr>
-                <th>
-                    <div class="custom-checkbox custom-control text-center">
-                        <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input" id="checkbox-records">
-                        <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
-                    </div>
-                </th>
-                <th>İsim</th>
-                <th>Slug</th>
-                <th>Toplam</th>
-                <th>Oluşturma Tarihi</th>
-                <th>İşlem</th>
-            </tr>
+    <table class="table table-striped" style="margin-top: 20px !important;">
+        <tr>
+            <th>
+                <div class="custom-checkbox custom-control text-center">
+                    <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input" id="checkbox-records">
+                    <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
+                </div>
+            </th>
+            <th>İsim</th>
+            <th>Slug</th>
+            <th>Toplam</th>
+            <th>Oluşturma Tarihi</th>
+            <th>İşlem</th>
+        </tr>
+        @if($tableItems->isNotEmpty())
             @foreach($tableItems as $item)
                 <tr>
                     <td class="p-0 text-center">
@@ -42,8 +42,13 @@
                     </td>
                 </tr>
             @endforeach
-        </table>
-        <div class="pagination float-right mr-3">{{$tableItems->links()}}</div>
+        @endif
+    </table>
+    <div class="pagination float-right mr-3">{{$tableItems->appends($_GET)->links()}}</div>
+    @if($tableItems->isEmpty())
+        <div class="pl-3 pb-3">
+            <span style="font-size: 15px;color:gray;">Kategori Bulunamadı</span>
+        </div>
     @endif
 </div>
 

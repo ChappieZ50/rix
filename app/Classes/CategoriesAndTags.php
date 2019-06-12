@@ -11,14 +11,13 @@ class CategoriesAndTags
     /*
      * For Both
      */
-    static function search($value, $taxonomy, $variable, $blade)
+    static function search($value, $taxonomy)
     {
-        $data = Terms::whereHas('termTaxonomy', function ($query) use ($taxonomy) {
+        return Terms::whereHas('termTaxonomy', function ($query) use ($taxonomy) {
             return $query->where('taxonomy', $taxonomy);
         })->where(function ($query) use ($value) {
             return $query->where('name', 'like', '%' . $value . '%')->orWhere('slug', 'like', '%' . Str::slug($value) . '%');
-        })->orderBy('created_at', 'desc')->paginate(20);
-        return self::renderCategories($data, $variable, $blade);
+        })->orderBy('created_at', 'desc');
     }
 
     static function findExistRecord($taxonomy, $name, $slug, $parent = 0)

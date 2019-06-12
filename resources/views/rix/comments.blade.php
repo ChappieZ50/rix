@@ -61,7 +61,7 @@
             <h4>Yorumlar</h4>
             <div class="card-header-form">
                 <div class="input-group">
-                    <button type="button" class="btn custom-btn-dark mr-2" style="display: none;" id="closeSearch">Aramadan Çık
+                    <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">Aramadan Çık
                     </button>
                     <input type="text" class="form-control" id="searchInComments" placeholder="Yorum Ara..."
                            value="{{Request::get('search')}}">

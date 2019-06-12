@@ -670,6 +670,20 @@ function ajaxCheckStatus(res, options) {
         }
     }
 }
+$('#closeSearch').on('click', function () {
+    window.location.replace(location.pathname);
+});
 function param(name) {
     return (location.search.split(name + '=')[1] || '').split('&')[0];
+}
+
+function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+        return uri + separator + key + "=" + value;
+    }
 }

@@ -7,7 +7,11 @@
                 <label for="checkbox-{{$comment->comment_id}}" class="custom-control-label">&nbsp;</label>
             </div>
         </td>
-        <td>{{$comment->name}}</td>
+        <td>
+            {{$comment->name}}
+            <br>
+            <a href="javascript:;">{{$comment->email}}</a>
+        </td>
         <td>
             {{$comment->comment}}
         </td>

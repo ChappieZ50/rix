@@ -45,8 +45,8 @@
             <h4>Yazılar</h4>
             <div class="card-header-form">
                 <div class="input-group">
-                    <button type="button" class="btn custom-btn-dark mr-2" style="display: none;" id="closeSearch">Aramadan Çık</button>
-                    <input type="text" class="form-control" id="searchInPosts" placeholder="Yazı Ara...">
+                    <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">Aramadan Çık</button>
+                    <input type="text" class="form-control" id="searchInPosts" placeholder="Yazı Ara..." value="{{Request::get('search')}}">
                     <div class="input-group-btn">
                         <button class="btn btn-primary" id="searchPostsBtn" type="button"><i class="fas fa-search"></i></button>
                     </div>

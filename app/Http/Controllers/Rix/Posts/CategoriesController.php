@@ -16,10 +16,7 @@ class CategoriesController extends Controller
     {
         if ($request->ajax()) {
             $action = $request['action'];
-            if ($action == 'search') {
-                if ($request->input('value') && !empty($request->input('value')))
-                    return Categories::search($request->input('value'),'category','tableItems','rix.layouts.components.posts.categories.table');
-            } elseif ($action == 'getParents' && !empty($request->input('term_id'))) {
+            if ($action == 'getParents' && !empty($request->input('term_id'))) {
                 $parents = Categories::parentCategories($request->input('term_id'), $request->input('main'), false);
                 return Categories::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
             } elseif ($action == 'getTable') {
@@ -27,8 +24,10 @@ class CategoriesController extends Controller
                 return Categories::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
             }
         }
-
-        $categories = Categories::getRecords(['taxonomy' => 'category']);
+        if($request->get('search'))
+            $categories =  Categories::search($request->get('search'),'category');
+        else
+            $categories =  Categories::getRecords(['taxonomy' => 'category']);
         $view = [
             'tableItems'  => $categories->paginate(20),
             'parentItems' => $categories->get(),

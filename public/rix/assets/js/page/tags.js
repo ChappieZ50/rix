@@ -94,21 +94,8 @@ $('#searchTagsBtn').on('click', function () {
     if ($.trim(input.val()).length > 0)
         searchInTags($.trim(input.val()));
 });
-$('#closeSearch').on('click', function () {
-    closeSearch();
-});
-
 function searchInTags(value) {
-    $('#closeSearch').show();
-    simplePost({action: 'search', value: value}, tag, 'get').done(function (res) {
-        $('#tagsTable').html(res.html);
-        if (res.data.data.length <= 0)
-            $('#tags').after('<div class="text-center mb-3"><b><h6>Aradığınız kategori bulunamadı.</h6></b></div>');
-        console.log($('#tagsTable').html());
-    }).fail(function (res) {
-        console.log(res.responseText);
-        ajaxCheckStatus(res, {status: 500});
-    })
+    window.location.href = updateQueryStringParameter(current,'search', value);
 }
 
 function closeSearch() {

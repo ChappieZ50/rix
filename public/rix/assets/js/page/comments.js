@@ -27,33 +27,9 @@ $('#searchCommentBtn').on('click', function () {
     if ($.trim(input.val()).length > 0)
         searchInComments($.trim(input.val()));
 });
-
 function searchInComments(value) {
-    let url = JQUERY4U.UTIL.addParamToUrl('search', value);
-    window.location.href = url;
+    window.location.href = updateQueryStringParameter(current, 'search', value);
 }
-var JQUERY4U = {};
-(function ($, W, D) {
-    JQUERY4U.UTIL =
-        {
-            addParamToUrl: function (param, value) {
-                var result = new RegExp(param + "=([^&]*)", "i").exec(W.location.search);
-                result = result && result[1] || "";
-                var loc = W.location;
-                var url = loc.protocol + '//' + loc.host + loc.pathname + loc.search;
-
-                if (result == '') {
-                    if (loc.search == '') {
-                        url += "?" + param + '=' + value;
-                    } else {
-                        url += "&" + param + '=' + value;
-                    }
-                }
-                return url;
-            }
-        }
-
-})(jQuery, window, document);
 
 function actionComment(data, action = '') {
     simplePost({
