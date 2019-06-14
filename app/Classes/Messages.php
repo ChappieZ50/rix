@@ -8,6 +8,7 @@
 
 namespace App\Classes;
 
+use App\Helpers\Helper;
 use App\Models\Messages as ModelMessages;
 
 class Messages
@@ -55,5 +56,27 @@ class Messages
             'messages' => $messages,
             'count'    => $count
         ];
+    }
+    static function doMessageAction($messages, $action)
+    {
+        $ids = Helper::getIds($messages);
+        if ($action === 'read' || $action === 'unread') {
+            $do = ModelMessages::whereIn('message_id', $ids)->update(['status' => $action, 'before_status' => null]);
+        } elseif ($action === 'trash' || $action === 'untrash') {
+            if (is_array($messages) || is_object($messages)) {
+                foreach ($messages as $message) {
+                    $get = ModelMessages::where('message_id', $message['id'])->first();
+                    $do  = ModelMessages::where('message_id', $message['id'])->update([
+                        'before_status' => $action === 'untrash' ? null : $message['status'],
+                        'status'        => $action === 'untrash' && isset($get->before_status) ? $get->before_status : $action
+                    ]);
+                }
+            }
+        } elseif ($action === 'delete') {
+            $do = ModelMessages::destroy($ids);
+        }
+        if (isset($do) && $do)
+            return Helper::response(true, 'Başarıyla Güncellendi');
+        return Helper::response(false, 'Bir sorun oluştu!');
     }
 }

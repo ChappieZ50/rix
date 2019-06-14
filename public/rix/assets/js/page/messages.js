@@ -3,7 +3,7 @@ $('#apply').on('click', function () {
         value = select.val();
     if (value.length > 0) {
         if (confirm('Bunu yapmak istediğinden emin misin ? ')) {
-            let data = $('#comments input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
+            let data = $('#messages input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
                 return {id: this.value, status: $(this).attr('data-status')};
             }).get();
             if (data.length > 0) {

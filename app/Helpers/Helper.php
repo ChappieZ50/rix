@@ -122,4 +122,15 @@ class Helper
             return ['whereValue' => $status];
         return [];
     }
+
+    static function getIds($items){
+        $ids = [];
+        if (is_array($items) || is_object($items)) {
+            foreach ($items as $item) {
+                $item = (object) $item;
+                $ids[] = $item->id;
+            }
+        }
+        return $ids;
+    }
 }

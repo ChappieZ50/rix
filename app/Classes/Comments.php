@@ -77,7 +77,7 @@ class Comments
 
     static function doCommentAction($comments, $action)
     {
-        $ids = self::getCommentIds($comments);
+        $ids = Helper::getIds($comments);
         if ($action === 'approved' || $action === 'pending') {
             $do = ModelComments::whereIn('comment_id', $ids)->update(['status' => $action, 'before_status' => null]);
         } elseif ($action === 'spam' || $action === 'unspam') {
@@ -96,17 +96,6 @@ class Comments
         if (isset($do) && $do)
             return Helper::response(true, 'Başarıyla Güncellendi');
         return Helper::response(false, 'Bir sorun oluştu!');
-    }
-
-    static function getCommentIds($comments)
-    {
-        $ids = [];
-        if (is_array($comments) || is_object($comments)) {
-            foreach ($comments as $comment) {
-                $ids[] = $comment['id'];
-            }
-        }
-        return $ids;
     }
     static function renderComments($viewData, $blade)
     {

@@ -29,4 +29,9 @@ class MessagesController extends Controller
             'typeData' => $messages['count']
         ]);
     }
+    public function action_messages(Request $request)
+    {
+        if ($request->ajax())
+            return Messages::doMessageAction($request->input('data'), $request->input('action'));
+    }
 }
