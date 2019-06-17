@@ -16,13 +16,11 @@ class PostsController extends Controller
     {
         $type = $request->get('type');
         $viewData = Posts::getViewData([ 'type' => $type ]);
-        if ($request->get('search')) {
-            $search = Posts::search($request->get('search'),Posts::pageType($request->get('type')));
-            $viewData['posts'] = $search->paginate(1);
-        } else {
+        if ($request->get('search'))
+            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')));
+        else
             $records = Posts::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => Posts::pageType($type) ]);
-            $viewData['posts'] = $records->paginate(1);
-        }
+        $viewData['posts'] = $records->paginate(20);
         return view('rix.posts.posts')->with($viewData);
     }
 
@@ -46,9 +44,11 @@ class PostsController extends Controller
         if ($validator->isEmpty()) {
             $createPost = Posts::requestData($request);
             $insert = ModelPosts::create($createPost);
-            if ($insert)
-                return Posts::termRelations($request, $insert->post_id);
-            else
+            if ($insert) {
+                $res = Posts::termRelations($request, $insert->post_id);
+                $res = array_merge($res, [ 'post_id' => $insert->post_id ]);
+                return $res;
+            } else
                 return Helper::response(false, 'Bir sorun oluştu');
         }
         return Helper::response(false, '', [ 'errors' => $validator ]);

@@ -31,19 +31,7 @@ class GalleryController extends Controller
             $file = $request->file('image');
             $noExtensionName = Helper::uniqImg();
             $imageName = Helper::uniqImg(['extension' => $file->getClientOriginalExtension()], $noExtensionName);
-            $imageData = json_encode([
-                'width'                  => getimagesize($file)[0],
-                'height'                 => getimagesize($file)[1],
-                'mime-type'              => $file->getClientMimeType(),
-                'size'                   => $file->getSize(),
-                'extension'              => $file->getClientOriginalExtension(),
-                'url'                    => Helper::srcImage($imageName),
-                'formatedDate'           => Helper::readableDateFormat(),
-                'noExtensionName'        => $noExtensionName,
-                'imageSizeHumanReadable' => Helper::fileSize($file->getSize()),
-                'image_title'            => '',
-                'image_alt'              => ''
-            ]);
+            $imageData = Helper::getImageData($file,$imageName,$noExtensionName);
             $upload = $file->move(public_path(config('definitions.PUBLIC_PATH')), $imageName);
             if ($upload) {
                 $insert = Gallery::create([

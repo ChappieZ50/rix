@@ -28,9 +28,6 @@
         <script src="/rix/assets/js/page/new-post.js"></script>
     @endisset
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
-{{--     <script>
-       window.onbeforeunload = function () { return "alert" };
-    </script>--}}
 @endsection
 
 {{-- JS --}}
@@ -51,7 +48,17 @@
             );
             // Modal Fix modal backdrop
             $('#mediaModal').appendTo("body");
-        })
+        });
+        @if(Request::get('action') && Request::get('id'))
+            @if(Request::get('status') == 'success')
+                iziToast.success({
+                    title: 'Başarılı',
+                    message: 'Yazı Başarıyla Eklendi',
+                    position: 'topRight',
+                });
+            @endif
+            window.history.pushState({}, document.title, removeURLParameter('{!! url()->full() !!}', 'status'));
+        @endif
     </script>
 @endsection
 
@@ -62,7 +69,7 @@
 @endsection
 
 @section('content')
-    <div class="row @isset($post) ? updatePost @else newPost @endisset">
+    <div class="row @isset($post) updatePost @else newPost @endisset">
         <div class="col-xl-9 col-lg-12">
             <div class="card">
                 <div class="card-header">

@@ -114,7 +114,7 @@ class Posts
                 });
             })->select('term_taxonomy_id')->get();
             foreach ($taxonomy as $tax)
-                self::relationsCounter($tax->term_taxonomy_id, 'decrement');
+                self::relationsCounter($tax->term_taxonomy_id, 'increment');
             if (!ModelPosts::where('post_id', $id)->update([ 'status' => !empty($beforeStatus) ? $beforeStatus->before_status : 'closed', 'before_status' => null ]))
                 return Helper::response(false, 'Bir Sorun Oluştu ve Bazı Yazılar Çöpten Taşınamadı');
         }
@@ -198,6 +198,7 @@ class Posts
             'slider'          => $request->input('slider'),
             'url'             => url('/' . $slug),
             'readable_date'   => Helper::readableDateFormat(),
+            'author_id'       => $request->input('author')
         ];
         $data = array_merge($defaults, $data);
         return $data;

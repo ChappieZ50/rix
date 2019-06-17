@@ -58,7 +58,9 @@ class Comments
         $comments = !empty($options['with']) ? $comments->with([$options['with'] => function ($query) use ($options) {
             return $query->select(!empty($options['withSelect']) ? $options['withSelect'] : ['*']);
         }]) : $comments;
-        return $comments->orderBy($options['order'], $options['orderBy']);
+        return $comments->whereHas('post',function ($query){
+            return $query->where('status','!=','trash');
+        })->orderBy($options['order'], $options['orderBy']);
     }
 
     static function getCommentsWithCount($options = [], $custom = [])
@@ -96,10 +98,5 @@ class Comments
         if (isset($do) && $do)
             return Helper::response(true, 'Başarıyla Güncellendi');
         return Helper::response(false, 'Bir sorun oluştu!');
-    }
-    static function renderComments($viewData, $blade)
-    {
-        $view = view($blade)->with($viewData)->render();
-        return response()->json(['html' => $view]);
     }
 }

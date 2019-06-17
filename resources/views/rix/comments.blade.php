@@ -4,7 +4,7 @@
         @isset($comments->toArray()['data'][0]['post']['title']) <a href="{{$comments->toArray()['data'][0]['post']['url']}}"
                                                                     target="_blank">{{\App\Helpers\Helper::longText($comments->toArray()['data'][0]['post']['title'],['len' => 30])}}</a>  Yazısının Yorumları @else Yorumlar  @endisset
     @else
-        Yorumlar
+       Yorumlar
     @endif
 @endsection
 @if(Request::get('post'))

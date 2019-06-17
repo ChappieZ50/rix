@@ -28,6 +28,8 @@ class CreateRixPostsTable extends Migration
             $table->string('before_status',10)->nullable();
             $table->integer('slider')->default(0);
             $table->text('url')->nullable();
+            $table->foreign('author_id')->references('user_id')->on('rix_users');
+            $table->unsignedBigInteger('author_id');
             $table->string('readable_date',25);
             $table->timestamps();
         });

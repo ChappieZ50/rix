@@ -18,7 +18,7 @@ class CreateRixCommentsTable extends Migration
             $table->string('name', 255);
             $table->string('email', 255);
             $table->text('comment');
-            $table->ipAddress('ip');
+            $table->ipAddress('ip')->nullable();
             $table->foreign('parent_comment')->references('comment_id')->on('rix_comments')->onDelete('cascade');
             $table->unsignedBigInteger('parent_comment')->nullable();
             $table->foreign('post_id')->references('post_id')->on('rix_posts')->onDelete('cascade');

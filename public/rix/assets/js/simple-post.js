@@ -5,6 +5,6 @@ function simplePost(data, url, type = 'post') {
         data: data,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+        },
     });
 }

@@ -644,6 +644,7 @@ function ajaxCheckStatus(res, options) {
             message: 'Beklenmeyen bir hata meydana geldi !',
             position: 'topRight',
         });
+        return false;
     } else {
         if (res.status === false) {
             $(options.area + ' .invalid-feedback').html('');
@@ -660,6 +661,7 @@ function ajaxCheckStatus(res, options) {
                 position: 'topRight',
             };
             iziToast.warning(content);
+            return false;
         } else {
             $(options.area + ' .invalid-feedback').html('');
             iziToast.success({
@@ -667,16 +669,20 @@ function ajaxCheckStatus(res, options) {
                 message: options.successMessage,
                 position: 'topRight',
             });
+            return true;
         }
     }
 }
+
 $('#closeSearch').on('click', function () {
     window.location.replace(location.pathname);
 });
+
 function param(name) {
     return (location.search.split(name + '=')[1] || '').split('&')[0];
 }
-function Q (url) {
+
+function Q(url) {
     this.search = url.split('?')[1];
     this.params = {};
     this.search && this.search.split('&').forEach(pair => {
@@ -684,6 +690,7 @@ function Q (url) {
         this.params[split[0]] = split[1];
     });
 }
+
 Q.prototype.getParam = function (param) {
     return this.params[param];
 };
@@ -708,6 +715,7 @@ Q.prototype.toSearch = function () {
         .map(param => `${param}=${this.params[param]}`)
         .join('&');
 };
+
 function searchInTable(value) {
     const search = new Q(location.search);
     search.setParam('search', value);
@@ -729,6 +737,8 @@ function searchInTable(value) {
         url = '?' + url + '&search=' + value;
     return url;
 }
+
+
 function parseParams(str) {
     return str.split('&').reduce(function (params, param) {
         var paramSplit = param.split('=').map(function (value) {
@@ -738,7 +748,8 @@ function parseParams(str) {
         return params;
     }, {});
 }
-function doAction(data, action = '',url) {
+
+function doAction(data, action = '', url) {
     simplePost({
         data,
         currentType: param('status').length <= 0 ? 'all' : param('status'),
@@ -750,4 +761,60 @@ function doAction(data, action = '',url) {
         console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
     })
+}
+
+function applyMultipleSelect(id, url, message = 'Bunu yapmak istediğinden emin misin ? ') {
+    let select = $('select[name=action]'),
+        value = select.val();
+    if (value.length > 0) {
+        if (confirm(message)) {
+            let data = $('#' + id + ' input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
+                return {id: this.value, status: $(this).attr('data-status')};
+            }).get();
+            if (data.length > 0)
+                doAction(data, value, url);
+        }
+    }
+}
+
+function applySingleSelect(element, url) {
+    let action = element.attr('id'),
+        dataID = element.closest('div').attr('data-id'),
+        status = element.closest('div').attr('data-status');
+    doAction([{id: dataID, status: status}], action, url);
+}
+function previewImage(preview) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        preview.attr('src', e.target.result);
+        preview.show();
+    };
+
+    $("#avatar").change(function () {
+        readURL(this,reader);
+    });
+}
+function readURL(input,reader) {
+    if (input.files && input.files[0])
+        reader.readAsDataURL(input.files[0]);
+}
+function removeURLParameter(url, parameter) {
+    //prefer to use l.search if you have a location/link object
+    var urlparts = url.split('?');
+    if (urlparts.length >= 2) {
+
+        var prefix = encodeURIComponent(parameter) + '=';
+        var pars = urlparts[1].split(/[&;]/g);
+
+        //reverse iteration as may be destructive
+        for (var i = pars.length; i-- > 0;) {
+            //idiom for string.startsWith
+            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                pars.splice(i, 1);
+            }
+        }
+
+        return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+    }
+    return url;
 }

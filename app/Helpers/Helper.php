@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class Helper
 {
@@ -38,7 +39,7 @@ class Helper
     static function render($data, $variable, $blade)
     {
         $view = view($blade)->with($variable, $data)->render();
-        return response()->json(['html' => $view, 'data' => $data]);
+        return response()->json([ 'html' => $view, 'data' => $data ]);
     }
 
 
@@ -70,7 +71,7 @@ class Helper
             'errors' => '',
         ];
         $options = array_merge($defaults, $options);
-        $send = ['status' => $status, 'message' => $message];
+        $send = [ 'status' => $status, 'message' => $message ];
         if (!$status)
             $send['errors'] = $options['errors'];
 
@@ -96,7 +97,7 @@ class Helper
         $i = 0;
         foreach ($terms as $term) {
             if ($term->termTaxonomy->taxonomy == $taxonomy) {
-                $params = ['action' => 'edit', 'id' => $term->termTaxonomy->term_id];
+                $params = [ 'action' => 'edit', 'id' => $term->termTaxonomy->term_id ];
                 $route = $taxonomy == 'category' ? route('rix_categories', $params) : route('rix_tags', $params);
                 $i++;
                 echo '<a href="' . $route . '" target="_blank">' . $term->termTaxonomy->terms->name . '</a>, ';
@@ -108,7 +109,7 @@ class Helper
     static function longText($str, $options = [])
     {
         $defaults = [
-            'len' => 50,
+            'len'   => 50,
             'start' => 0,
         ];
 
@@ -116,21 +117,68 @@ class Helper
         return strlen($str) > $options['len'] ? substr($str, $options['start'], $options['len']) . "..." : $str;
     }
 
-    static function findStatusOnParam($status,$types)
+    static function findStatusOnParam($status, $types)
     {
-        if(in_array($status,$types))
-            return ['whereValue' => $status];
+        if (in_array($status, $types))
+            return [ 'whereValue' => $status ];
         return [];
     }
 
-    static function getIds($items){
+    static function getIds($items)
+    {
         $ids = [];
         if (is_array($items) || is_object($items)) {
             foreach ($items as $item) {
-                $item = (object) $item;
+                $item = (object)$item;
                 $ids[] = $item->id;
             }
         }
         return $ids;
+    }
+
+    static function getImageData($file, $imageName, $noExtensionName)
+    {
+        return json_encode([
+            'width'                  => getimagesize($file)[0],
+            'height'                 => getimagesize($file)[1],
+            'mime-type'              => $file->getClientMimeType(),
+            'size'                   => $file->getSize(),
+            'extension'              => $file->getClientOriginalExtension(),
+            'url'                    => Helper::srcImage($imageName),
+            'formatedDate'           => Helper::readableDateFormat(),
+            'noExtensionName'        => $noExtensionName,
+            'imageSizeHumanReadable' => Helper::fileSize($file->getSize()),
+            'image_title'            => '',
+            'image_alt'              => ''
+        ]);
+    }
+
+    static function createTablePagesBar($typeData, $names,$render = false)
+    {
+        $type = $typeData->type;
+        unset($typeData->type);
+        $html = [];
+        foreach ($typeData as $key => $value) {
+            $aClass = 'nav-link';
+            $spanClass = 'badge badge-primary';
+            $href = $key !== 'all' ? route('rix_users', [ 'type' => $key ]) : route('rix_users');
+            if ($type === $key) {
+                $aClass = 'nav-link active';
+                $spanClass = 'badge badge-white';
+            } elseif (empty($type)) {
+                $aClass = 'nav-link active';
+                $spanClass = 'badge badge-white';
+                $type = 'temp';
+            }
+            $html[] = '<li class="nav-item">';
+            $html[] = '<a class="' . $aClass . '" href="' . $href . '">' . $names->$key . '';
+            $html[] = '<span class="' . $spanClass . '">' . $value . '</span>';
+            $html[] = '</a>';
+            $html[] = ' </li>';
+        }
+        if(!$render)
+            return $html;
+        foreach($html as $item)
+            echo $item;
     }
 }
