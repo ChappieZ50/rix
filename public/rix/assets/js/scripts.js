@@ -771,8 +771,8 @@ function applyMultipleSelect(id, url, message = 'Bunu yapmak istediğinden emin 
             let data = $('#' + id + ' input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
                 return {id: this.value, status: $(this).attr('data-status')};
             }).get();
-            if (data.length > 0)
-                doAction(data, value, url);
+             if (data.length > 0)
+                 doAction(data, value, url);
         }
     }
 }

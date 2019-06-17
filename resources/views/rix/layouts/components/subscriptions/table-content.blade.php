@@ -9,19 +9,14 @@
         </td>
         <td>
             {{$subscription->email}}
+            <div class="table-links actions" data-id="{{$subscription->subscription_id}}">
+                <a href="#" class="text-danger" id="delete">Kalıcı Olarak Sil</a>
+            </div>
         </td>
         <td>
             {{$subscription->ip}}
         </td>
         <td>{{$subscription->readable_date}}</td>
-        <td>
-            <div class="btn-group dropleft">
-                <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"></button>
-                <div class="dropdown-menu dropleft actions" data-id="{{$subscription->subscription_id}}">
-                    <a class="dropdown-item has-icon" href="javascript:;" id="delete" style="color:red;"><i class="far fa-trash-alt"></i>Kalıcı Olarak Sil</a>
-                </div>
-            </div>
-        </td>
     </tr>
 @endforeach
+

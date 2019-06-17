@@ -8,13 +8,25 @@
             </div>
         </td>
         <td>
-            Avatar
+            {{$user->username}}
+            <div class="table-links">
+                <a href="#" class="text-primary">Düzenle</a>
+                <div class="bullet"></div>
+                <a href="#">Yasakla</a>
+                <div class="bullet"></div>
+                <a href="#" class="text-success">Yasağı Kaldır</a>
+                <div class="bullet"></div>
+                <a href="#" class="text-danger">Kalıcı Olarak Sil</a>
+            </div>
         </td>
         <td>
-            {{$user->username}}
+            <img src="/rix/assets/img/avatar/avatar-5.png" class="rounded-circle" width="45">
         </td>
         <td>
             {{$user->role}}
+        </td>
+        <td>
+            {{$user->readable_date}}
         </td>
         <td>
             @if($user->status === 'ok')
@@ -22,18 +34,6 @@
             @else
                 <div class="badge badge-danger">Yasaklı</div>
             @endif
-        </td>
-        <td>{{$user->readable_date}}</td>
-        <td>
-            <div class="btn-group dropleft">
-                <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"></button>
-                <div class="dropdown-menu dropleft actions" data-id="{{$user->user_id}}">
-                    <a class="dropdown-item has-icon" href="javascript:;" style="color:green;" id="unban"><i class="ion ion-ios-checkmark"></i>Yasağı Kaldır</a>
-                    <a class="dropdown-item has-icon" href="javascript:;" id="ban"><i class="ion ion-android-alert"></i>Yasakla</a>
-                    <a class="dropdown-item has-icon" href="javascript:;" id="delete" style="color:red;"><i class="far fa-trash-alt"></i>Kalıcı Olarak Sil</a>
-                </div>
-            </div>
         </td>
     </tr>
 @endforeach

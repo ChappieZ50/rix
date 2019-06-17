@@ -1548,56 +1548,81 @@ meta_id</ColNames>
       <DataType>varchar(191)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="241" name="email">
+    <column id="346" parent="241" name="avatar_data">
       <Position>6</Position>
-      <DataType>varchar(191)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="241" name="password">
+    <column id="347" parent="241" name="email">
       <Position>7</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="241" name="role">
+    <column id="348" parent="241" name="password">
       <Position>8</Position>
+      <DataType>varchar(60)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="349" parent="241" name="role">
+      <Position>9</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="349" parent="241" name="readable_date">
-      <Position>9</Position>
+    <column id="350" parent="241" name="readable_date">
+      <Position>10</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="350" parent="241" name="remember_token">
-      <Position>10</Position>
+    <column id="351" parent="241" name="status">
+      <Position>11</Position>
+      <DataType>varchar(191)|0s</DataType>
+      <DefaultExpression>&apos;ok&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="352" parent="241" name="status_data">
+      <Position>12</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="353" parent="241" name="remember_token">
+      <Position>13</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="241" name="created_at">
-      <Position>11</Position>
+    <column id="354" parent="241" name="created_at">
+      <Position>14</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="241" name="updated_at">
-      <Position>12</Position>
+    <column id="355" parent="241" name="updated_at">
+      <Position>15</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="353" parent="241" name="rix_users_email_unique">
+    <index id="356" parent="241" name="rix_users_username_unique">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="357" parent="241" name="rix_users_email_unique">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="354" parent="241" name="PRIMARY">
+    <key id="358" parent="241" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="355" parent="241" name="rix_users_email_unique">
+    <key id="359" parent="241" name="rix_users_username_unique">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>rix_users_username_unique</UnderlyingIndexName>
+    </key>
+    <key id="360" parent="241" name="rix_users_email_unique">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>rix_users_email_unique</UnderlyingIndexName>
     </key>

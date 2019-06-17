@@ -10,7 +10,3 @@ $(document).on('click','[data-checkboxes]',function () {
         all.prop('checked', false);
     }
 });
-/*
-$("#sortable-table tbody").sortable({
-  handle: '.sort-handler'
-});*/

@@ -25,7 +25,7 @@ class MessagesController extends Controller
             });
         }
         return view('rix.messages')->with([
-            'messages' => $messages['messages']->paginate(3),
+            'messages' => $messages['messages']->paginate(20),
             'typeData' => $messages['count']
         ]);
     }

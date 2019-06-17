@@ -2,7 +2,9 @@ $('#apply').on('click', function () {
     applyMultipleSelect('subscriptions',subscriptions)
 });
 $('.actions a').on('click', function () {
-    applySingleSelect($(this),subscriptions);
+    if(confirm('Bunu yapmak istediğinizden emin misiniz ?')){
+        applySingleSelect($(this),subscriptions)
+    }
 });
 $('#searchInSubscriptions').keyup(function (e) {
     if (e.keyCode === 13 && $.trim($(this).val()).length > 0)

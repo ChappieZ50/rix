@@ -1,5 +1,11 @@
-<a href="{{route('rix_messages')}}"   @if(!$typeData->type || $typeData->type != 'read' && $typeData->type != 'unread' && $typeData->type != 'trash')  class="page-active" @endif>Hepsi <span class="count"> ({{$typeData->all}})</span></a>
-
-@if(!empty($typeData->read))<a href="{{route('rix_messages',['status' => 'read'])}}" @if($typeData->type == 'read')  class="page-active" @endif>Okunmuş <span class="count"> ({{$typeData->read}})</span></a>@endif
-@if(!empty($typeData->unread))<a href="{{route('rix_messages',['status' => 'unread'])}}" @if($typeData->type == 'unread')  class="page-active" @endif> Okunmamış <span class="count"> ({{$typeData->unread}})</span></a>@endif
-@if(!empty($typeData->trash))<a href="{{route('rix_messages',['status' => 'trash'])}}" @if($typeData->type == 'trash')  class="page-active" @endif> Çöp <span class="count"> ({{$typeData->trash}})</span></a>@endif
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-0">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    {!! \App\Helpers\Helper::createTablePagesBar($typeData, (object) ['all' => 'Hepsi' ,'read' => 'Okunmuş','unread' => 'Okunmamış','trash' => 'Çöp'],'rix_messages','status') !!}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

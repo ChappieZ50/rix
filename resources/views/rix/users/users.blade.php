@@ -47,76 +47,21 @@
                         </div>
                     </div>
                     <div class="float-right">
-                        <form>
                             <div class="input-group">
+                                <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">
+                                    Aramadan Çık
+                                </button>
                                 <input type="text" class="form-control" id="searchInUsers" placeholder="Kullanıcı Ara" value="{{Request::get('search')}}">
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary" id="searchInUsersBtn"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        </form>
                     </div>
 
                     <div class="clearfix mb-3"></div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tr>
-                                <th>
-                                    <div class="custom-checkbox custom-control text-center">
-                                        <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input"
-                                               id="checkbox-records">
-                                        <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
-                                    </div>
-                                </th>
-                                <th>Adı</th>
-                                <th>Avatar</th>
-                                <th>Rol</th>
-                                <th>Oluşturma Tarihi</th>
-                                <th>Durum</th>
-                            </tr>
-                            @if($users->isNotEmpty())
-                                @foreach($users as $user)
-                                    <tr>
-                                        <td class="p-0 text-center">
-                                            <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" data-checkbox="records" class="custom-control-input" value="{{$user->user_id}}"
-                                                       id="checkbox-{{$user->user_id}}">
-                                                <label for="checkbox-{{$user->user_id}}" class="custom-control-label">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {{$user->username}}
-                                            <div class="table-links">
-                                                <a href="#" class="text-primary">Düzenle</a>
-                                                <div class="bullet"></div>
-                                                <a href="#">Yasakla</a>
-                                                <div class="bullet"></div>
-                                                <a href="#" class="text-success">Yasağı Kaldır</a>
-                                                <div class="bullet"></div>
-                                                <a href="#" class="text-danger">Kalıcı Olarak Sil</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="/rix/assets/img/avatar/avatar-5.png" class="rounded-circle" width="45">
-                                        </td>
-                                        <td>
-                                            {{$user->role}}
-                                        </td>
-                                        <td>
-                                            {{$user->readable_date}}
-                                        </td>
-                                        <td>
-                                            @if($user->status === 'ok')
-                                                <div class="badge badge-primary">Aktif</div>
-                                            @else
-                                                <div class="badge badge-danger">Yasaklı</div>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </table>
+                    <div class="table-responsive usersTable">
+                        @include('rix.layouts.components.users.table')
                         <div class="pagination float-right mr-3 mt-3">{{$users->appends($_GET)->links()}}</div>
                         @if($users->isEmpty())
                             <div class="pl-3 pb-3">

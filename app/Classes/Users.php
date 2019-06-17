@@ -106,7 +106,7 @@ class Users
         $users = self::getUsers($options);
         return [
             'users' => $users,
-            'count'    => $count
+            'count' => $count
         ];
     }
 }

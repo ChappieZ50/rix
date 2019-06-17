@@ -153,7 +153,7 @@ class Helper
         ]);
     }
 
-    static function createTablePagesBar($typeData, $names,$render = false)
+    static function createTablePagesBar($typeData, $names,$routeName,$param = 'type',$render = true)
     {
         $type = $typeData->type;
         unset($typeData->type);
@@ -161,7 +161,7 @@ class Helper
         foreach ($typeData as $key => $value) {
             $aClass = 'nav-link';
             $spanClass = 'badge badge-primary';
-            $href = $key !== 'all' ? route('rix_users', [ 'type' => $key ]) : route('rix_users');
+            $href = $key !== 'all' ? route($routeName, [ $param => $key ]) : route($routeName);
             if ($type === $key) {
                 $aClass = 'nav-link active';
                 $spanClass = 'badge badge-white';

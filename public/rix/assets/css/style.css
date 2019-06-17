@@ -53,9 +53,7 @@
 a {
     color: #6777ef;
     font-weight: 500;
-    transition: all .5s;
-    -webkit-transition: all .5s;
-    -o-transition: all .5s; }
+}
 
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .ion,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fas,

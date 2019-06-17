@@ -8,8 +8,36 @@
             </div>
         </td>
         <td>
-            {{$message->name}}
-            <br>
+            <div class="mt-2">
+                {{$message->name}}
+            </div>
+            <div class="table-links actions" data-id="{{$message->message_id}}" data-status="{{$message->status}}">
+                @if(Request::get('status') === 'unread')
+                    <a href="javascript:;" class="text-success" id="read">Okundu</a>
+                    <div class="bullet"></div>
+                @elseif (Request::get('status') === 'read')
+                    <a href="javascript:;" class="text-danger" id="unread">Okunmadı</a>
+                    <div class="bullet"></div>
+                @endif
+                @if(!Request::get('status') || Request::get('status') != 'read' &&  Request::get('status') != 'unread' &&  Request::get('status') != 'trash')
+                    @if($message->status === 'unread')
+                        <a href="javascript:;" class="text-success" id="read">Okundu</a>
+                        <div class="bullet"></div>
+                    @elseif($message->status === 'read')
+                        <a href="javascript:;" class="text-danger" id="unread">Okunmadı</a>
+                        <div class="bullet"></div>
+                    @endif
+                @endif
+                @if(Request::get('status') === 'trash')
+                    <a href="javascript:;" class="text-success" id="untrash">Geri Al</a>
+                    <div class="bullet"></div>
+                    <a href="javascript:;" class="text-danger" id="unread">Kalıcı Olarak Sil</a>
+                @else
+                    <a href="javascript:;" class="text-danger" id="trash">Çöpe Taşı</a>
+                @endif
+            </div>
+        </td>
+        <td>
             <a href="javascript:;">{{$message->email}}</a>
         </td>
         <td>
@@ -19,41 +47,5 @@
             {{$message->message}}
         </td>
         <td>{{$message->readable_date}}</td>
-        <td>
-            <div class="btn-group dropleft">
-                <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"></button>
-                <div class="dropdown-menu dropleft actions" data-id="{{$message->message_id}}" data-status="{{$message->status}}">
-                    @if(Request::get('status') === 'unread')
-                        <a class="dropdown-item has-icon" href="javascript:;" style="color:green;" id="read"><i
-                                    class="ion ion-ios-checkmark"></i>
-                            Okundu</a>
-                    @elseif (Request::get('status') === 'read')
-                        <a class="dropdown-item has-icon" href="javascript:;" id="unread" style="color:red"><i class="ion ion-close-circled"></i>Okunmadı</a>
-                    @endif
-                    @if(!Request::get('status') || Request::get('status') != 'read' &&  Request::get('status') != 'unread' &&  Request::get('status') != 'trash')
-                        @if($message->status === 'unread')
-                            <a class="dropdown-item has-icon" href="javascript:;" style="color:green;" id="read"><i
-                                        class="ion ion-ios-checkmark"></i>
-                                Okundu</a>
-                        @elseif($message->status === 'read')
-                            <a class="dropdown-item has-icon" href="javascript:;" id="unread" style="color:red;"><i
-                                        class="ion ion-close-circled"></i>
-                                Okunmadı</a>
-                        @endif
-                    @endif
-                    @if(Request::get('status') === 'trash')
-                        <a class="dropdown-item has-icon" href="javascript:;" style="color:green;" id="untrash"><i
-                                    class="ion ion-ios-checkmark"></i>
-                            Geri Al</a>
-                        <a class="dropdown-item has-icon" href="javascript:;" id="delete" style="color:red;"><i
-                                    class="far fa-trash-alt"></i>Kalıcı Olarak Sil</a>
-                    @else
-                        <a class="dropdown-item has-icon" href="javascript:;" id="trash" style="color:red;"><i class="far fa-trash-alt"></i>Çöpe
-                            Taşı</a>
-                    @endif
-                </div>
-            </div>
-        </td>
     </tr>
 @endforeach
