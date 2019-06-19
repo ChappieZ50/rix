@@ -28,12 +28,9 @@ class Posts
         $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
-        return $records;
-    }
-
-    static function getPostCount($column = '', $value = '')
-    {
-        return !empty($column) && !empty($value) ? ModelPosts::where($column, $value)->count() : ModelPosts::count();
+        return $records->whereHas('user',function ($query){
+            $query->where('status','ok');
+        });
     }
 
     static function renderPosts($viewData, $blade)
@@ -45,29 +42,32 @@ class Posts
     static function getRenderedPosts($type = '')
     {
         $records = $type == 'open' || empty($type) ? self::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => [ 'closed', 'open' ] ]) : self::getPosts([ 'wherePostColumn' => 'status', 'wherePostValue' => $type ]);
-        $viewData = self::getViewData([ 'type' => $type ]);
-        $viewData['posts'] = $records->paginate(20);
-        $posts = self::renderPosts($viewData, 'rix.layouts.components.posts.posts.posts-table');
+        $typeData = self::getTypeData([ 'type' => $type ]);
+        $posts = self::renderPosts([ 'posts' => $records->paginate(20), 'typeData' => $typeData ], 'rix.layouts.components.posts.posts.table');
         return $posts;
     }
 
-    static function getViewData($custom = [])
+    static function getTypeData($custom = [])
     {
-        $viewData = [
-            'all'    => self::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => [ 'closed', 'open' ] ])->count(),
-            'open'   => self::getPostCount('status', 'open'),
-            'closed' => self::getPostCount('status', 'closed'),
-            'trash'  => self::getPostCount('status', 'trash'),
-            'type'   => ''
+        $all = [ 'whereInPostColumn' => 'status', 'whereInPostValue' => [ 'closed', 'open' ] ];
+        $open = [ 'wherePostColumn' => 'status', 'wherePostValue' => 'open' ];
+        $closed = [ 'wherePostColumn' => 'status', 'wherePostValue' => 'closed' ];
+        $trash = [ 'wherePostColumn' => 'status', 'wherePostValue' => 'trash' ];
+
+        $typeData = [
+            'all'    => self::getPosts($all)->count(),
+            'open'   => self::getPosts($open)->count(),
+            'closed' => self::getPosts($closed)->count(),
+            'trash'  => self::getPosts($trash)->count(),
         ];
         if (!empty($custom))
-            $viewData = array_merge($viewData, $custom);
-        return $viewData;
+            $typeData = array_merge($typeData, $custom);
+        return (object)$typeData;
     }
 
     static function getRenderedTablePagesBar($custom = [])
     {
-        return self::renderPosts(self::getViewData($custom), 'rix.layouts.components.posts.posts.table-pages-bar');
+        return self::renderPosts([ 'typeData' => self::getTypeData($custom) ], 'rix.layouts.components.posts.posts.pages-bar');
     }
 
     static function toTrash($request)

@@ -13,6 +13,7 @@ $(document).on('click', '.newTag #publish', function () {
         ajaxCheckStatus(res, {successMessage: 'Etiket Başarıyla Eklendi', area: area});
         if (res.status !== false) {
             if ($('#closeSearch').is(':hidden')) {
+                $('.no-results').hide();
                 $('#tags').html(res.html);
             }
             progressForPublish(0, area);
@@ -28,15 +29,15 @@ $(document).on('click', '.newTag #publish', function () {
 
 function deleteTags(ids) {
     simplePost({ids: ids}, tag, 'delete').done(function (res) {
-        ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi', area: '.newTag'});
-        $('#tags').html(res.html);
+        if(ajaxCheckStatus(res))
+            location.reload();
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
         console.log(res.responseText);
     })
 }
 
-$(document).on('click', '.newTag #deleteInTable', function () {
+$(document).on('click', '.tags #deleteInTable', function () {
     $('select[name=action]').each(function () {
         if ($(this).val() == 'delete') {
             let values = $('#tags input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
@@ -47,7 +48,7 @@ $(document).on('click', '.newTag #deleteInTable', function () {
         }
     });
 });
-$(document).on('click', '.newTag #singleDeleteInTable', function () {
+$(document).on('click', '.tags #singleDeleteInTable', function () {
     if (confirm('Silmek istediğinizden emin misiniz ?')) {
         let id = $(this).attr('data-id');
         if (id.length > 0)

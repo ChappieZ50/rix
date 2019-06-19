@@ -51,11 +51,12 @@ function multipleDelete(variable, area) {
                 if (values.length > 0) {
                     simplePost({ids: values}, category, 'delete').done(function (res) {
                         if (res.confirm) {
-                            confirmParentCategories(res)
+                            confirmParentCategories(res);
                         } else {
-                            ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi',errorMessage: ''});
-                            parseRendered(res);
+                            if (ajaxCheckStatus(res))
+                                location.reload();
                         }
+
                     }).fail(function (res) {
                         ajaxCheckStatus(res, {status: 500});
                         console.log(res.responseText);
@@ -78,12 +79,8 @@ function singleDelete(variable) {
                     if (res.confirm) {
                         confirmParentCategories(res, variable);
                     } else {
-                        parseRendered(res);
-                        ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi',errorMessage:''});
-                        if (variable === '#singleDeleteInParents' && res.status !== false) {
-                            console.log('Remove');
-                            $(variable).closest('tr').remove();
-                        }
+                        if (ajaxCheckStatus(res))
+                            location.reload();
                     }
 
                 }).fail(function (res) {
@@ -103,7 +100,7 @@ function confirmParentCategories(res, variable = '') {
             if (variable === '#singleDeleteInParents' && res.status !== false) {
                 $(variable).closest('tr').remove();
             }
-            ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi',errorMessage:''});
+            ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi', errorMessage: ''});
         }).fail(function (response) {
             ajaxCheckStatus(response, {status: 500});
             console.log(response.responseText);
@@ -167,16 +164,4 @@ $('#searchCategoriesBtn').on('click', function () {
 function searchInCategories(value) {
     let url = searchInTable(value);
     window.location.href = category + url;
-}
-
-function closeSearch() {
-    $('#closeSearch').hide();
-    $('#searchInCategories').val('');
-    simplePost({action: 'getTable'}, category, 'get').done(function (res) {
-        console.log(res);
-        $('#categoriesTable').html(res.html);
-    }).fail(function (res) {
-        console.log(res.responseText);
-        ajaxCheckStatus(res, {status: 500});
-    });
 }

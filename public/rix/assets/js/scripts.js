@@ -771,8 +771,8 @@ function applyMultipleSelect(id, url, message = 'Bunu yapmak istediğinden emin 
             let data = $('#' + id + ' input[type=checkbox]:checked').not('[data-checkbox-role]').map(function () {
                 return {id: this.value, status: $(this).attr('data-status')};
             }).get();
-             if (data.length > 0)
-                 doAction(data, value, url);
+            if (data.length > 0)
+                doAction(data, value, url);
         }
     }
 }
@@ -783,6 +783,7 @@ function applySingleSelect(element, url) {
         status = element.closest('div').attr('data-status');
     doAction([{id: dataID, status: status}], action, url);
 }
+
 function previewImage(preview) {
     var reader = new FileReader();
     reader.onload = function (e) {
@@ -791,13 +792,15 @@ function previewImage(preview) {
     };
 
     $("#avatar").change(function () {
-        readURL(this,reader);
+        readURL(this, reader);
     });
 }
-function readURL(input,reader) {
+
+function readURL(input, reader) {
     if (input.files && input.files[0])
         reader.readAsDataURL(input.files[0]);
 }
+
 function removeURLParameter(url, parameter) {
     //prefer to use l.search if you have a location/link object
     var urlparts = url.split('?');

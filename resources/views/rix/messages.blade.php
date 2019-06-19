@@ -31,7 +31,7 @@
                         <div class="d-flex justify-content-start align-items-start">
                             <select class="form-control" name="action" data-area="#messages"
                                     style="border-radius: 0 !important;height: 30px;padding: 5px;width: 140px;">
-                                <option>Seçilene Uygula</option>
+                                <option value="">Seçilene Uygula</option>
                                 <option value="read">Okundu</option>
                                 @if(Request::get('status') !== 'unread')
                                     <option value="unread">Okunmadı</option>

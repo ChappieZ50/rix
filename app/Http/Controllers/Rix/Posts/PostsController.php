@@ -14,14 +14,15 @@ class PostsController extends Controller
 {
     public function get_posts(Request $request)
     {
-        $type = $request->get('type');
-        $viewData = Posts::getViewData([ 'type' => $type ]);
         if ($request->get('search'))
-            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')));
+            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')))->with('user');
         else
-            $records = Posts::getPosts([ 'whereInPostColumn' => 'status', 'whereInPostValue' => Posts::pageType($type) ]);
-        $viewData['posts'] = $records->paginate(20);
-        return view('rix.posts.posts')->with($viewData);
+            $records = Posts::getPosts()->whereIn('status', Posts::pageType($request->get('type')))->with('user');
+        $typeData = Posts::getTypeData([ 'type' => $request->get('type') ]);
+        return view('rix.posts.posts')->with([
+            'typeData' => $typeData,
+            'posts'    => $records->paginate(20),
+        ]);
     }
 
     public function new_post(Request $request)

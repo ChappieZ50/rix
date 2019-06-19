@@ -109,4 +109,54 @@ class Users
             'count' => $count
         ];
     }
+
+    static function actionUsers($request)
+    {
+        $ids = Helper::getIds($request->input('data'));
+        if (!empty($ids)) {
+            if ($request->input('action') === 'delete') {
+                return ModelUsers::destroy($ids);
+            } else {
+                foreach ($ids as $id) {
+                    $user = ModelUsers::where('user_id', $id)->select('user_id', 'created_at', 'status_data','status')->first();
+                    if (!empty($user)) {
+                        $find = ModelUsers::where('user_id', $user->user_id);
+                        $statusData = json_decode($user->status_data);
+                        if ($request->input('action') === 'ban' && $user->status !== 'banned') {
+                            $find->update([
+                                'status'      => 'banned',
+                                'status_data' => self::createUserStatusData(isset($statusData->prohibition) ? $statusData->prohibition : 0)
+                            ]);
+                        } elseif ($request->input('action') === 'unban' && $user->status === 'banned') {
+                            $find->update([
+                                'status'      => 'ok',
+                                'status_data' => self::updateUserStatusData(isset($statusData->bannedTime) ? $statusData->bannedTime : null, isset($statusData->prohibition) ? $statusData->prohibition : 1)
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    static function createUserStatusData($prohibition)
+    {
+        return json_encode([
+            'bannedReadableTime' => Helper::readableDateFormat('%d %B %Y %H:%M'),
+            'bannedTime'         => date('Y-m-d H:i:s'),
+            'status'             => 'Yasaklı',
+            'prohibition'        => $prohibition + 1,
+        ]);
+    }
+
+    static function updateUserStatusData($bannedTime, $prohibition)
+    {
+        return json_encode([
+            'unbannedReadableTime' => Helper::readableDateFormat('%d %B %Y %H:%M'),
+            'unbannedTime'         => date('Y-m-d H:i:s'),
+            'prohibitedTime'       => Helper::getTimeDiff($bannedTime),
+            'prohibition'          => $prohibition,
+            'status'               => 'Yasak Kaldırıldı',
+        ]);
+    }
 }

@@ -15,6 +15,7 @@
 @section('js')
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
     <script src="/rix/assets/js/simple-post.js"></script>
+    <script src="/rix/assets/js/page/user.js"></script>
 @endsection
 
 @section('section_header_bottom')
@@ -36,9 +37,13 @@
                         <div class="d-flex justify-content-start align-items-start">
                             <select class="form-control" name="action" data-area="#users"
                                     style="border-radius: 0 !important;height: 30px;padding: 5px;width: 140px;">
-                                <option>Seçilene Uygula</option>
-                                <option value="ban">Yasakla</option>
-                                <option value="unban">Yasağı Kaldır</option>
+                                <option value="">Seçilene Uygula</option>
+                                @if(Request::get('type') === 'banned')
+                                    <option value="unban">Yasağı Kaldır</option>
+                                @else
+                                    <option value="unban">Yasağı Kaldır</option>
+                                    <option value="ban">Yasakla</option>
+                                @endif
                                 <option value="delete">Kalıcı Olarak Sil</option>
                             </select>
                             <button type="button" class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" id="apply">
@@ -47,15 +52,15 @@
                         </div>
                     </div>
                     <div class="float-right">
-                            <div class="input-group">
-                                <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">
-                                    Aramadan Çık
-                                </button>
-                                <input type="text" class="form-control" id="searchInUsers" placeholder="Kullanıcı Ara" value="{{Request::get('search')}}">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" id="searchInUsersBtn"><i class="fas fa-search"></i></button>
-                                </div>
+                        <div class="input-group">
+                            <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">
+                                Aramadan Çık
+                            </button>
+                            <input type="text" class="form-control" id="searchInUsers" placeholder="Kullanıcı Ara" value="{{Request::get('search')}}">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" id="searchInUsersBtn"><i class="fas fa-search"></i></button>
                             </div>
+                        </div>
                     </div>
 
                     <div class="clearfix mb-3"></div>

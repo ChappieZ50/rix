@@ -29,7 +29,6 @@
                                 <th>Slug</th>
                                 <th>Toplam</th>
                                 <th>Oluşturma Tarihi</th>
-                                <th>İşlem</th>
                             </tr>
                             @foreach($parentCategories->records as $category)
                                 <tr>
@@ -40,22 +39,19 @@
                                             <label for="parent-checkbox-{{$category->term_id}}" class="custom-control-label">&nbsp;</label>
                                         </div>
                                     </td>
-                                    <td>{{$category->name}}</td>
+                                    <td>
+                                        {{$category->name}}
+                                        <div class="table-links actions">
+                                            <a href="{{route('rix_categories',['action' => 'edit','id' => $category->term_id])}}" class="text-primary">Düzenle</a>
+                                            <div class="bullet"></div>
+                                            <a href="#" class="text-danger" id="singleDeleteInParents" data-id="{{$category->term_id}}">Sil</a>
+                                            <div class="bullet"></div>
+                                            <a href="#" class="text-primary" target="_blank">Git</a>
+                                        </div>
+                                    </td>
                                     <td>{{$category->slug}}</td>
                                     <td>{{$category->count}}</td>
                                     <td>{{$category->readable_date}}</td>
-                                    <td>
-                                        <div class="btn-group dropleft">
-                                            <button type="button" class="btn custom-btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                            <div class="dropdown-menu dropleft">
-                                                <a class="dropdown-item has-icon" href="#"><i class="far fa-edit"></i> Düzenle</a>
-                                                <a class="dropdown-item has-icon" href="javascript:;" id="singleDeleteInParents" style="color:red;" data-id="{{$category->term_id}}"><i class="far
-                                                fa-trash-alt"></i>
-                                                    Sil</a>
-                                                <a class="dropdown-item has-icon" href="#" target="_blank"><i class="fas fa-share"></i> Git</a>
-                                            </div>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </table>

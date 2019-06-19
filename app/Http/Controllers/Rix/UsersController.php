@@ -7,7 +7,7 @@ use App\Helpers\Helper;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Carbon;
 class UsersController extends Controller
 {
     public function get_users(Request $request)
@@ -38,7 +38,8 @@ class UsersController extends Controller
 
     public function action_users(Request $request)
     {
-
+        if($request->ajax())
+            return Users::actionUsers($request);
     }
 
     public function action_user(Request $request)

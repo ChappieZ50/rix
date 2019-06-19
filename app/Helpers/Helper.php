@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use PhpParser\Node\Expr\Cast\Object_;
 
@@ -43,11 +44,11 @@ class Helper
     }
 
 
-    static function readableDateFormat()
+    static function readableDateFormat($localized = '%d %B %Y')
     {
-        $months = __('date');
-        $month = $months[date('m') - 1];
-        return date('j ') . $month . date(' Y ');
+        $datetime = Carbon::createFromDate(date('Y-m-d H:i:s'));
+        setlocale(LC_TIME, 'tr_TR.utf8');
+        return $datetime->formatLocalized($localized);
     }
 
     static function fileSize($size)
@@ -153,7 +154,7 @@ class Helper
         ]);
     }
 
-    static function createTablePagesBar($typeData, $names,$routeName,$param = 'type',$render = true)
+    static function createTablePagesBar($typeData, $names, $routeName, $param = 'type', $render = true)
     {
         $type = $typeData->type;
         unset($typeData->type);
@@ -176,9 +177,21 @@ class Helper
             $html[] = '</a>';
             $html[] = ' </li>';
         }
-        if(!$render)
+        $typeData->type = $type;
+        if (!$render)
             return $html;
-        foreach($html as $item)
+        foreach ($html as $item)
             echo $item;
+    }
+
+    static function getTimeDiff($time2, $time1 = null, $output = true)
+    {
+        $time1 = empty($time1) ? date('Y-m-d H:i:s') : $time1;
+        $time = Carbon::parse($time1);
+        $date = $time->diff(Carbon::parse($time2));
+        if ($output === false)
+            return $date;
+
+        return $date->m . " Ay " . $date->d . " Gün " . $date->h . " Saat " . $date->i . " Dakika " . $date->s . " Saniye ";
     }
 }

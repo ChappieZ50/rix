@@ -26,5 +26,25 @@ $(document).ready(function () {
             ajaxCheckStatus(res, {status: 500});
         });
     });
-
 });
+$('#apply').on('click', function () {
+    applyMultipleSelect('users',users);
+});
+$('.actions a').not('#edit').on('click', function () {
+    if(confirm('Bunu yapmak istediğinizden emin misiniz ?'))
+        applySingleSelect($(this),users);
+});
+$('#searchInUsers').keyup(function (e) {
+    if (e.keyCode === 13 && $.trim($(this).val()).length > 0)
+        searchInUsers($.trim($(this).val()));
+});
+$('#searchInUsersBtn').on('click', function () {
+    let input = $('#searchInUsers');
+    if ($.trim(input.val()).length > 0)
+        searchInUsers($.trim(input.val()));
+});
+function searchInUsers(value) {
+    let url = searchInTable(value);
+    window.location.href = users + url;
+}
+

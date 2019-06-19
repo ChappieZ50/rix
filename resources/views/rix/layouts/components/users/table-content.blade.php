@@ -9,14 +9,17 @@
         </td>
         <td>
             {{$user->username}}
-            <div class="table-links">
-                <a href="#" class="text-primary">Düzenle</a>
+            <div class="table-links actions" data-id="{{$user->user_id}}">
+                <a href="{{action('Rix\UsersController@get_user',$user->user_id)}}" class="text-primary" id="edit">Düzenle</a>
                 <div class="bullet"></div>
-                <a href="#">Yasakla</a>
-                <div class="bullet"></div>
-                <a href="#" class="text-success">Yasağı Kaldır</a>
-                <div class="bullet"></div>
-                <a href="#" class="text-danger">Kalıcı Olarak Sil</a>
+                @if(Request::get('type') === 'banned' || $user->status === 'banned')
+                    <a href="#" class="text-success" id="unban">Yasağı Kaldır</a>
+                    <div class="bullet"></div>
+                @else
+                    <a href="#" class="text-dark" id="ban">Yasakla</a>
+                    <div class="bullet"></div>
+                @endif
+                <a href="#" class="text-danger" id="delete">Kalıcı Olarak Sil</a>
             </div>
         </td>
         <td>

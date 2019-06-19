@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row mt-4 tags">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -32,7 +32,7 @@
                     @include('rix.layouts.components.posts.tags.table')
                     <div class="pagination float-right mr-3 mt-3">{{$tags->appends($_GET)->links()}}</div>
                     @if($tags->isEmpty())
-                        <div class="pl-3 pb-3">
+                        <div class="pl-3 pb-3 no-results">
                             <span style="font-size: 15px;color:gray;">Etiket Bulunamadı</span>
                         </div>
                     @endif

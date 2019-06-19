@@ -10,7 +10,9 @@
             {{$tag->name}}
             <div class="table-links actions">
                 <a href="{{route('rix_tags',['action' => 'edit','id' => $tag->term_id])}}" class="text-primary">Düzenle</a>
+                <div class="bullet"></div>
                 <a href="#" class="text-primary" target="_blank">Git</a>
+                <div class="bullet"></div>
                 <a href="#" class="text-danger" id="singleDeleteInTable" data-id="{{$tag->term_id}}">Sil</a>
             </div>
         </td>
