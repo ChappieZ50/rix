@@ -14,4 +14,8 @@ class Users extends Model
     {
         return $this->hasMany(Posts::class);
     }
+    public function image()
+    {
+        return $this->morphOne(ImageRelationships::class, 'imageable', 'meta_type', 'meta_id');
+    }
 }

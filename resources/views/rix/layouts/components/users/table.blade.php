@@ -7,7 +7,8 @@
                 <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
             </div>
         </th>
-        <th>Adı</th>
+        <th>Kullanıcı Adı</th>
+        <th>İsmi</th>
         <th>Avatar</th>
         <th>Rol</th>
         <th>Oluşturma Tarihi</th>

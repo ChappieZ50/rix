@@ -27,6 +27,32 @@ $(document).ready(function () {
         });
     });
 });
+$('#resetPassword').on('click',function () {
+    let auth = $(this).attr('data-auth'),
+        html = '    <div class="form-group row mb-2">\n' +
+            '        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre</label>\n' +
+            '        <div class="col-sm-12 col-md-7">\n' +
+            '            <input type="password" class="form-control" name="password">\n' +
+            '            <div class="invalid-feedback" data-name="password"></div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '    <div class="form-group row mb-2">\n' +
+            '        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre Tekrar</label>\n' +
+            '        <div class="col-sm-12 col-md-7">\n' +
+            '            <input type="password" class="form-control" name="password_confirmation">\n' +
+            '            <div class="invalid-feedback" data-name="password_confirmation"></div>\n' +
+            '        </div>\n' +
+            '    </div>';
+    if(auth !== 'self'){
+        if(confirm('Başka bir kullanıcının profilini güncelliyorsunuz. Bunu yapmak istediğinizden emin misin?')){
+            $(this).hide();
+            $('.password_area').html(html);
+        }
+    }else{
+        $(this).hide();
+        $('.password_area').html(html);
+    }
+});
 $('#apply').on('click', function () {
     applyMultipleSelect('users',users);
 });
@@ -47,4 +73,3 @@ function searchInUsers(value) {
     let url = searchInTable(value);
     window.location.href = users + url;
 }
-

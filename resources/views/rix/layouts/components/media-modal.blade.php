@@ -4,31 +4,35 @@
             <div class="modal-header">
                 <h1 class="modal-title"><strong>Resim Galerisi</strong></h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
+                            aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab2" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link" id="add-media-tab" data-toggle="tab" href="#add-media" role="tab"
-                            aria-controls="add-media" aria-selected="false">Resim Yükle</a>
+                           aria-controls="add-media" aria-selected="false">Resim Yükle</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab"
-                            aria-controls="media" aria-selected="true">Resim Seç</a>
+                           aria-controls="media" aria-selected="true">Resim Seç</a>
                     </li>
                 </ul>
                 <div class="tab-content tab-bordered media-tabs-content" id="media-tabs-content">
                     {{-- Tab 1 --}}
                     <div class="tab-pane fade add-media-tab" id="add-media" role="tabpanel"
-                        aria-labelledby="add-media-tab">
+                         aria-labelledby="add-media-tab">
                         @include('rix.layouts.components.media.new_media')
                     </div>
                     {{-- Tab 2--}}
                     <div class="tab-pane fade show active media-tab" id="media" role="tabpanel" aria-labelledby="media-tab">
                         <div class="media-content">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Galeride ara...">
+                            <div class="form-group mb-2 d-flex align-items-center" id="mediaModalActions">
+                                <input type="text" class="form-control" id="searchInGallery" placeholder="Galeride Ara">
+                                <button class="btn btn-primary btn-sm" id="all">Hepsi</button>
+                                <button class="btn btn-outline-primary btn-sm ml-1" id="posts">Yazılar</button>
+                                <button class="btn btn-outline-primary btn-sm ml-1" id="users">Kullanıcılar</button>
                             </div>
+                            <div class="clearfix"></div>
                             <div class="modal-media-items"></div>
                         </div>
                         <div class="media-details">
@@ -42,8 +46,11 @@
                                     <div class="date"></div>
                                     <div class="size"></div>
                                     <div class="pixels"></div>
-                                    <div class="delete-image"><button type="button" class="btn" id="delete_image">Resmi
-                                            Sil</button></div>
+                                    <div class="delete-image">
+                                        <button type="button" class="btn" id="delete_image">Resmi
+                                            Sil
+                                        </button>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="inputs mt-3">
@@ -51,8 +58,8 @@
                                         <label class="col-form-label col-12">URL</label>
                                         <div class="col-12">
                                             <input type="text" class="form-control" readonly
-                                                value=""
-                                                name="image_url">
+                                                   value=""
+                                                   name="image_url">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-4">
@@ -80,10 +87,10 @@
     </div>
 </div>
 @section('css')
-<link rel="stylesheet" href="/rix/assets/css/custom.css">
+    <link rel="stylesheet" href="/rix/assets/css/custom.css">
 @append
 @section('js')
-<script src="/rix/assets/js/endless-scroll.js"></script>
-<script src="/rix/assets/js/media-modal.js"></script>
-<script src="/rix/assets/js/simple-post.js"></script>
+    <script src="/rix/assets/js/endless-scroll.js"></script>
+    <script src="/rix/assets/js/media-modal.js"></script>
+    <script src="/rix/assets/js/simple-post.js"></script>
 @append

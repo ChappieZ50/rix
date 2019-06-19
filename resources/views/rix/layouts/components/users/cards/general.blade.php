@@ -19,25 +19,31 @@
         <div class="invalid-feedback" data-name="email"></div>
     </div>
 </div>
-@isset($user)
-    <button class="btn btn-outline-primary" type="button">Şifreyi Sıfırla</button>
-
-@else
-    <div class="form-group row mb-2">
-        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre</label>
-        <div class="col-sm-12 col-md-7">
-            <input type="password" class="form-control" name="password">
-            <div class="invalid-feedback" data-name="password"></div>
+<div class="password_area">
+    @isset($user)
+        <div class="form-group row mb-2">
+            <div class="offset-md-3 offset-lg-3 offset-12"></div>
+            <div class="col-sm-12 col-md-7">
+                <button class="btn btn-outline-primary" type="button" id="resetPassword" data-auth="other">Şifreyi Sıfırla</button>
+            </div>
         </div>
-    </div>
-    <div class="form-group row mb-2">
-        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre Tekrar</label>
-        <div class="col-sm-12 col-md-7">
-            <input type="password" class="form-control" name="password_confirmation">
-            <div class="invalid-feedback" data-name="password_confirmation"></div>
+    @else
+        <div class="form-group row mb-2">
+            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre</label>
+            <div class="col-sm-12 col-md-7">
+                <input type="password" class="form-control" name="password">
+                <div class="invalid-feedback" data-name="password"></div>
+            </div>
         </div>
-    </div>
-@endisset
+        <div class="form-group row mb-2">
+            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre Tekrar</label>
+            <div class="col-sm-12 col-md-7">
+                <input type="password" class="form-control" name="password_confirmation">
+                <div class="invalid-feedback" data-name="password_confirmation"></div>
+            </div>
+        </div>
+    @endisset
+</div>
 @section('js')
     <script src="/rix/assets/js/custom.js"></script>
 @append

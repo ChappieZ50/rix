@@ -10,8 +10,13 @@ class Gallery extends Model
     protected $guarded = [];
     protected $primaryKey = 'image_id';
 
-    static function get_gallery($select = ['*'], $paginate,$order = 'desc')
+    static function get_gallery($select = [ '*' ], $paginate, $order = 'desc')
     {
-        return self::select($select)->orderBy('image_id',$order)->paginate($paginate);
+        return self::select($select)->orderBy('image_id', $order)->paginate($paginate);
+    }
+
+    public function image_relations()
+    {
+        return $this->hasMany(ImageRelationships::class,'image_id');
     }
 }

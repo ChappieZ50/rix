@@ -23,6 +23,9 @@
             </div>
         </td>
         <td>
+            {{$user->name}}
+        </td>
+        <td>
             <img src="/rix/assets/img/avatar/avatar-5.png" class="rounded-circle" width="45">
         </td>
         <td>

@@ -4,19 +4,26 @@ namespace App\Http\Controllers\Rix;
 
 use App\Classes\Users;
 use App\Helpers\Helper;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Carbon;
+
 class UsersController extends Controller
 {
     public function get_users(Request $request)
     {
         $type = [ 'type' => $request->get('type') ];
-        if($type['type'] === 'banned')
-            $data = Users::getUsersWithCount(['whereColumn' => 'status','whereValue' => 'banned'],$type);
+        if ($type['type'] === 'banned')
+            $data = Users::getUsersWithCount([ 'whereColumn' => 'status', 'whereValue' => 'banned' ], $type);
         else
-            $data = Users::getUsersWithCount(['whereColumn' => 'role','whereValue' => $type['type']],$type);
+            $data = Users::getUsersWithCount([ 'whereColumn' => 'role', 'whereValue' => $type['type'] ], $type);
+        if ($request->get('search')) {
+            $search = $request->get('search');
+            $data['users']->where(function ($query) use ($search) {
+                $query->where('username', 'like','%'.$search.'%')
+                    ->orWhere('name', 'like','%'.$search.'%')
+                    ->orWhere('email', 'like','%'.$search.'%');
+            });
+        }
         return view('rix.users.users')->with([
             'typeData' => $data['count'],
             'users'    => $data['users']->paginate(20)
@@ -38,7 +45,7 @@ class UsersController extends Controller
 
     public function action_users(Request $request)
     {
-        if($request->ajax())
+        if ($request->ajax())
             return Users::actionUsers($request);
     }
 
