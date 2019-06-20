@@ -12,6 +12,7 @@
         <th>Avatar</th>
         <th>Rol</th>
         <th>Oluşturma Tarihi</th>
+        <th>Yazı</th>
         <th>Durum</th>
     </tr>
     @if($users->isNotEmpty())

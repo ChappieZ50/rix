@@ -11,6 +11,7 @@
         <th>Kategoriler</th>
         <th>Etiketler</th>
         <th>Oluşturma Tarihi</th>
+        <th>Yazar</th>
         <th><i class="fas fa-comment-alt" style="font-size: 20px;"></i></th>
     </tr>
     @if($posts->isNotEmpty())

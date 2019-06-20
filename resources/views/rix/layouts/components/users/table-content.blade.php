@@ -19,20 +19,33 @@
                     <a href="#" class="text-dark" id="ban">Yasakla</a>
                     <div class="bullet"></div>
                 @endif
-                <a href="#" class="text-danger" id="delete">Kalıcı Olarak Sil</a>
+                <a href="javascript:;" class="text-danger" id="delete" @if($user->post_count > 0) data-target="post" @endif>Kalıcı Olarak Sil</a>
             </div>
         </td>
         <td>
             {{$user->name}}
         </td>
         <td>
-            <img src="/rix/assets/img/avatar/avatar-5.png" class="rounded-circle" width="45">
+            @if(empty($user->avatar))
+                <img src="/rix/assets/img/avatar/avatar-5.png" width="50">
+            @else
+                <img src="{{url('storage/avatars/'.$user->avatar)}}" width="50">
+            @endif
         </td>
         <td>
-            {{$user->role}}
+            @if($user->role === 'admin')
+                Yönetici
+            @elseif ($user->role === 'editor')
+                Yazar
+            @else
+                Kullanıcı
+            @endif
         </td>
         <td>
             {{$user->readable_date}}
+        </td>
+        <td>
+            {{$user->post_count}}
         </td>
         <td>
             @if($user->status === 'ok')
@@ -43,3 +56,4 @@
         </td>
     </tr>
 @endforeach
+@include('rix.layouts.components.users.move-modal')

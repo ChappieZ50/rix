@@ -30,9 +30,4 @@ class Posts extends Model
         return $this->belongsTo(Users::class,'author_id');
     }
 
-    public function image()
-    {
-        return $this->morphOne(ImageRelationships::class, 'imageable', 'meta_type', 'meta_id');
-    }
-
 }

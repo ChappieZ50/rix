@@ -19,14 +19,18 @@ class UsersController extends Controller
         if ($request->get('search')) {
             $search = $request->get('search');
             $data['users']->where(function ($query) use ($search) {
-                $query->where('username', 'like','%'.$search.'%')
-                    ->orWhere('name', 'like','%'.$search.'%')
-                    ->orWhere('email', 'like','%'.$search.'%');
+                $query->where('username', 'like', '%' . $search . '%')
+                    ->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
+        $data['admins'] = Users::getUsers();
         return view('rix.users.users')->with([
             'typeData' => $data['count'],
-            'users'    => $data['users']->paginate(20)
+            'users'    => $data['users']->withCount(['post' => function($query){
+                $query->where('status','!=','trash');
+            }])->paginate(20),
+            'admins' => $data['admins']->whereIn('role', ['admin','editor'])->where('user_id','!=',1)->get(),
         ]);
     }
 
@@ -51,14 +55,9 @@ class UsersController extends Controller
 
     public function action_user(Request $request)
     {
-        $validator = Users::validateUser($request);
-        if ($validator->isEmpty()) {
-            if ($request->input('id')) {
-                // Will be update
-            } else {
-                return Users::createUser($request);
-            }
-        }
-        return Helper::response(false, '', [ 'errors' => $validator ]);
+        if ($request->input('id'))
+            return Users::updateUser($request);
+        else
+            return Users::createUser($request);
     }
 }

@@ -15,9 +15,9 @@ class PostsController extends Controller
     public function get_posts(Request $request)
     {
         if ($request->get('search'))
-            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')))->with('user');
+            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')));
         else
-            $records = Posts::getPosts()->whereIn('status', Posts::pageType($request->get('type')))->with('user');
+            $records = Posts::getPosts()->whereIn('status', Posts::pageType($request->get('type')));
         $typeData = Posts::getTypeData([ 'type' => $request->get('type') ]);
         return view('rix.posts.posts')->with([
             'typeData' => $typeData,
@@ -44,13 +44,15 @@ class PostsController extends Controller
         $validator = Posts::validatePost($request);
         if ($validator->isEmpty()) {
             $createPost = Posts::requestData($request);
-            $insert = ModelPosts::create($createPost);
-            if ($insert) {
-                $res = Posts::termRelations($request, $insert->post_id);
-                $res = array_merge($res, [ 'post_id' => $insert->post_id ]);
-                return $res;
-            } else
-                return Helper::response(false, 'Bir sorun oluştu');
+            if ($createPost) {
+                $insert = ModelPosts::create($createPost);
+                if ($insert) {
+                    $res = Posts::termRelations($request, $insert->post_id);
+                    $res = array_merge($res, [ 'post_id' => $insert->post_id ]);
+                    return $res;
+                }
+            }
+            return Helper::response(false, 'Bir sorun oluştu');
         }
         return Helper::response(false, '', [ 'errors' => $validator ]);
     }

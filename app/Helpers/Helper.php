@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class Helper
 {
@@ -62,6 +61,34 @@ class Helper
         else
             $size = $size . " B";
         return $size;
+    }
+
+    static function slugPrefix($slug, $table, $options = [])
+    {
+        $defaults = [
+            'prefix'     => '-',
+            'table'      => '',
+            'slugColumn' => 'slug',
+            'idColumn'   => '',
+            'id'         => ''
+        ];
+        $options = array_merge($defaults, $options);
+        $i = 1;
+        $constSlug = $slug;
+        while (true) {
+            $item = empty($options['id']) || empty($options['idColumn']) ? $table->where($options['slugColumn'], $slug)->count() :
+                $table->whereNotIn($options['idColumn'], is_array($options['id']) ? $options['id'] : explode(',', $options['id']))
+                    ->where($options['slugColumn'], $slug)
+                    ->count();
+            if ($item > 0) {
+                $i++;
+                $slug = $constSlug;
+                $slug .= $options['prefix'] . $i;
+            } else {
+                break;
+            }
+        }
+        return $i === 1 ? $constSlug : $slug;
     }
 
     static function response($status, $message = '', $options = [])
@@ -131,7 +158,7 @@ class Helper
         if (is_array($items) || is_object($items)) {
             foreach ($items as $item) {
                 $item = (object)$item;
-                $ids[] = $item->id;
+                $ids[] = isset($item->id) ? $item->id : null;
             }
         }
         return $ids;

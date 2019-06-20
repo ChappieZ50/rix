@@ -54,7 +54,7 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ], function 
     // Users
     Route::get('users', 'Rix\UsersController@get_users')->name('rix_users');
     Route::post('users', 'Rix\UsersController@action_users')->name('rix_action_users');
-    Route::get('user/{id?}', 'Rix\UsersController@get_user')->where('id', '[1-9]+')->name('rix_user');
+    Route::get('user/{id?}', 'Rix\UsersController@get_user')->where('id', '^([0-9-]+)?')->name('rix_user');
     Route::post('user', 'Rix\UsersController@action_user')->name('rix_action_user');
 
 

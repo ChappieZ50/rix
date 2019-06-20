@@ -4,7 +4,8 @@
         <input type="file" id="avatar" name="avatar" style="display: none">
     </div>
     <div id="image-preview" class="mx-auto d-flex justify-content-center align-items-center" style="display: block;">
-        <img src="" id="preview_selected_image" class="rounded-circle" style="display: none;height: 120px;width: 120px;">
+        <img src="@if(isset($user) && !empty($user->avatar)) {{url(asset('storage/avatars').'/'.$user->avatar)}}  @endif" id="preview_selected_image" class="rounded-circle"
+             style="@if(isset($user) && !empty($user->avatar)) display: block @else display:none; @endif ;height: 120px;width: 120px;">
     </div>
     <div class="invalid-feedback" data-name="avatar"></div>
 </div>

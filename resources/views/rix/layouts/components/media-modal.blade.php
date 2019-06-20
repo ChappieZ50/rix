@@ -28,9 +28,6 @@
                         <div class="media-content">
                             <div class="form-group mb-2 d-flex align-items-center" id="mediaModalActions">
                                 <input type="text" class="form-control" id="searchInGallery" placeholder="Galeride Ara">
-                                <button class="btn btn-primary btn-sm" id="all">Hepsi</button>
-                                <button class="btn btn-outline-primary btn-sm ml-1" id="posts">Yazılar</button>
-                                <button class="btn btn-outline-primary btn-sm ml-1" id="users">Kullanıcılar</button>
                             </div>
                             <div class="clearfix"></div>
                             <div class="modal-media-items"></div>

@@ -3,9 +3,12 @@
 namespace App\Classes;
 
 use App\Models\Users as ModelUsers;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Helpers\Helper;
+use Illuminate\Validation\Rule;
+use Intervention\Image\ImageManagerStatic;
 
 class Users
 {
@@ -57,20 +60,20 @@ class Users
 
     static function createUser($request)
     {
+        $validator = self::validateUser($request);
+        if ($validator->isNotEmpty())
+            return Helper::response(false, '', [ 'errors' => $validator ]);
         $slug = Str::slug($request->input('username'));
         $password = Hash::make($request->input('password'));
-        if ($request->hasFile('avatar')) {
-            $noExtensionName = Helper::uniqImg();
-            $avatarName = Helper::uniqImg([ 'extension' => $request->file('avatar')->getClientOriginalExtension() ], $noExtensionName);
-            $avatarData = Helper::getImageData($request->file('avatar'), $avatarName, $noExtensionName);
-            $request->file('avatar')->move(public_path('storage/avatars'), $avatarName);
-        }
+        if ($request->hasFile('avatar'))
+            $avatar = self::createAvatar($request->file('avatar'));
+
         $create = ModelUsers::create([
             'name'          => $request->input('name'),
-            'slug'          => $slug,
+            'slug'          => Helper::slugPrefix($slug, new ModelUsers()),
             'username'      => $request->input('username'),
-            'avatar'        => isset($avatarName) ? $avatarName : null,
-            'avatar_data'   => isset($avatarData) ? $avatarData : null,
+            'avatar'        => isset($avatar) ? $avatar->avatarName : null,
+            'avatar_data'   => isset($avatar) ? $avatar->avatarData : null,
             'email'         => $request->input('email'),
             'password'      => $password,
             'role'          => $request->input('role'),
@@ -79,6 +82,59 @@ class Users
         if ($create)
             return Helper::response(true, 'Kullanıcı Başarıyla Eklendi');
         return Helper::response(false, 'Bir Sorun Oluştu');
+    }
+
+    static function updateUser($request)
+    {
+        $id = $request->input('id');
+        $user = ModelUsers::where('user_id', $id)->first();
+        if (!empty($user)) {
+            $data = [];
+            $validate = [
+                'username' => [ 'required', 'max:255', Rule::unique('rix_users')->ignore($user->user_id, 'user_id') ],
+                'email'    => [ 'required', 'email', 'max:255', Rule::unique('rix_users')->ignore($user->user_id, 'user_id') ],
+            ];
+            if ($request->has('password')) {
+                $password = Hash::make($request->input('password'));
+                $validate = array_merge($validate, [ 'password' => 'required|min:6|max:255|confirmed' ]);
+                $data['password'] = $password;
+            } else {
+                $validate = array_merge($validate, [ 'password' => 'nullable' ]);
+            }
+            $validator = self::validateUser($request, $validate);
+            if ($validator->isNotEmpty())
+                return Helper::response(false, '', [ 'errors' => $validator ]);
+            if ($request->hasFile('avatar'))
+                $avatar = self::createAvatar($request->file('avatar'));
+            $data = $data + [
+                    'username'      => $request->input('username'),
+                    'email'         => $request->input('email'),
+                    'name'          => $request->input('name'),
+                    'slug'          => Helper::slugPrefix(Str::slug($request->input('username')), new ModelUsers(), [ 'idColumn' => 'user_id', 'id' => $user->user_id ]),
+                    'role'          => $request->input('role'),
+                    'readable_date' => Helper::readableDateFormat(),
+                    'avatar'        => isset($avatar) ? $avatar->avatarName : $user->avatar,
+                    'avatar_data'   => isset($avatar) ? $avatar->avatarData : $user->avatar_data,
+                ];
+            if (isset($avatar) && File::exists(public_path('storage/avatars/') . $user->avatar))
+                File::delete(public_path('storage/avatars/') . $user->avatar);
+            if (ModelUsers::where('user_id', $user->user_id)->update($data))
+                return Helper::response(true, 'Kullanıcı Başarıyla Güncellendi');
+            return Helper::response(false, 'Bir Sorun Oluştu');
+        }
+    }
+
+    static function createAvatar($avatar)
+    {
+        $noExtensionName = Helper::uniqImg();
+        $avatarName = Helper::uniqImg([ 'extension' => $avatar->getClientOriginalExtension() ], $noExtensionName);
+        $avatarData = Helper::getImageData($avatar, $avatarName, $noExtensionName);
+        $img = ImageManagerStatic::make($avatar->getRealPath());
+        $img->resize(200, 200)->save(public_path('storage/avatars/') . $avatarName);
+        return (object)[
+            'avatarData' => $avatarData,
+            'avatarName' => $avatarName,
+        ];
     }
 
     static function getTypeData($custom = [])
@@ -112,13 +168,28 @@ class Users
 
     static function actionUsers($request)
     {
+        if ($request->input('action') === 'transfer') {
+            $data = (object) $request->input('data');
+            $user = \App\Models\Posts::where('author_id', $data->deleteID)->update([
+                'author_id' => $data->transferID
+            ]);
+            if ($user)
+                if (ModelUsers::where('user_id', $data->deleteID)->delete())
+                    return Helper::response(true,'Transfer İşlemi Başarıyla Tamamlandı');
+                else
+                    return Helper::response(false,'Kullanıcı Silinemedi');
+            else
+                return Helper::response(false,'Yazılar Güncellenemedi');
+
+        }
+
         $ids = Helper::getIds($request->input('data'));
         if (!empty($ids)) {
             if ($request->input('action') === 'delete') {
                 return ModelUsers::destroy($ids);
             } else {
                 foreach ($ids as $id) {
-                    $user = ModelUsers::where('user_id', $id)->select('user_id', 'created_at', 'status_data','status')->first();
+                    $user = ModelUsers::where('user_id', $id)->select('user_id', 'created_at', 'status_data', 'status')->first();
                     if (!empty($user)) {
                         $find = ModelUsers::where('user_id', $user->user_id);
                         $statusData = json_decode($user->status_data);

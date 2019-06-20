@@ -12,10 +12,6 @@ class Users extends Model
 
     public function post()
     {
-        return $this->hasMany(Posts::class);
-    }
-    public function image()
-    {
-        return $this->morphOne(ImageRelationships::class, 'imageable', 'meta_type', 'meta_id');
+        return $this->hasMany(Posts::class,'author_id');
     }
 }

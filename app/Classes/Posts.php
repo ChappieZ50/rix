@@ -28,9 +28,9 @@ class Posts
         $records = ModelPosts::with('termRelationships.termTaxonomy.terms')->orderBy($options['orderByColumn'], $options['orderByType']);
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
-        return $records->whereHas('user',function ($query){
-            $query->where('status','ok');
-        });
+        return $records->with(['user' => function($query){
+            $query->where('status', 'ok')->select('user_id','username');
+        }]);
     }
 
     static function renderPosts($viewData, $blade)
@@ -121,23 +121,6 @@ class Posts
         return [ 'posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar([ 'type' => $request->input('currentType') ]) ];
     }
 
-    static function ifExistsSlug($slug, $prefix = '-', $postID = '')
-    {
-        $i = 1;
-        $constSlug = $slug;
-        while (true) {
-            $post = empty($postID) ? ModelPosts::where('slug', $slug)->count() : ModelPosts::whereNotIn('post_id', [ $postID ])->where('slug', $slug)->count();
-            if ($post > 0) {
-                $i++;
-                $slug = $constSlug;
-                $slug .= $prefix . $i;
-            } else {
-                break;
-            }
-        }
-        return $i === 1 ? $constSlug : $slug;
-    }
-
     static function findPostForUpdate($id)
     {
         $record = ModelPosts::with([
@@ -180,28 +163,33 @@ class Posts
 
     static function requestData($request, $data = [])
     {
-        if ($request->input('action') == 'update')
-            $slug = self::ifExistsSlug(Str::slug($request->input('slug')), '-', $request->input('id'));
-        else
-            $slug = self::ifExistsSlug(Str::slug($request->input('slug')));
-        $defaults = [
-            'title'           => $request->input('title'),
-            'slug'            => $slug,
-            'content'         => json_encode($request->input('content')),
-            'summary'         => $request->input('summary'),
-            'seo_title'       => $request->input('seo_title'),
-            'seo_description' => $request->input('seo_description'),
-            'seo_keywords'    => $request->input('seo_keywords'),
-            'featured_image'  => $request->input('featured_image'),
-            'status'          => $request->input('status') ? 'open' : 'closed',
-            'featured'        => $request->input('featured'),
-            'slider'          => $request->input('slider'),
-            'url'             => url('/' . $slug),
-            'readable_date'   => Helper::readableDateFormat(),
-            'author_id'       => $request->input('author')
-        ];
-        $data = array_merge($defaults, $data);
-        return $data;
+        $author = \App\Models\Users::where('user_id',$request->input('author'))->first();
+        if(!empty($author) && $author->role === 'editor' || $author->role === 'admin'){
+            if ($request->input('action') == 'update')
+                $slug = Helper::slugPrefix(Str::slug($request->input('slug')), new ModelPosts(), [ 'idColumn' => 'post_id', 'id' => $request->input('id') ]);
+            else
+                $slug = Helper::slugPrefix(Str::slug($request->input('slug')), new ModelPosts());
+            $defaults = [
+                'title'           => $request->input('title'),
+                'slug'            => $slug,
+                'content'         => json_encode($request->input('content')),
+                'summary'         => $request->input('summary'),
+                'seo_title'       => $request->input('seo_title'),
+                'seo_description' => $request->input('seo_description'),
+                'seo_keywords'    => $request->input('seo_keywords'),
+                'featured_image'  => $request->input('featured_image'),
+                'status'          => $request->input('status') ? 'open' : 'closed',
+                'featured'        => $request->input('featured'),
+                'slider'          => $request->input('slider'),
+                'url'             => url('/' . $slug),
+                'readable_date'   => Helper::readableDateFormat(),
+                'author_id'       => $request->input('author')
+            ];
+            $data = array_merge($defaults, $data);
+            return $data;
+        }else{
+            return false;
+        }
     }
 
     static function fetchTerms($ids, $taxonomy = 'post_tag')

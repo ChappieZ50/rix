@@ -39,6 +39,9 @@
         @endif
         <td>{{$post->readable_date}}</td>
         <td>
+            {{$post->user->username}}
+        </td>
+        <td>
             <a href="#" class="comment">
                 <span class="comment-count">1</span>
             </a>

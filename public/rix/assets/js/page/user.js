@@ -27,7 +27,7 @@ $(document).ready(function () {
         });
     });
 });
-$('#resetPassword').on('click',function () {
+$('#resetPassword').on('click', function () {
     let auth = $(this).attr('data-auth'),
         html = '    <div class="form-group row mb-2">\n' +
             '        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Şifre</label>\n' +
@@ -43,22 +43,40 @@ $('#resetPassword').on('click',function () {
             '            <div class="invalid-feedback" data-name="password_confirmation"></div>\n' +
             '        </div>\n' +
             '    </div>';
-    if(auth !== 'self'){
-        if(confirm('Başka bir kullanıcının profilini güncelliyorsunuz. Bunu yapmak istediğinizden emin misin?')){
+    if (auth !== 'self') {
+        if (confirm('Başka bir kullanıcının profilini güncelliyorsunuz. Bunu yapmak istediğinizden emin misin?')) {
             $(this).hide();
             $('.password_area').html(html);
         }
-    }else{
+    } else {
         $(this).hide();
         $('.password_area').html(html);
     }
 });
+$('.actions #delete').on('click', function () {
+
+});
 $('#apply').on('click', function () {
-    applyMultipleSelect('users',users);
+    applyMultipleSelect('users', users);
 });
 $('.actions a').not('#edit').on('click', function () {
-    if(confirm('Bunu yapmak istediğinizden emin misiniz ?'))
-        applySingleSelect($(this),users);
+    if ($(this).attr('data-target') !== 'post') {
+        if (confirm('Bunu yapmak istediğinizden emin misiniz ?'))
+            applySingleSelect($(this), users);
+    } else {
+        $('#moveAnOtherUser').attr('data-id', $(this).closest('div').attr('data-id')).modal('toggle');
+    }
+});
+$('#moveUserModalActions #delete').on('click', function () {
+    if (confirm('Kullanıcıyı içerikle beraber silmek istediğinizden emin misiniz ?'))
+        doAction([{id: $('#moveAnOtherUser').attr('data-id')}], 'delete', users);
+});
+$('#moveUserModalActions #transfer').on('click', function () {
+    if (confirm('İçerikleri seçtiğiniz kullanıcıya aktarmak istiyor musunuz ?')) {
+        let transferID = $('input[name=transferAdmin]:checked').val(),
+            deleteID = $('#moveAnOtherUser').attr('data-id');
+        doAction([{transferID, deleteID}], 'transfer', users);
+    }
 });
 $('#searchInUsers').keyup(function (e) {
     if (e.keyCode === 13 && $.trim($(this).val()).length > 0)
@@ -69,6 +87,7 @@ $('#searchInUsersBtn').on('click', function () {
     if ($.trim(input.val()).length > 0)
         searchInUsers($.trim(input.val()));
 });
+
 function searchInUsers(value) {
     let url = searchInTable(value);
     window.location.href = users + url;

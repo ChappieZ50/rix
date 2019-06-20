@@ -128,15 +128,3 @@ $(document).on('click', '#select_image', function () {
     }
     $('#mediaModal').modal('toggle');
 });
-$('#mediaModalActions button').on('click',function () {
-    let action = $(this).attr('id'),
-        data = {mediaType:action},
-        param = null;
-    const mediaType = new Q(location.search);
-    mediaType.setParam('media_type',action);
-    if(mediaType.toSearch().length <= 0 )
-        param = '?media_type=' + action;
-    else
-        param = mediaType.toSearch();
-    window.history.pushState({}, document.title, post + param);
-});

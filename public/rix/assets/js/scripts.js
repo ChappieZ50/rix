@@ -749,10 +749,10 @@ function parseParams(str) {
     }, {});
 }
 
-function doAction(data, action = '', url) {
+function doAction(data, action = '', url,getParam = 'status') {
     simplePost({
         data,
-        currentType: param('status').length <= 0 ? 'all' : param('status'),
+        currentType: param(getParam).length <= 0 ? 'all' : param(getParam),
         action
     }, url).done(function (res) {
         if (res.status !== false)
