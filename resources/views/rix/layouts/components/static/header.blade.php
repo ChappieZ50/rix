@@ -27,62 +27,64 @@
         </div>
     </form>
     <ul class="navbar-nav navbar-right">
-        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                <div class="dropdown-header">Messages
-                    <div class="float-right">
-                        <a href="#">Mark All As Read</a>
+        @if($composeMessages->isNotEmpty())
+            <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <div class="dropdown-header">Okunmamış Mesajlar</div>
+                    <div class="dropdown-list-content dropdown-list-message">
+                        @foreach($composeMessages as $composeMessage)
+                            <a href="{{route('rix_messages',['message' => $composeMessage->message_id])}}" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="/rix/assets/img/avatar/avatar-1.png" class="rounded-circle">
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>{{$composeMessage->name}}</b>
+                                    <p>{{\App\Helpers\Helper::longText($composeMessage->message,['len' => 120])}}</p>
+                                    <div class="time">{{$composeMessage->readable_date}}</div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <div class="dropdown-footer text-center">
+                        <a href="{{route('rix_messages',['status' => 'unread'])}}">Hepsi <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
-                <div class="dropdown-list-content dropdown-list-message">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-avatar">
-                            <img alt="image" src="/rix/assets/img/avatar/avatar-1.png" class="rounded-circle">
-                            <div class="is-online"></div>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            <b>Kusnaedi</b>
-                            <p>Hello, Bro!</p>
-                            <div class="time">10 Hours Ago</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
-            </div>
-        </li>
-        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                <div class="dropdown-header">Notifications
-                    <div class="float-right">
-                        <a href="#">Mark All As Read</a>
+            </li>
+        @endif
+        @if($composeComments->isNotEmpty())
+            <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i
+                            class="ion ion-chatbubbles"></i></a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <div class="dropdown-header">Onaylanmamış Yorumlar
+                    </div>
+                    <div class="dropdown-list-content dropdown-list-icons">
+                        @foreach($composeComments as $composeComment)
+                            <a href="{{route('rix_comments',['comment' => $composeComment->comment_id])}}" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" src="{{!empty($composeComment->user->avatar) ? url(asset('storage/avatars').'/'.$composeComment->user->avatar) : '/rix/assets/img/avatar/avatar-1.png'}}" class="rounded-circle">
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>{{isset($composeComment->user) ? $composeComment->user->username : $composeComment->name }}</b>
+                                    <p>{{\App\Helpers\Helper::longText($composeComment->message,['len' => 120])}}</p>
+                                    <div class="time">{{$composeComment->readable_date}}</div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <div class="dropdown-footer text-center">
+                        <a href="#">View All <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
-                <div class="dropdown-list-content dropdown-list-icons">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Template update is available now!
-                            <div class="time text-primary">2 Min Ago</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
-            </div>
-        </li>
+            </li>
+        @endif
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="/rix/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
+                <img alt="image" src="{{!empty(Auth::user()->avatar) ? url(asset('storage/avatars').'/'.Auth::user()->avatar) : '/rix/assets/img/avatar/avatar-1.png'}}"
+                     class="rounded-circle mr-1">
+                <div class="d-sm-none d-lg-inline-block">Merhaba, {{Auth::user()->name }}</div>
+            </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="features-profile.html" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
-                </a>
+                <a href="" class="dropdown-item has-icon"><i class="far fa-user"></i> Profil</a>
+                <a href="{{route('rix_logout')}}" class="dropdown-item has-icon"><i class="ion ion-power"></i>Çıkış Yap</a>
             </div>
         </li>
     </ul>

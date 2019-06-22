@@ -77,7 +77,8 @@ class Users
             'email'         => $request->input('email'),
             'password'      => $password,
             'role'          => $request->input('role'),
-            'readable_date' => Helper::readableDateFormat()
+            'readable_date' => Helper::readableDateFormat(),
+            'ip'            => $request->ip()
         ]);
         if ($create)
             return Helper::response(true, 'Kullanıcı Başarıyla Eklendi');
@@ -115,6 +116,7 @@ class Users
                     'readable_date' => Helper::readableDateFormat(),
                     'avatar'        => isset($avatar) ? $avatar->avatarName : $user->avatar,
                     'avatar_data'   => isset($avatar) ? $avatar->avatarData : $user->avatar_data,
+                    'ip'            => $request->ip(),
                 ];
             if (isset($avatar) && File::exists(public_path('storage/avatars/') . $user->avatar))
                 File::delete(public_path('storage/avatars/') . $user->avatar);
@@ -130,7 +132,7 @@ class Users
         $avatarName = Helper::uniqImg([ 'extension' => $avatar->getClientOriginalExtension() ], $noExtensionName);
         $avatarData = Helper::getImageData($avatar, $avatarName, $noExtensionName);
         $img = ImageManagerStatic::make($avatar->getRealPath());
-        $img->resize(200, 200)->save(public_path('storage/avatars/') . $avatarName);
+        $img->fit(200)->save(public_path('storage/avatars/') . $avatarName);
         return (object)[
             'avatarData' => $avatarData,
             'avatarName' => $avatarName,
@@ -169,17 +171,17 @@ class Users
     static function actionUsers($request)
     {
         if ($request->input('action') === 'transfer') {
-            $data = (object) $request->input('data');
+            $data = (object)$request->input('data');
             $user = \App\Models\Posts::where('author_id', $data->deleteID)->update([
                 'author_id' => $data->transferID
             ]);
             if ($user)
                 if (ModelUsers::where('user_id', $data->deleteID)->delete())
-                    return Helper::response(true,'Transfer İşlemi Başarıyla Tamamlandı');
+                    return Helper::response(true, 'Transfer İşlemi Başarıyla Tamamlandı');
                 else
-                    return Helper::response(false,'Kullanıcı Silinemedi');
+                    return Helper::response(false, 'Kullanıcı Silinemedi');
             else
-                return Helper::response(false,'Yazılar Güncellenemedi');
+                return Helper::response(false, 'Yazılar Güncellenemedi');
 
         }
 

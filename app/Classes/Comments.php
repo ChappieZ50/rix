@@ -24,7 +24,7 @@ class Comments
             'all'      => self::getComments($all)->count(),
             'approved' => self::getComments($approved)->count(),
             'pending'  => self::getComments($pending)->count(),
-            'spam' => self::getComments($spam)->count(),
+            'spam'     => self::getComments($spam)->count(),
         ];
         if (!empty($custom))
             $typeData = array_merge($typeData, $custom);
@@ -42,6 +42,7 @@ class Comments
             'wherePostValue'  => '',
             'order'           => 'created_at',
             'orderBy'         => 'desc',
+            'userSelect'      => ['user_id','name','username','email'],
         ];
         $options = array_merge($defaults, $options);
         $comments = new ModelComments();
@@ -61,7 +62,10 @@ class Comments
             } ]) : $comments;
         return $comments->whereHas('post', function ($query) {
             return $query->where('status', '!=', 'trash');
-        })->orderBy($options['order'], $options['orderBy']);
+        })->with([
+            'user' => function ($query) use($options) {
+                $query->select($options['userSelect']);
+            } ])->orderBy($options['order'], $options['orderBy']);
     }
 
     static function getCommentsWithCount($options = [], $custom = [])
@@ -99,5 +103,40 @@ class Comments
         if (isset($do) && $do)
             return Helper::response(true, 'Başarıyla Güncellendi');
         return Helper::response(false, 'Bir sorun oluştu!');
+    }
+
+    static function createComment($request)
+    {
+        $validate = [
+            'parent_comment' => 'nullable|numeric',
+            'message'        => 'required',
+            'post_id'        => 'required'
+        ];
+        $data = [
+            'comment'        => $request->input('message'),
+            'ip'             => $request->ip(),
+            'parent_comment' => $request->input('parent_comment'),
+            'post_id'        => $request->input('post_id'),
+            'readable_date'  => Helper::readableDateFormat()
+        ];
+        if (\Auth::check()) {
+            $data += [ 'user_id' => \Auth::user()->user_id ];
+        } else {
+            $validate = $validate + [
+                    'name'  => 'required',
+                    'email' => 'required|email'
+                ];
+            $data += [
+                'name'  => $request->input('name'),
+                'email' => $request->input('email'),
+            ];
+        }
+        $validator = \Validator::make($request->all(), $validate);
+        if ($validator->fails())
+            return Helper::response(false, '', [ 'errors' => $validator->errors() ]);
+
+        if (ModelComments::create($data))
+            return Helper::response(true, 'Yorum Gönderildi');
+        return Helper::response(false, 'Bir Sorun Oluştu');
     }
 }

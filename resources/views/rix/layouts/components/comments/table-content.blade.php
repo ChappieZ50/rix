@@ -8,7 +8,7 @@
             </div>
         </td>
         <td>
-            <div class="mt-2">{{$comment->name}}</div>
+            <div class="mt-2">{{isset($comment->user) ? $comment->user->username : $comment->name}}</div>
             <div class="table-links actions" data-id="{{$comment->comment_id}}" data-status="{{$comment->status}}">
                 @if(Request::get('status') == 'pending')
                     <a href="javascript:;" class="text-success" id="approved">Onayla</a>
@@ -37,7 +37,7 @@
             </div>
         </td>
         <td>
-            <a href="javascript:;">{{$comment->email}}</a>
+            <a href="javascript:;">{{isset($comment->user) ? $comment->user->email : $comment->email}}</a>
         </td>
         <td>
             {{$comment->comment}}

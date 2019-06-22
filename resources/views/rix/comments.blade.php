@@ -1,3 +1,4 @@
+
 @extends('rix.layouts.master')
 @section('page_title')
     @if(Request::get('post'))

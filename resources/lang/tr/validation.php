@@ -163,6 +163,9 @@ return [
         'password'         => 'Şifre',
         'password_confirm' => 'Şifre Tekrar',
         'username'         => 'Kullanıcı Adı',
-        'email'            => 'E-Posta'
+        'email'            => 'E-Posta',
+        'comment'          => 'Yorum',
+        'message'          => 'Mesaj',
+        'subject'          => 'Konu'
     ],
 ];

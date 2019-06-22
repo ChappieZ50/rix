@@ -30,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         setLocale(LC_TIME, 'tr_TR');
+        view()->composer('*','App\Http\ViewComposers\MessagesComposer');
+        view()->composer('*','App\Http\ViewComposers\CommentsComposer');
     }
 }

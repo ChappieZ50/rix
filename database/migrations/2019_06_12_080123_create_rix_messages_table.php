@@ -19,9 +19,10 @@ class CreateRixMessagesTable extends Migration
             $table->string('email', 255);
             $table->string('subject', 255);
             $table->text('message');
-            $table->string('status', 30);
+            $table->string('status', 30)->default('unread')->nullable();
             $table->string('readable_date',25);
             $table->string('before_status', 30)->nullable();
+            $table->ipAddress('ip')->nullable();
             $table->timestamps();
         });
     }

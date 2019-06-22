@@ -82,4 +82,28 @@ class Messages
             return Helper::response(true, 'Başarıyla Güncellendi');
         return Helper::response(false, 'Bir sorun oluştu!');
     }
+
+    static function createMessage($request)
+    {
+        $validate = [
+            'name'    => 'required',
+            'email'   => 'required|email',
+            'subject' => 'required',
+            'message' => 'required',
+        ];
+        $validator = \Validator::make($request->all, $validate);
+        if ($validator->fails())
+            return Helper::response(false, '', [ 'errors' => $validator->errors() ]);
+        $data = [
+            'name'          => $request->input('name'),
+            'email'         => $request->input('email'),
+            'subject'       => $request->input('subject'),
+            'message'       => $request->input('message'),
+            'readable_date' => Helper::readableDateFormat(),
+            'ip'            => $request->ip(),
+        ];
+        if(ModelMessages::create($data))
+            return Helper::response(true,'Mesaj Gönderildi');
+        return Helper::response(false,'Mesaj Gönderilemedi');
+    }
 }

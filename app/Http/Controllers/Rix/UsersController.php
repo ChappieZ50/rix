@@ -55,7 +55,7 @@ class UsersController extends Controller
 
     public function action_user(Request $request)
     {
-        if ($request->input('id'))
+        if ($request->has('id'))
             return Users::updateUser($request);
         else
             return Users::createUser($request);

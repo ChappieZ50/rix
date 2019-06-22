@@ -67,7 +67,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <a href="{{route('rix_home')}}" class="links"> Rix Admin </a>
+                    <a href="{{route('rix_login')}}" class="links"> Rix Admin </a>
                 </div>
             </div>
         </div>

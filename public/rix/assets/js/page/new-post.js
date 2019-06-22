@@ -12,14 +12,13 @@ $(document).on('click', '.newPost #publish', function () {
         tags = $('input[name=tags]').val(),
         status = $('input[name=status]').val(),
         featured = $('input[name=featured]').val(),
-        slider = $('input[name=slider]').val(),
-        author = 1,
+        slider = $('input[name=slider]').val()
         // ------------------------
         area = '.newPost';
     progressForPublish(1, area);
     simplePost({
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
-        categories, tags, status, featured, slider, author
+        categories, tags, status, featured, slider
     }, post).done(function (res) {
         console.log(res);
         progressForPublish(0, area);

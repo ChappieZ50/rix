@@ -30,6 +30,8 @@ class CommentsController extends Controller
                     ->orWhere('comment', 'like', '%' . $value . '%');
             });
         }
+        if($request->get('comment'))
+            $data['comments']->where('comment_id',$request->get('comment'));
         return view('rix.comments')->with([
             'comments' => $data['comments']->paginate(20),
             'typeData' => $data['count']

@@ -1,8 +1,14 @@
 @extends('rix.layouts.master')
 
-@section('page_title','Kullanıcı Ekle')
+@section('page_title')
+    @if(Request::route('id') && isset($user))
+        {{$user->username}}
+    @else
+        Kullanıcı Ekle
+    @endif
+@endsection
 
-@section('title','Kullanıcı Ekle - Rix Admin')
+@section('title',Request::route('id') && isset($user) ? $user->username.' Düzenleniyor - Rix Admin' : 'Kullanıcı Ekle - Rix Admin')
 
 @section('general_css')
     <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
@@ -18,13 +24,13 @@
     <script src="/rix/assets/js/page/user.js"></script>
     <script>
         @if(Request::route('id'))
-            @if(Request::get('status') == 'success')
-                iziToast.success({
-                    title: 'Başarılı',
-                    message: 'Kullanıcı Başarıyla Eklendi',
-                    position: 'topRight',
-                });
-            @endif
+        @if(Request::get('status') == 'success')
+        iziToast.success({
+            title: 'Başarılı',
+            message: 'Kullanıcı Başarıyla Eklendi',
+            position: 'topRight',
+        });
+        @endif
         window.history.pushState({}, document.title, removeURLParameter('{!! url()->full() !!}', 'status'));
         @endif
     </script>
@@ -40,7 +46,7 @@
     <form action="{{route('rix_action_user')}}" method="post" enctype="multipart/form-data" id="userForm">
         @csrf
         <div class="row @isset($user) updateUser @else newUser @endisset">
-            @isset($user)<input type="hidden" name="user_id" value=" {{$user->user_id}}"> @endisset
+            @isset($user)<input type="hidden" name="id" value=" {{$user->user_id}}"> @endisset
             <div class="col-xl-9 col-lg-12">
                 <div class="card">
                     <div class="card-header">

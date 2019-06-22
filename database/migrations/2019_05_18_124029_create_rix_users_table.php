@@ -22,10 +22,11 @@ class CreateRixUsersTable extends Migration
             $table->text('avatar_data')->nullable();
             $table->string('email')->unique();
             $table->string('password', 60);
-            $table->string('role', 10);
+            $table->string('role', 10)->default('user');
             $table->string('readable_date', 25);
             $table->string('status')->default('ok')->nullable();
             $table->text('status_data')->nullable();
+            $table->ipAddress('ip')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -12,6 +12,7 @@ use App\Models\Posts as ModelPosts;
 
 class PostsController extends Controller
 {
+
     public function get_posts(Request $request)
     {
         if ($request->get('search'))

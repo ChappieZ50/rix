@@ -24,6 +24,8 @@ class MessagesController extends Controller
                     ->orWhere('message', 'like', '%' . $value . '%');
             });
         }
+        if($request->get('message'))
+            $messages['messages']->where('message_id',$request->get('message'));
         return view('rix.messages')->with([
             'messages' => $messages['messages']->paginate(20),
             'typeData' => $messages['count']
