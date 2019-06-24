@@ -166,6 +166,15 @@ return [
         'email'            => 'E-Posta',
         'comment'          => 'Yorum',
         'message'          => 'Mesaj',
-        'subject'          => 'Konu'
+        'subject'          => 'Konu',
+        'role'             => 'Rol',
+        'web'              => 'Web Site',
+        'biography'        => 'Biyografi',
+        'facebook'         => 'Facebook',
+        'twitter'          => 'Twitter',
+        'instagram'        => 'Instagram',
+        'youtube'          => 'Youtube',
+        'linkedin'         => 'Linkedin',
+        'pinterest'        => 'Pinterest',
     ],
 ];

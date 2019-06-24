@@ -1,12 +1,6 @@
 <table class="table table-striped" id="users">
     <tr>
-        <th>
-            <div class="custom-checkbox custom-control text-center">
-                <input type="checkbox" data-checkboxes="records" data-checkbox-role="records" class="custom-control-input"
-                       id="checkbox-records">
-                <label for="checkbox-records" class="custom-control-label">&nbsp;</label>
-            </div>
-        </th>
+        <th>#</th>
         <th>Kullanıcı Adı</th>
         <th>İsmi</th>
         <th>Avatar</th>

@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'accessibility' => \App\Http\Middleware\RixAdmin::class,
+        'roles'         => \App\Http\Middleware\RixRoles::class
     ];
 
     /**

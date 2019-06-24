@@ -83,7 +83,7 @@
                 <div class="d-sm-none d-lg-inline-block">Merhaba, {{Auth::user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="" class="dropdown-item has-icon"><i class="far fa-user"></i> Profil</a>
+                <a href="{{route('rix_profile')}}" class="dropdown-item has-icon"><i class="far fa-user"></i> Profil</a>
                 <a href="{{route('rix_logout')}}" class="dropdown-item has-icon"><i class="ion ion-power"></i>Çıkış Yap</a>
             </div>
         </li>

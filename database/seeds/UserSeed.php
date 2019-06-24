@@ -19,7 +19,8 @@ class UserSeed extends Seeder
             'email' => 'chappie@gmail.com',
             'role' => 'admin',
             'readable_date' => \App\Helpers\Helper::readableDateFormat(),
-            'status' => 'ok'
+            'status' => 'ok',
+            'user_data' => json_encode([])
         ]);
     }
 }

@@ -44,14 +44,10 @@ class PostsController extends Controller
     {
         $validator = Posts::validatePost($request);
         if ($validator->isEmpty()) {
-            $createPost = Posts::requestData($request);
-            if ($createPost) {
-                $insert = ModelPosts::create($createPost);
-                if ($insert) {
-                    $res = Posts::termRelations($request, $insert->post_id);
-                    $res = array_merge($res, [ 'post_id' => $insert->post_id ]);
-                    return $res;
-                }
+            $insert = ModelPosts::create(Posts::requestData($request));
+            if ($insert) {
+                $res = Posts::termRelations($request, $insert->post_id);
+                return array_merge($res, [ 'post_id' => $insert->post_id ]);
             }
             return Helper::response(false, 'Bir sorun oluştu');
         }

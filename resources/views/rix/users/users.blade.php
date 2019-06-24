@@ -33,24 +33,6 @@
                     <h4>Kullanıcılar</h4>
                 </div>
                 <div class="card-body">
-                    <div class="float-left">
-                        <div class="d-flex justify-content-start align-items-start">
-                            <select class="form-control" name="action" data-area="#users"
-                                    style="border-radius: 0 !important;height: 30px;padding: 5px;width: 140px;">
-                                <option value="">Seçilene Uygula</option>
-                                @if(Request::get('type') === 'banned')
-                                    <option value="unban">Yasağı Kaldır</option>
-                                @else
-                                    <option value="unban">Yasağı Kaldır</option>
-                                    <option value="ban">Yasakla</option>
-                                @endif
-                                <option value="delete">Kalıcı Olarak Sil</option>
-                            </select>
-                            <button type="button" class="btn btn-sm btn-primary ml-1" style="box-shadow: none;border-radius: 0;" id="apply">
-                                Uygula
-                            </button>
-                        </div>
-                    </div>
                     <div class="float-right">
                         <div class="input-group">
                             <button type="button" class="btn custom-btn-dark mr-2" style="{{Request::get('search') ? 'display: show;' : 'display: none;'}}" id="closeSearch">

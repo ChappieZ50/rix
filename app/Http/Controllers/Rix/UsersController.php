@@ -27,10 +27,11 @@ class UsersController extends Controller
         $data['admins'] = Users::getUsers();
         return view('rix.users.users')->with([
             'typeData' => $data['count'],
-            'users'    => $data['users']->withCount(['post' => function($query){
-                $query->where('status','!=','trash');
-            }])->paginate(20),
-            'admins' => $data['admins']->whereIn('role', ['admin','editor'])->where('user_id','!=',1)->get(),
+            'users'    => $data['users']->withCount([
+                'post' => function ($query) {
+                    $query->where('status', '!=', 'trash');
+                } ])->paginate(20),
+            'admins'   => $data['admins']->whereIn('role', [ 'admin', 'editor' ])->where('user_id', '!=', 1)->get(),
         ]);
     }
 

@@ -9,13 +9,13 @@
             </div>
             <div class="modal-body">
                 <div class="text">
-                    Merhaba, seçtiğiniz <span class="text-primary">{{$user->name}}</span> isim kullanıcının göndermiş olduğu yazılar bulunmaktadır.
-                    Eğer bu kullanıcıyı silerseniz yazılarınıda silersiniz. İsterseniz herhangi bir yönetici veya yazara <span class="text-primary">{{$user->name}}</span>
-                    isimli kullanıcının yazdığı yazıları aktarabilirsiniz.
-                    <div class="col-12 border border-primary p-3 mt-2">
+                   <span class="text-primary"> Merhaba, seçtiğiniz kullanıcının göndermiş olduğu yazılar bulunmaktadır.
+                    Eğer bu kullanıcıyı silerseniz yazılarınıda silersiniz. İsterseniz herhangi bir yönetici veya yazara kullanıcının yazdığı yazıları aktarabilirsiniz.</span>
+                    <div class="col-12 border border-primary p-3 mt-2 admins">
                         @foreach($admins as $key => $value)
                             <div class="custom-control custom-radio custom-control-inline mb-1">
-                                <input type="radio" id="admin-{{$key}}" name="transferAdmin" class="custom-control-input" {{$key === 0 ? 'checked' : null }} value="{{$value->user_id}}">
+                                <input type="radio" id="admin-{{$key}}" name="transferAdmin" class="custom-control-input"
+                                      value="{{$value->user_id}}">
                                 <label class="custom-control-label" for="admin-{{$key}}">{{$value->username}}</label>
                             </div>
                             <div class="clearfix"></div>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer" id="moveUserModalActions" data-id="{{$user->user_id}}">
+            <div class="modal-footer" id="moveUserModalActions">
                 <button type="button" class="btn btn-primary" id="transfer">Aktar</button>
                 <button type="button" class="btn btn-danger" id="delete">İçerikle Beraber Sil</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>

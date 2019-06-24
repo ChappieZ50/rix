@@ -21,6 +21,6 @@ class RixAdmin
         if (auth()->check())
             if ($user->accessibility())
                 return $next($request);
-        return redirect()->route('welcome');
+        return redirect()->route('rix_login');
     }
 }

@@ -6,3 +6,4 @@
         1.0
     </div>
 </footer>
+@include('rix.layouts.components.static.scripts-styles.js-definitions')

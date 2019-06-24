@@ -6,9 +6,8 @@ Route::get('robots.txt', function () {
     $robots->addDisallow('/rix-login');
     return Response::make($robots->generate(), 200, array( 'Content-Type' => 'text/plain' ));
 });
-
-Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware' => 'accessibility'], function () {
-    Auth::routes();
+Auth::routes();
+Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware' => ['accessibility','roles']], function () {
     Route::get('', 'Rix\RixController@get_rix')->name('rix_home');
     // Gallery
     Route::get('gallery', 'Rix\GalleryController@get_gallery')->name('rix_gallery');
@@ -57,6 +56,9 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware
     Route::post('users', 'Rix\UsersController@action_users')->name('rix_action_users');
     Route::get('user/{id?}', 'Rix\UsersController@get_user')->where('id', '^([0-9-]+)?')->name('rix_user');
     Route::post('user', 'Rix\UsersController@action_user')->name('rix_action_user');
+    // Profile
+    Route::get('profile','Rix\ProfileController@get_profile')->name('rix_profile');
+    Route::post('profile','Rix\ProfileController@update_profile')->name('rix_update_profile');
 });
 Route::get('/rix-login','Rix\LoginController@get_login')->name('rix_login');
 Route::post('/rix-login','Rix\LoginController@action_login')->name('rix_action_login');

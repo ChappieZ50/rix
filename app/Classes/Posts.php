@@ -155,7 +155,7 @@ class Posts
             'featured'        => 'integer',
             'slider'          => 'integer',
             'categories'      => 'required',
-            'tags'            => 'required|notIn:[]',
+            'tags'            => 'nullable|notIn:[]',
         ];
         $validate = array_merge($defaultValidate, $validate);
         $validator = \Validator::make($request->all(), $validate);

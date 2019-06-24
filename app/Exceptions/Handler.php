@@ -29,7 +29,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -40,12 +40,17 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+            $view = $request->is('rix-admin/*') ? 'rix.errors.' . $statusCode : 'errors.' . $statusCode;
+            return response()->make(view($view, [ 'exception' => $exception ]), $statusCode);
+        }
         return parent::render($request, $exception);
     }
 }

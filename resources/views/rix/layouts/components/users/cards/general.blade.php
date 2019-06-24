@@ -19,12 +19,74 @@
         <div class="invalid-feedback" data-name="email"></div>
     </div>
 </div>
+@php
+    $social = isset($user) ? json_decode($user->user_data ) : [];
+@endphp
+
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Biyografi</label>
+    <div class="col-sm-12 col-md-7">
+        <textarea class="form-control" name="biography">@if(isset($user) && !empty($social)){{$social->biography}} @endif</textarea>
+        <div class="invalid-feedback" data-name="biography"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Web Sitesi</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="web" value="@if(isset($user) && !empty($social)){{$social->web}} @endif">
+        <div class="invalid-feedback" data-name="web"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Facebook</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="facebook" @if(isset($user) && !empty($social)) value="{{$social->facebook->name}}" @endif>
+        <div class="invalid-feedback" data-name="facebook"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Twitter</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="twitter" @if(isset($user) && !empty($social)) value="{{$social->twitter->name}}" @endif>
+        <div class="invalid-feedback" data-name="twitter"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Instagram</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="instagram" @if(isset($user) && !empty($social)) value="{{$social->instagram->name}}" @endif>
+        <div class="invalid-feedback" data-name="instagram"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Youtube</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="youtube" @if(isset($user) && !empty($social)) value="{{$social->youtube->name}}" @endif>
+        <div class="invalid-feedback" data-name="youtube"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Linkedin</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="linkedin" @if(isset($user) && !empty($social)) value="{{$social->linkedin->name}}" @endif>
+        <div class="invalid-feedback" data-name="linkedin"></div>
+    </div>
+</div>
+<div class="form-group row mb-2">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pinterest</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="text" class="form-control" name="pinterest" @if(isset($user) && !empty($social)) value="{{$social->pinterest->name}}" @endif>
+        <div class="invalid-feedback" data-name="pinterest"></div>
+    </div>
+</div>
 <div class="password_area">
     @isset($user)
         <div class="form-group row mb-2">
             <div class="offset-md-3 offset-lg-3 offset-12"></div>
             <div class="col-sm-12 col-md-7">
-                <button class="btn btn-outline-primary" type="button" id="resetPassword" data-auth="{{Request::route('id') == Auth::user()->user_id ? 'self' : 'other'}}">Şifreyi Sıfırla</button>
+                <button class="btn btn-outline-primary" type="button" id="resetPassword">Şifreyi
+                    Sıfırla
+                </button>
             </div>
         </div>
     @else

@@ -1,14 +1,8 @@
 @extends('rix.layouts.master')
 
-@section('page_title')
-    @if(Request::route('id') && isset($user))
-        {{$user->username}}
-    @else
-        Kullanıcı Ekle
-    @endif
-@endsection
+@section('page_title','Profil')
 
-@section('title',Request::route('id') && isset($user) ? $user->username.' Düzenleniyor - Rix Admin' : 'Kullanıcı Ekle - Rix Admin')
+@section('title','Profil - Rix Admin')
 
 @section('general_css')
     <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
@@ -20,33 +14,24 @@
 
 @section('js')
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="/rix/assets/js/page/user.js"></script>
+    <script src="/rix/assets/js/page/profile.js"></script>
     <script>
-        @if(Request::route('id'))
-            @if(Request::get('status') == 'success')
+        @if(Request::get('status') == 'success')
             iziToast.success({
                 title: 'Başarılı',
-                message: '{{Request::get('action') == 'insert' ? 'Kullanıcı Başarıyla Eklendi' : 'Kullanıcı Başarıyla Güncellendi'}}',
+                message: 'Profilin Başarıyla Güncellendi',
                 position: 'topRight',
             });
-
-            @endif
-        window.history.pushState({}, document.title, removeURLParameter('{!! url()->full() !!}', 'status'));
         @endif
+        window.history.pushState({}, document.title, removeURLParameter('{!! url()->full() !!}', 'status'));
     </script>
 @endsection
 
-@section('section_header_top')
-    <div class="section-header-back">
-        <a href="{{route('rix_users')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
-    </div>
-@endsection
 
 @section('content')
-    <form action="{{route('rix_action_user')}}" method="post" enctype="multipart/form-data" id="userForm">
+    <form action="{{route('rix_profile')}}" method="post" enctype="multipart/form-data" id="profileForm">
         @csrf
-        <div class="row @isset($user) updateUser @else newUser @endisset">
-            @isset($user)<input type="hidden" name="id" value=" {{$user->user_id}}"> @endisset
+        <div class="row profile">
             <div class="col-xl-9 col-lg-12">
                 <div class="card">
                     <div class="card-header">
@@ -87,8 +72,11 @@
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse4">
-                        <div class="card-body">
-                            @include('rix.layouts.components.users.cards.publish')
+                        <div class="card-body profile">
+                            <div class="col-sm-12 text-center">
+                                <button type="submit" name="update" class="btn btn-primary" id="publish">Güncelle</button>
+                                <button type="button" class="btn disabled btn-primary btn-progress" style="display: none;">Progress</button>
+                            </div>
                         </div>
                     </div>
                 </div>

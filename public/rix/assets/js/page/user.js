@@ -16,10 +16,14 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
         }).done(function (res) {
-            console.log(res);
             progressForPublish(0, area);
-            if (ajaxCheckStatus(res))
-                window.location.href = users;
+            console.log(res);
+            if (ajaxCheckStatus(res,{showSuccess: false})){
+                if(res.content.action === 'insert')
+                    window.location.href = user + "/" + res.content.user_id + "?status=success&action=insert";
+                else
+                    window.location.href = user + "/" + res.content.user_id + "?status=success&action=update";
+            }
         }).fail(function (res) {
             console.log(res.responseText);
             progressForPublish(0, area);
@@ -53,18 +57,18 @@ $('#resetPassword').on('click', function () {
         $('.password_area').html(html);
     }
 });
-$('.actions #delete').on('click', function () {
-
-});
-$('#apply').on('click', function () {
-    applyMultipleSelect('users', users);
-});
 $('.actions a').not('#edit').on('click', function () {
     if ($(this).attr('data-target') !== 'post') {
         if (confirm('Bunu yapmak istediğinizden emin misiniz ?'))
             applySingleSelect($(this), users);
     } else {
         $('#moveAnOtherUser').attr('data-id', $(this).closest('div').attr('data-id')).modal('toggle');
+        $('input[name=transferAdmin]').each(function () {
+            if ($(this).val() == $('#moveAnOtherUser').attr('data-id'))
+                $(this).closest('div').hide();
+            else
+                $(this).closest('div').show();
+        });
     }
 });
 $('#moveUserModalActions #delete').on('click', function () {
@@ -75,7 +79,7 @@ $('#moveUserModalActions #transfer').on('click', function () {
     if (confirm('İçerikleri seçtiğiniz kullanıcıya aktarmak istiyor musunuz ?')) {
         let transferID = $('input[name=transferAdmin]:checked').val(),
             deleteID = $('#moveAnOtherUser').attr('data-id');
-        doAction([{transferID, deleteID}], 'transfer', users);
+        doAction({transferID, deleteID}, 'transfer', users);
     }
 });
 $('#searchInUsers').keyup(function (e) {

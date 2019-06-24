@@ -27,6 +27,7 @@ class CreateRixUsersTable extends Migration
             $table->string('status')->default('ok')->nullable();
             $table->text('status_data')->nullable();
             $table->ipAddress('ip')->nullable();
+            $table->text('user_data');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -15,12 +15,20 @@ class Users
     static function validateUser($request, $validate = [])
     {
         $defaultValidate = [
-            'name'     => 'required|max:255',
-            'username' => 'required|unique:rix_users|max:255',
-            'email'    => 'required|email|unique:rix_users|max:255',
-            'avatar'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:1024',
-            'password' => 'required|min:6|max:255|confirmed',
-            'role'     => 'required'
+            'name'      => 'required|max:255',
+            'username'  => 'required|unique:rix_users|max:255',
+            'email'     => 'required|email|unique:rix_users|max:255',
+            'avatar'    => 'nullable|image|mimes:jpg,jpeg,png,gif|max:1024',
+            'password'  => 'required|min:6|max:255|confirmed',
+            'role'      => 'required',
+            'web'       => 'nullable|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            'biography' => 'max:255|nullable',
+            'facebook'  => 'max:255|nullable',
+            'twitter'   => 'max:255|nullable',
+            'instagram' => 'max:255|nullable',
+            'youtube'   => 'max:255|nullable',
+            'linkedin'  => 'max:255|nullable',
+            'pinterest' => 'max:255|nullable',
         ];
         $validate = array_merge($defaultValidate, $validate);
         $validator = \Validator::make($request->all(), $validate);
@@ -67,7 +75,6 @@ class Users
         $password = Hash::make($request->input('password'));
         if ($request->hasFile('avatar'))
             $avatar = self::createAvatar($request->file('avatar'));
-
         $create = ModelUsers::create([
             'name'          => $request->input('name'),
             'slug'          => Helper::slugPrefix($slug, new ModelUsers()),
@@ -78,11 +85,12 @@ class Users
             'password'      => $password,
             'role'          => $request->input('role'),
             'readable_date' => Helper::readableDateFormat(),
-            'ip'            => $request->ip()
+            'ip'            => $request->ip(),
+            'user_data'     => self::userData($request)
         ]);
         if ($create)
-            return Helper::response(true, 'Kullanıcı Başarıyla Eklendi');
-        return Helper::response(false, 'Bir Sorun Oluştu');
+            return Helper::response(true, 'Eklendi', [ 'custom' => [ 'user_id' => $create->user_id, 'action' => 'insert' ] ]);
+        return Helper::response(false);
     }
 
     static function updateUser($request)
@@ -95,12 +103,17 @@ class Users
                 'username' => [ 'required', 'max:255', Rule::unique('rix_users')->ignore($user->user_id, 'user_id') ],
                 'email'    => [ 'required', 'email', 'max:255', Rule::unique('rix_users')->ignore($user->user_id, 'user_id') ],
             ];
+
             if ($request->has('password')) {
                 $password = Hash::make($request->input('password'));
                 $validate = array_merge($validate, [ 'password' => 'required|min:6|max:255|confirmed' ]);
                 $data['password'] = $password;
             } else {
                 $validate = array_merge($validate, [ 'password' => 'nullable' ]);
+            }
+            if ($user->user_id == \Auth::user()->user_id) {
+                $request->merge([ 'role' => \Auth::user()->role ]);
+                $validate = array_merge($validate,['role' => 'nullable']);
             }
             $validator = self::validateUser($request, $validate);
             if ($validator->isNotEmpty())
@@ -117,12 +130,13 @@ class Users
                     'avatar'        => isset($avatar) ? $avatar->avatarName : $user->avatar,
                     'avatar_data'   => isset($avatar) ? $avatar->avatarData : $user->avatar_data,
                     'ip'            => $request->ip(),
+                    'user_data'     => self::userData($request),
                 ];
             if (isset($avatar) && File::exists(public_path('storage/avatars/') . $user->avatar))
                 File::delete(public_path('storage/avatars/') . $user->avatar);
             if (ModelUsers::where('user_id', $user->user_id)->update($data))
-                return Helper::response(true, 'Kullanıcı Başarıyla Güncellendi');
-            return Helper::response(false, 'Bir Sorun Oluştu');
+                return Helper::response(true, 'Güncellendi', [ 'custom' => [ 'user_id' => $user->user_id, 'action' => 'update' ] ]);
+            return Helper::response(false);
         }
     }
 
@@ -172,22 +186,39 @@ class Users
     {
         if ($request->input('action') === 'transfer') {
             $data = (object)$request->input('data');
-            $user = \App\Models\Posts::where('author_id', $data->deleteID)->update([
-                'author_id' => $data->transferID
-            ]);
-            if ($user)
-                if (ModelUsers::where('user_id', $data->deleteID)->delete())
-                    return Helper::response(true, 'Transfer İşlemi Başarıyla Tamamlandı');
-                else
-                    return Helper::response(false, 'Kullanıcı Silinemedi');
-            else
-                return Helper::response(false, 'Yazılar Güncellenemedi');
+            if (isset($data->deleteID) && isset($data->transferID) && $data->deleteID != $data->transferID) {
+                $author = ModelUsers::where('user_id', $data->transferID)->first();
+                if (!empty($author) && $author->role == 'admin' || $author->role == 'editor') {
+                    $user = \App\Models\Posts::where('author_id', $data->deleteID)->update([
+                        'author_id' => $data->transferID
+                    ]);
+                    if ($user) {
+                        $getUser = ModelUsers::where('user_id', $data->deleteID)->select('user_id', 'avatar')->get();
+                        if (!empty($getUser))
+                            self::deleteUserThings($getUser);
+                        if (ModelUsers::where('user_id', $data->deleteID)->delete())
+                            return Helper::response(true, 'Transfer İşlemi Başarıyla Tamamlandı');
+                        else
+                            return Helper::response(false, 'Kullanıcı Silinemedi');
+                    } else {
+                        return Helper::response(false, 'Yazılar Güncellenemedi');
+                    }
+                }
+            }
 
         }
-
         $ids = Helper::getIds($request->input('data'));
+        $ids = !empty($ids) && is_array($ids) ? array_diff($ids, [ \Auth::user()->user_id ]) : null;
+        return self::actionDefaults($request, $ids);
+    }
+
+    static function actionDefaults($request, $ids)
+    {
         if (!empty($ids)) {
             if ($request->input('action') === 'delete') {
+                $user = ModelUsers::whereIn('user_id', $ids)->select('user_id', 'avatar')->get();
+                if (!empty($user))
+                    self::deleteUserThings($user);
                 return ModelUsers::destroy($ids);
             } else {
                 foreach ($ids as $id) {
@@ -212,6 +243,14 @@ class Users
         }
     }
 
+    static function deleteUserThings($users)
+    {
+        foreach ($users as $user) {
+            if (File::exists(public_path('storage/avatars/') . $user->avatar))
+                File::delete(public_path('storage/avatars/') . $user->avatar);
+        }
+    }
+
     static function createUserStatusData($prohibition)
     {
         return json_encode([
@@ -219,6 +258,20 @@ class Users
             'bannedTime'         => date('Y-m-d H:i:s'),
             'status'             => 'Yasaklı',
             'prohibition'        => $prohibition + 1,
+        ]);
+    }
+
+    static function userData($request)
+    {
+        return json_encode([
+            'web'       => $request->input('web'),
+            'biography' => $request->input('biography'),
+            'facebook'  => [ 'name' => $request->input('facebook'), 'url' => 'https://facebook.com/' ],
+            'twitter'   => [ 'name' => $request->input('twitter'), 'url' => 'https://twitter.com/' ],
+            'instagram' => [ 'name' => $request->input('instagram'), 'url' => 'https://instagram.com/' ],
+            'youtube'   => [ 'name' => $request->input('youtube'), 'url' => 'https://youtube.com/' ],
+            'linkedin'  => [ 'name' => $request->input('linkedin'), 'url' => 'https://linkedin.com/' ],
+            'pinterest' => [ 'name' => $request->input('pinterest'), 'url' => 'https://pinterest.com/' ]
         ]);
     }
 
@@ -232,4 +285,5 @@ class Users
             'status'               => 'Yasak Kaldırıldı',
         ]);
     }
+
 }

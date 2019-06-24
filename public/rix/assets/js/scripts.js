@@ -636,6 +636,7 @@ function ajaxCheckStatus(res, options) {
         errorMessage: 'Hata! Lütfen işaretlenmiş alanları doldurun.',
         status: 200,
         area: '',
+        showSuccess: true,
     };
     options = $.extend(defaults, options);
     if (options.status === 500) {
@@ -664,11 +665,12 @@ function ajaxCheckStatus(res, options) {
             return false;
         } else {
             $(options.area + ' .invalid-feedback').html('');
-            iziToast.success({
-                title: options.successTitle,
-                message: options.successMessage,
-                position: 'topRight',
-            });
+            if(options.showSuccess === true)
+                iziToast.success({
+                    title: options.successTitle,
+                    message: options.successMessage,
+                    position: 'topRight',
+                });
             return true;
         }
     }
@@ -755,8 +757,9 @@ function doAction(data, action = '', url,getParam = 'status') {
         currentType: param(getParam).length <= 0 ? 'all' : param(getParam),
         action
     }, url).done(function (res) {
-        if (res.status !== false)
-            location.reload();
+        console.log(res);
+         if (res.status !== false)
+             location.reload();
     }).fail(function (res) {
         console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
