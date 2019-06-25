@@ -21,7 +21,11 @@ class RixRoles
         'rix_users',
         'rix_action_users',
         'rix_user',
-        'rix_action_user'
+        'rix_action_user',
+        'rix_pages',
+        'rix_action_pages',
+        'rix_page',
+        'rix_action_page'
     ];
 
     public function handle($request, Closure $next)

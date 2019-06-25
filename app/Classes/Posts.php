@@ -211,11 +211,13 @@ class Posts
         $categories = $request->input('categories');
         if ($request->input('action') == 'update') {
             $tagIDS = [];
-            foreach ($tags as $tag)
-                if (isset($tag->id))
-                    $tagIDS[] = $tag->id;
-            self::fetchTerms($tagIDS);
-            self::fetchTerms($categories, 'category');
+            if (!empty($tags)) {
+                foreach ($tags as $tag)
+                    if (isset($tag->id))
+                        $tagIDS[] = $tag->id;
+                self::fetchTerms($tagIDS);
+                self::fetchTerms($categories, 'category');
+            }
 
         }
         if (is_array($tags)) {

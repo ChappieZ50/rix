@@ -33,22 +33,8 @@
 {{-- JS --}}
 @section('js')
     <script src="/rix/assets/modules/selectric/public/jquery.selectric.js"></script>
+    <script src="/rix/assets/js/summernote-custom-media.js"></script>
     <script>
-        $(function () {
-            let button =
-                '<div class="d-flex justify-content-center align-items-center mb-4">' +
-                '<button type="button" class="btn btn-primary" data-toggle="modal"' +
-                'data-target="#mediaModal" data-before="0" data-url="{{route("rix_gallery")}}"' +
-                'id="add_image" data-position="summernote" style="box-shadow:0;border-radius:0;width:100%;padding:10px;">Resim Seç</button>' +
-                '</div>';
-            let images = $('.note-group-select-from-files');
-            images.html(
-                button +
-                '<div class="text-center"><h6>Veya</h6></div>'
-            );
-            // Modal Fix modal backdrop
-            $('#mediaModal').appendTo("body");
-        });
         @if(Request::get('action') && Request::get('id'))
             @if(Request::get('status') == 'success')
                 iziToast.success({

@@ -25,11 +25,12 @@ class Helper
         return url(config('definitions.PUBLIC_PATH') . '/' . $img);
     }
 
-    static function deleteImage($images)
+    static function deleteImage($images,$path = '')
     {
+        $path = empty($path) ? config('definitions.PUBLIC_PATH').'/' : $path;
         if (is_array($images) && !empty($images)) {
             foreach ($images as $image)
-                File::delete(config('definitions.PUBLIC_PATH') . '/' . $image['image_name']);
+                File::delete($path . $image['image_name']);
             return true;
         } else {
             return false;

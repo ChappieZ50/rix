@@ -59,6 +59,11 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware
     // Profile
     Route::get('profile','Rix\ProfileController@get_profile')->name('rix_profile');
     Route::post('profile','Rix\ProfileController@update_profile')->name('rix_update_profile');
+    // Pages
+    Route::get('pages', 'Rix\PagesController@get_pages')->name('rix_pages');
+    Route::post('pages', 'Rix\PagesController@action_pages')->name('rix_action_pages');
+    Route::get('page/{id?}', 'Rix\PagesController@get_page')->where('id', '^([0-9-]+)?')->name('rix_page');
+    Route::post('page', 'Rix\PagesController@action_page')->name('rix_action_page');
 });
 Route::get('/rix-login','Rix\LoginController@get_login')->name('rix_login');
 Route::post('/rix-login','Rix\LoginController@action_login')->name('rix_action_login');

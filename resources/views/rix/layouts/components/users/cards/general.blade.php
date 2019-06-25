@@ -30,52 +30,83 @@
         <div class="invalid-feedback" data-name="biography"></div>
     </div>
 </div>
+
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Web Sitesi</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="web" value="@if(isset($user) && !empty($social)){{$social->web}} @endif">
+        <input type="url" class="form-control" name="web" value="@if(isset($user) && !empty($social)){{$social->web}} @endif">
         <div class="invalid-feedback" data-name="web"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Facebook</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="facebook" @if(isset($user) && !empty($social)) value="{{$social->facebook->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://facebook.com/</span>
+            </div>
+            <input type="text" class="form-control" name="facebook" @if(isset($user) && !empty($social)) value="{{$social->facebook->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="facebook"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Twitter</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="twitter" @if(isset($user) && !empty($social)) value="{{$social->twitter->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://twitter.com/</span>
+            </div>
+            <input type="text" class="form-control" name="twitter" @if(isset($user) && !empty($social)) value="{{$social->twitter->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="twitter"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Instagram</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="instagram" @if(isset($user) && !empty($social)) value="{{$social->instagram->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://instagram.com/</span>
+            </div>
+            <input type="text" class="form-control" name="instagram" @if(isset($user) && !empty($social)) value="{{$social->instagram->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="instagram"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Youtube</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="youtube" @if(isset($user) && !empty($social)) value="{{$social->youtube->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://youtube.com/</span>
+            </div>
+            <input type="text" class="form-control" name="youtube" @if(isset($user) && !empty($social)) value="{{$social->youtube->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="youtube"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Linkedin</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="linkedin" @if(isset($user) && !empty($social)) value="{{$social->linkedin->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://linkedin.com/</span>
+            </div>
+            <input type="text" class="form-control" name="linkedin" @if(isset($user) && !empty($social)) value="{{$social->linkedin->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="linkedin"></div>
     </div>
 </div>
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pinterest</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="pinterest" @if(isset($user) && !empty($social)) value="{{$social->pinterest->name}}" @endif>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">http://pinterest.com/</span>
+            </div>
+            <input type="text" class="form-control" name="pinterest" @if(isset($user) && !empty($social)) value="{{$social->pinterest->name}}" @endif>
+        </div>
         <div class="invalid-feedback" data-name="pinterest"></div>
     </div>
 </div>

@@ -14,5 +14,7 @@
         subscriptions = "{{route('rix_subscriptions')}}",
         users = "{{route('rix_users')}}",
         user = "{{route('rix_user')}}",
-        profile = "{{route('rix_profile')}}";
+        profile = "{{route('rix_profile')}}",
+        _pages = "{{route('rix_pages')}}",
+        _page = "{{route('rix_page')}}";
 </script>
