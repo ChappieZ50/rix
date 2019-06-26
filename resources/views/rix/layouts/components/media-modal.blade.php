@@ -25,11 +25,7 @@
                     </div>
                     {{-- Tab 2--}}
                     <div class="tab-pane fade show active media-tab" id="media" role="tabpanel" aria-labelledby="media-tab">
-                        <div class="media-content">
-                            <div class="form-group mb-2 d-flex align-items-center" id="mediaModalActions">
-                                <input type="text" class="form-control" id="searchInGallery" placeholder="Galeride Ara">
-                            </div>
-                            <div class="clearfix"></div>
+                        <div class="media-content pt-3">
                             <div class="modal-media-items"></div>
                         </div>
                         <div class="media-details">

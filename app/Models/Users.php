@@ -15,7 +15,7 @@ class Users extends Model implements Authenticatable
     const DEFAULT_TYPE = 'user';
 
     protected $table = 'rix_users';
-    protected $guarded = ['password'];
+    protected $guarded = [];
     protected $primaryKey = 'user_id';
 
     public function post()

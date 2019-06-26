@@ -5,14 +5,15 @@
             {{$page->title}}
             <div class="table-links actions" data-id="{{$page->page_id}}">
                 <a href="{{action('Rix\PagesController@get_page',$page->page_id)}}" class="text-primary" id="edit">Düzenle</a>
+                <div class="bullet"></div>
                 <a href="javascript:;" class="text-danger" id="delete">Kalıcı Olarak Sil</a>
             </div>
         </td>
         <td>
-            @if($page->status === 'ok')
-                <div class="badge badge-primary">OK</div>
+            @if($page->status == 1)
+                <i class="ion ion-checkmark-circled text-primary" style="font-size: 20px;"></i>
             @else
-                <div class="badge badge-danger">NO</div>
+                <i class="ion ion-close-circled text-danger" style="font-size: 20px;"></i>
             @endif
         </td>
         <td>

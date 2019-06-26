@@ -15,6 +15,7 @@
 @section('js')
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
     <script src="/rix/assets/js/simple-post.js"></script>
+    <script src="/rix/assets/js/page/pages.js"></script>
 @endsection
 
 @section('section_header_bottom')
@@ -47,8 +48,8 @@
 
                     <div class="table-responsive pagesTable">
                         @include('rix.layouts.components.pages.table')
-                        <div class="pagination float-right mr-3 mt-3">{{$users->appends($_GET)->links()}}</div>
-                        @if($users->isEmpty())
+                        <div class="pagination float-right mr-3 mt-3">{{$pages->appends($_GET)->links()}}</div>
+                        @if($pages->isEmpty())
                             <div class="pl-3 pb-3">
                                 <span style="font-size: 15px;color:gray;">Sayfa Bulunamadı</span>
                             </div>

@@ -64,6 +64,8 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware
     Route::post('pages', 'Rix\PagesController@action_pages')->name('rix_action_pages');
     Route::get('page/{id?}', 'Rix\PagesController@get_page')->where('id', '^([0-9-]+)?')->name('rix_page');
     Route::post('page', 'Rix\PagesController@action_page')->name('rix_action_page');
+    // Settings
+    Route::get('settings', 'Rix\SettingsController@get_settings')->name('rix_settings');
 });
 Route::get('/rix-login','Rix\LoginController@get_login')->name('rix_login');
 Route::post('/rix-login','Rix\LoginController@action_login')->name('rix_action_login');

@@ -3,8 +3,8 @@ $(document).ready(function () {
         e.preventDefault();
         let formData = new FormData(this),
             area = '.page';
-        if ($('#preview_selected_image').attr('data-id').length > 0)
-            formData.set('featured_image',$('#preview_selected_image').attr('data-id'));
+        formData.set('featured_image', $('#preview_selected_image').attr('data-id'));
+        formData.set('content', $('.summernote').summernote('code'));
         progressForPublish(1, area);
         $.ajax({
             type: 'post',
@@ -18,12 +18,12 @@ $(document).ready(function () {
         }).done(function (res) {
             progressForPublish(0, area);
             console.log(res);
-            /*if (ajaxCheckStatus(res,{showSuccess: false})){
-                if(res.content.action === 'insert')
-                    window.location.href = _page + "/" + res.content.user_id + "?status=success&action=insert";
-                else
-                    window.location.href = _page + "/" + res.content.user_id + "?status=success&action=update";
-            }*/
+            if (ajaxCheckStatus(res, {showSuccess: false})) {
+                if (res.content.action === 'insert')
+                    window.location.href = _page + "/" + res.content.page_id + "?status=success&action=insert";
+                else if (res.content.action === 'update')
+                    window.location.href = _page + "/" + res.content.page_id + "?status=success&action=update";
+            }
         }).fail(function (res) {
             console.log(res.responseText);
             progressForPublish(0, area);
@@ -31,3 +31,21 @@ $(document).ready(function () {
         });
     });
 });
+$('.actions a').not('#edit').on('click', function () {
+    if (confirm('Bunu yapmak istediğinizden emin misiniz ?'))
+        applySingleSelect($(this), _pages);
+});
+$('#searchInPages').keyup(function (e) {
+    if (e.keyCode === 13 && $.trim($(this).val()).length > 0)
+        searchInPages($.trim($(this).val()));
+});
+$('#searchInPagesBtn').on('click', function () {
+    let input = $('#searchInPages');
+    if ($.trim(input.val()).length > 0)
+        searchInPages($.trim(input.val()));
+});
+
+function searchInPages(value) {
+    let url = searchInTable(value);
+    window.location.href = _pages + url;
+}

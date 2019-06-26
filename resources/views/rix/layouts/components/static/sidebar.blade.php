@@ -22,8 +22,11 @@
                 $add->setPage('Yorumlar','rix_comments',['icon' => 'ion ion-ios-chatbubble-outline','size' => 19,'id' => 'beepMessage']);
                 if(Auth::user()->role == 'admin'){
                  $add->setPage('Mesajlar','rix_messages',['icon' => 'ion ion-ios-email-outline','size' => 19]);
-                 $add->setPage('Bülten','rix_subscriptions',['icon' => 'ion ion-speakerphone','size',19]);
+                 $add->setSubPage('Bülten','ion ion-speakerphone',[
+                    ['Aboneler','rix_subscriptions'],
+                 ]);
                  $add->setSubPage('Kullanıcılar','far fa-user',[['Bütün Kullanıcılar','rix_users'],['Yeni Ekle','rix_user'],['Profil','rix_profile']]);
+                 $add->setPage('Ayarlar','rix_settings',['icon' => 'ion ion-gear-a','size' => 19]);
                 }else{
                     $add->setPage('Profil','rix_profile',['icon' => 'far fa-user','size' => 19]);
                 }

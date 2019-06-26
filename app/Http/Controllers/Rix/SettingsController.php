@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Rix;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RixController extends Controller
+class SettingsController extends Controller
 {
-
-    public function get_rix()
+    public function get_settings()
     {
-        return view('rix.index');
+        return view('rix.settings');
     }
 }

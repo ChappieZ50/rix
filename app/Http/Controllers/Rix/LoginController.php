@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Rix;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 class LoginController extends Controller
 {
+
     public function get_login()
     {
+        if(\Auth::check())
+            return redirect()->route('rix_home');
         return view('rix.login');
     }
 

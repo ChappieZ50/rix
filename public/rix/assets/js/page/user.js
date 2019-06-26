@@ -21,7 +21,7 @@ $(document).ready(function () {
             if (ajaxCheckStatus(res,{showSuccess: false})){
                 if(res.content.action === 'insert')
                     window.location.href = user + "/" + res.content.user_id + "?status=success&action=insert";
-                else
+                else if(res.content.action === 'update')
                     window.location.href = user + "/" + res.content.user_id + "?status=success&action=update";
             }
         }).fail(function (res) {

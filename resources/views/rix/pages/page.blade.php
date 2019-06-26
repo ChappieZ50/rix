@@ -31,14 +31,17 @@
     <script src="/rix/assets/js/page/pages.js"></script>
     <script>
         @if(Request::route('id'))
-        @if(Request::get('status') == 'success')
-        iziToast.success({
-            title: 'Başarılı',
-            message: '{{Request::get('action') == 'insert' ? 'Sayfa Başarıyla Eklendi' : 'Sayfa Başarıyla Güncellendi'}}',
-            position: 'topRight',
-        });
-        @endif
-        window.history.pushState({}, document.title, removeURLParameter('{!! url()->full() !!}', 'status'));
+            @if(Request::get('status') == 'success')
+            iziToast.success({
+                title: 'Başarılı',
+                message: '{{Request::get('action') == 'insert' ? 'Sayfa Başarıyla Eklendi' : 'Sayfa Başarıyla Güncellendi'}}',
+                position: 'topRight',
+            });
+            @endif
+            let url = '{!! url()->full() !!}';
+            url = removeURLParameter(url,'status');
+            url = removeURLParameter(url,'action');
+            window.history.pushState({}, document.title, url);
         @endif
     </script>
 @endsection

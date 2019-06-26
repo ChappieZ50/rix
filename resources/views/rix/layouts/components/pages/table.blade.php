@@ -5,7 +5,7 @@
         <th>Durum</th>
         <th>Oluşturma Tarihi</th>
     </tr>
-    @if($users->isNotEmpty())
+    @if($pages->isNotEmpty())
         @include('rix.layouts.components.pages.table-content')
     @endif
 </table>

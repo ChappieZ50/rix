@@ -1,14 +1,14 @@
 <div class="post-publish w-100">
     <div class="form-group m-3 d-inline-block">
         <label>
-            <input type="checkbox" name="status" class="custom-switch-input" checked value="1">
+            <input type="checkbox" name="status" class="custom-switch-input" @isset($page) {{$page->status == 1 ? 'checked value="1"' : null}} @else checked value="1" @endisset>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Durum</span>
         </label>
     </div>
     <div class="form-group m-3 d-inline-block">
         <label>
-            <input type="checkbox" name="registered" class="custom-switch-input" value="0">
+            <input type="checkbox" name="registered" class="custom-switch-input"  @isset($page) {{$page->registered == 1 ? 'checked value="1"' : null}} @else value="0" @endisset>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Sadece Kayıtlı Kullanıcılara Göster</span>
         </label>

@@ -16,7 +16,7 @@ class CreateRixPostsTable extends Migration
         Schema::create('rix_posts', function (Blueprint $table) {
             $table->bigIncrements('post_id');
             $table->string('title',255);
-            $table->string('slug',255);
+            $table->string('slug',255)->unique();
             $table->longText('content');
             $table->text('summary');
             $table->integer('featured_image');

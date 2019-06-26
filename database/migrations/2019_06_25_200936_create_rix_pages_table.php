@@ -14,7 +14,7 @@ class CreateRixPagesTable extends Migration
     public function up()
     {
         Schema::create('rix_pages', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('page_id');
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content');

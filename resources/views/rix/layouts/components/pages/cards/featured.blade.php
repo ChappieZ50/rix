@@ -6,9 +6,9 @@
         </button>
     </div>
     <div id="image-preview" class="mx-auto d-flex justify-content-center align-items-center" style="display: block;">
-        @if(isset($page) && isset($page->selected_featured_image->image_data))
+        @if(isset($page) && isset($page->selected_featured_image))
             @php($imageData = json_decode($page->selected_featured_image->image_data))
-            <img src="{{isset($imageData->url) ? $imageData->url : null}}" id="preview_selected_image" data-id="{{$post->selected_featured_image->image_id}}">
+            <img src="{{isset($imageData->url) ? $imageData->url : null}}" id="preview_selected_image" data-id="{{$page->selected_featured_image->image_id}}">
         @else
             <img src="" id="preview_selected_image" style="display: none;" data-id="">
         @endisset

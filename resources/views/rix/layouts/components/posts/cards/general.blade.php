@@ -22,7 +22,7 @@
 <div class="form-group row mb-2">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Özet / Açıklama</label>
     <div class="col-sm-12 col-md-7">
-        <textarea class="form-control" rows="10" name="summary">@isset($post) {{$post->summary}} @endisset</textarea>
+        <textarea class="form-control" rows="10" name="summary" id="txt_src_summary">@isset($post) {{$post->summary}} @endisset</textarea>
         <div class="invalid-feedback" data-name="summary"></div>
     </div>
 </div>
@@ -30,7 +30,11 @@
     <script src="/rix/assets/js/custom.js"></script>
     <script type="text/javascript">
         $('#txt_src').on('keyup', function () {
-            $('#txt_trg').val(stringToSlug($(this).val()))
+            $('#txt_trg').val(stringToSlug($(this).val()));
+            $('#txt_trg_seo_title').val($(this).val());
+        });
+        $('#txt_src_summary').on('keyup', function () {
+            $('#txt_trg_seo_description').val($(this).val());
         });
     </script>
 @append
