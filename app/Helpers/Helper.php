@@ -25,9 +25,9 @@ class Helper
         return url(config('definitions.PUBLIC_PATH') . '/' . $img);
     }
 
-    static function deleteImage($images,$path = '')
+    static function deleteImage($images, $path = '')
     {
-        $path = empty($path) ? config('definitions.PUBLIC_PATH').'/' : $path;
+        $path = empty($path) ? config('definitions.PUBLIC_PATH') . '/' : $path;
         if (is_array($images) && !empty($images)) {
             foreach ($images as $image)
                 File::delete($path . $image['image_name']);
@@ -206,6 +206,30 @@ class Helper
             $html[] = ' </li>';
         }
         $typeData->type = $type;
+        if (!$render)
+            return $html;
+        foreach ($html as $item)
+            echo $item;
+    }
+
+    static function createSettingPagesBar($types, $routeName, $param = 'setting', $render = true)
+    {
+        $html = [];
+        foreach ($types as $key => $value) {
+            $html[] = '<li class="nav-item">';
+            $active = null;
+            if (!array_key_exists(\Request::get($param), $types)){
+                $first = array_key_first($types);
+                if($first == $key)
+                    $active = 'active';
+                $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
+            }else{
+                if ($key == \Request::get($param))
+                    $active = 'active';
+                $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
+                $html[] = '</li>';
+            }
+        }
         if (!$render)
             return $html;
         foreach ($html as $item)

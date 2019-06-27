@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <h4>Genel</h4>
                     <p>Panel adı, doğrulamalar , adres vb. ayarlar.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_general')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <h4>SEO</h4>
                     <p>Meta etiketleri ve sosyal medya gibi arama motoru optimizasyonu ayarları.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_seo')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <h4>E-Posta</h4>
                     <p>E-posta SMTP ayarları ve e-posta ile ilgili diğer bilgiler.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_email')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
                 <div class="card-body">
                     <h4>Önbellek</h4>
                     <p>Önbellek ile ilgi ayarlar.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_cache')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <div class="card-body">
                     <h4>Güvenlik</h4>
                     <p>Recaptcha doğrulama.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_security')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
                 <div class="card-body">
                     <h4>Senkronizasyon</h4>
                     <p>Hata giderme ve resimlerin gözükmemesi vb durumlar için senkronizasyon.</p>
-                    <a href="features-setting-detail.html" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <a href="{{route('rix_settings_synchronization')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>

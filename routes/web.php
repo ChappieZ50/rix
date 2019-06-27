@@ -7,7 +7,7 @@ Route::get('robots.txt', function () {
     return Response::make($robots->generate(), 200, array( 'Content-Type' => 'text/plain' ));
 });
 Auth::routes();
-Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware' => ['accessibility','roles']], function () {
+Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware' => [ 'accessibility', 'roles' ] ], function () {
     Route::get('', 'Rix\RixController@get_rix')->name('rix_home');
     // Gallery
     Route::get('gallery', 'Rix\GalleryController@get_gallery')->name('rix_gallery');
@@ -57,19 +57,27 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/' ,'middleware
     Route::get('user/{id?}', 'Rix\UsersController@get_user')->where('id', '^([0-9-]+)?')->name('rix_user');
     Route::post('user', 'Rix\UsersController@action_user')->name('rix_action_user');
     // Profile
-    Route::get('profile','Rix\ProfileController@get_profile')->name('rix_profile');
-    Route::post('profile','Rix\ProfileController@update_profile')->name('rix_update_profile');
+    Route::get('profile', 'Rix\ProfileController@get_profile')->name('rix_profile');
+    Route::post('profile', 'Rix\ProfileController@update_profile')->name('rix_update_profile');
     // Pages
     Route::get('pages', 'Rix\PagesController@get_pages')->name('rix_pages');
     Route::post('pages', 'Rix\PagesController@action_pages')->name('rix_action_pages');
     Route::get('page/{id?}', 'Rix\PagesController@get_page')->where('id', '^([0-9-]+)?')->name('rix_page');
     Route::post('page', 'Rix\PagesController@action_page')->name('rix_action_page');
     // Settings
-    Route::get('settings', 'Rix\SettingsController@get_settings')->name('rix_settings');
+    Route::group([ 'prefix' => 'settings' ], function () {
+        Route::get('', 'Rix\SettingsController@get_settings')->name('rix_settings');
+        Route::get('general', 'Rix\SettingsController@get_setting')->name('rix_settings_general');
+        Route::get('seo', 'Rix\SettingsController@get_setting')->name('rix_settings_seo');
+        Route::get('email', 'Rix\SettingsController@get_setting')->name('rix_settings_email');
+        Route::get('cache', 'Rix\SettingsController@get_setting')->name('rix_settings_cache');
+        Route::get('security', 'Rix\SettingsController@get_setting')->name('rix_settings_security');
+        Route::get('synchronization', 'Rix\SettingsController@get_setting')->name('rix_settings_synchronization');
+    });
 });
-Route::get('/rix-login','Rix\LoginController@get_login')->name('rix_login');
-Route::post('/rix-login','Rix\LoginController@action_login')->name('rix_action_login');
-Route::get('/logout',function (){
+Route::get('/rix-login', 'Rix\LoginController@get_login')->name('rix_login');
+Route::post('/rix-login', 'Rix\LoginController@action_login')->name('rix_action_login');
+Route::get('/logout', function () {
     Auth::logout();
     return redirect()->route('welcome');
 })->name('rix_logout');
