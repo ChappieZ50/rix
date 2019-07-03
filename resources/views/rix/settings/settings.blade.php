@@ -83,12 +83,12 @@
         <div class="col-lg-6">
             <div class="card card-large-icons col-12 p-0">
                 <div class="card-icon bg-primary text-white">
-                    <i class="ion ion-android-sync"></i>
+                    <i class="ion ion-grid"></i>
                 </div>
                 <div class="card-body">
-                    <h4>Senkronizasyon</h4>
-                    <p>Hata giderme ve resimlerin gözükmemesi vb durumlar için senkronizasyon.</p>
-                    <a href="{{route('rix_settings_synchronization')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
+                    <h4>Diğer</h4>
+                    <p>Diğer Ayarlar.</p>
+                    <a href="{{route('rix_settings_other')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>

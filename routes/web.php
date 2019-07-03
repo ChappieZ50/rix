@@ -67,12 +67,12 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware
     // Settings
     Route::group([ 'prefix' => 'settings' ], function () {
         Route::get('', 'Rix\SettingsController@get_settings')->name('rix_settings');
-        Route::get('general', 'Rix\SettingsController@get_setting')->name('rix_settings_general');
-        Route::get('seo', 'Rix\SettingsController@get_setting')->name('rix_settings_seo');
-        Route::get('email', 'Rix\SettingsController@get_setting')->name('rix_settings_email');
-        Route::get('cache', 'Rix\SettingsController@get_setting')->name('rix_settings_cache');
-        Route::get('security', 'Rix\SettingsController@get_setting')->name('rix_settings_security');
-        Route::get('synchronization', 'Rix\SettingsController@get_setting')->name('rix_settings_synchronization');
+        Route::any('general', 'Rix\SettingsController@get_setting')->name('rix_settings_general');
+        Route::any('seo', 'Rix\SettingsController@get_setting')->name('rix_settings_seo');
+        Route::any('email', 'Rix\SettingsController@get_setting')->name('rix_settings_email');
+        Route::any('cache', 'Rix\SettingsController@get_setting')->name('rix_settings_cache');
+        Route::any('security', 'Rix\SettingsController@get_setting')->name('rix_settings_security');
+        Route::any('other', 'Rix\SettingsController@get_setting')->name('rix_settings_other');
     });
 });
 Route::get('/rix-login', 'Rix\LoginController@get_login')->name('rix_login');

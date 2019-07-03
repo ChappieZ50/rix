@@ -45,9 +45,9 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form method="post" action="{{route('rix_settings')}}" id="generalSettingsForm">
+            <form method="POST" action="{{route('rix_settings_general')}}" id="generalSettingsForm" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="setting_type" value="{{Request::get('setting')}}">
+                <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'general_settings' : Request::get('setting')}}">
                 @if(View::exists('rix.layouts.components.settings.cards.general.'.Request::get('setting')))
                     @include('rix.layouts.components.settings.cards.general.'.Request::get('setting'))
                 @else
@@ -58,10 +58,3 @@
     </div>
 @endsection
 
-@section('js')
-    <script>
-        $('input[name=cookie],input[name=adblock]').on('change', function () {
-            $(this).val($(this).is(':checked') ? 1 : 0);
-        });
-    </script>
-@append

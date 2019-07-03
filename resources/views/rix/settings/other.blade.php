@@ -1,8 +1,8 @@
 @extends('rix.layouts.master')
 
-@section('page_title','Güvenlik Ayarları')
+@section('page_title','Diğer Ayarlar')
 
-@section('title','Güvenlik - Rix Admin')
+@section('title','Diğer Ayarlar - Rix Admin')
 
 @section('general_css')
     <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
@@ -32,16 +32,16 @@
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-pills flex-column">
-                        <li class="nav-item"><a href="javascript:;" class="nav-link active">Güvenlik Ayarları</a></li>
+                        <li class="nav-item"><a href="javascript:;" class="nav-link active">Diğer Ayarlar</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <form method="post" action="{{route('rix_settings')}}" id="securitySettingsForm">
+            <form method="post" action="{{route('rix_settings')}}" id="otherSettingsForm">
                 @csrf
-                <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'security' : Request::get('setting')}}">
-                @include('rix.layouts.components.settings.cards.security.security')
+                <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'other' : Request::get('setting')}}">
+                @include('rix.layouts.components.settings.cards.other.other')
             </form>
         </div>
     </div>

@@ -1,8 +1,8 @@
 @extends('rix.layouts.master')
 
-@section('page_title','Genel Ayarlar')
+@section('page_title','Seo Ayarları')
 
-@section('title','Genel Ayarlar - Rix Admin')
+@section('title','Seo Ayarları - Rix Admin')
 
 @section('general_css')
     <link rel="stylesheet" href="/rix/assets/modules/izitoast/dist/css/iziToast.min.css">
@@ -40,7 +40,7 @@
         <div class="col-md-8">
             <form method="post" action="{{route('rix_settings')}}" id="seoSettingsForm">
                 @csrf
-                <input type="hidden" name="setting_type" value="{{Request::get('setting')}}">
+                <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'seo' : Request::get('setting')}}">
                 @include('rix.layouts.components.settings.cards.seo.seo')
             </form>
         </div>
@@ -49,7 +49,7 @@
 
 @section('js')
     <script>
-        $('input[name=cookie],input[name=adblock]').on('change', function () {
+        $('input[name=status_site_name]').on('change', function () {
             $(this).val($(this).is(':checked') ? 1 : 0);
         });
     </script>
