@@ -113,7 +113,7 @@ class Users
             }
             if ($user->user_id == \Auth::user()->user_id) {
                 $request->merge([ 'role' => \Auth::user()->role ]);
-                $validate = array_merge($validate,['role' => 'nullable']);
+                $validate = array_merge($validate, [ 'role' => 'nullable' ]);
             }
             $validator = self::validateUser($request, $validate);
             if ($validator->isNotEmpty())
@@ -146,6 +146,8 @@ class Users
         $avatarName = Helper::uniqImg([ 'extension' => $avatar->getClientOriginalExtension() ], $noExtensionName);
         $avatarData = Helper::getImageData($avatar, $avatarName, $noExtensionName);
         $img = ImageManagerStatic::make($avatar->getRealPath());
+        if (!File::exists(public_path('storage/avatars')))
+            File::makeDirectory(public_path('storage/avatars'));
         $img->fit(200)->save(public_path('storage/avatars/') . $avatarName);
         return (object)[
             'avatarData' => $avatarData,

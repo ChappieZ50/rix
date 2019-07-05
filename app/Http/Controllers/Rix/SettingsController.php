@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Rix;
 
 use App\Classes\Settings;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
     private $settings = [
-        'cache'    => [ 'view' => 'rix.settings.cache', 'route' => 'rix_settings_cache' ],
-        'email'    => [ 'view' => 'rix.settings.email', 'route' => 'rix_settings_email' ],
-        'general'  => [ 'view' => 'rix.settings.general', 'route' => 'rix_settings_general' ],
-        'security' => [ 'view' => 'rix.settings.security', 'route' => 'rix_settings_security' ],
-        'seo'      => [ 'view' => 'rix.settings.seo', 'route' => 'rix_settings_seo' ],
-        'other'    => [ 'view' => 'rix.settings.other', 'route' => 'rix_settings_other' ]
+        'cache'    => [ 'view' => 'rix.settings.cache', 'route' => 'rix_settings_cache', 'default' => 'cache' ],
+        'email'    => [ 'view' => 'rix.settings.email', 'route' => 'rix_settings_email', 'default' => 'email' ],
+        'general'  => [ 'view' => 'rix.settings.general', 'route' => 'rix_settings_general', 'default' => 'general_settings' ],
+        'security' => [ 'view' => 'rix.settings.security', 'route' => 'rix_settings_security', 'default' => 'security' ],
+        'seo'      => [ 'view' => 'rix.settings.seo', 'route' => 'rix_settings_seo', 'default' => 'seo' ],
     ];
 
     public function __construct()
@@ -32,16 +31,18 @@ class SettingsController extends Controller
         foreach ($this->settings as $key => $setting)
             if ($request->routeIs($setting->route)) {
                 if ($request->isMethod('get')) {
-                    return view($setting->view)->with([]);
+                    return view($setting->view)->with([
+                        'setting' => Settings::getSetting($key, $request->get('setting') ? $request->get('setting') : $setting->default)->first()
+                    ]);
                 } elseif ($request->isMethod('post')) {
-                    dd($this->action_setting($request,$key));
+                    return $this->action_setting($request, $key);
                 }
             }
         return abort(404);
     }
 
-    public function action_setting(Request $request,$page)
+    public function action_setting($request, $page)
     {
-        return Settings::createOrUpdate($request,$page);
+        return Settings::createOrUpdate($request, $page);
     }
 }

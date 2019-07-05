@@ -72,7 +72,6 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware
         Route::any('email', 'Rix\SettingsController@get_setting')->name('rix_settings_email');
         Route::any('cache', 'Rix\SettingsController@get_setting')->name('rix_settings_cache');
         Route::any('security', 'Rix\SettingsController@get_setting')->name('rix_settings_security');
-        Route::any('other', 'Rix\SettingsController@get_setting')->name('rix_settings_other');
     });
 });
 Route::get('/rix-login', 'Rix\LoginController@get_login')->name('rix_login');

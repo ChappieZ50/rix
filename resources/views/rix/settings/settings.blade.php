@@ -80,18 +80,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="card card-large-icons col-12 p-0">
-                <div class="card-icon bg-primary text-white">
-                    <i class="ion ion-grid"></i>
-                </div>
-                <div class="card-body">
-                    <h4>Diğer</h4>
-                    <p>Diğer Ayarlar.</p>
-                    <a href="{{route('rix_settings_other')}}" class="card-cta">Ayarları Değiştir <i class="fas fa-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 

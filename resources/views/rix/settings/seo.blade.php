@@ -24,6 +24,7 @@
 @endsection
 
 @section('content')
+    @include('rix.layouts.components.status-message')
     <div class="row">
         <div class="col-md-4">
             <div class="card">
@@ -38,7 +39,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form method="post" action="{{route('rix_settings')}}" id="seoSettingsForm">
+            <form method="post" action="{{route('rix_settings_seo')}}" id="seoSettingsForm">
                 @csrf
                 <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'seo' : Request::get('setting')}}">
                 @include('rix.layouts.components.settings.cards.seo.seo')

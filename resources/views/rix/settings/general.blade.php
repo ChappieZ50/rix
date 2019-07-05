@@ -24,6 +24,7 @@
 @endsection
 
 @section('content')
+   @include('rix.layouts.components.status-message')
     <div class="row">
         <div class="col-md-4">
             <div class="card">

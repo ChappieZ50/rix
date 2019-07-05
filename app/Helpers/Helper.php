@@ -165,9 +165,9 @@ class Helper
         return $ids;
     }
 
-    static function getImageData($file, $imageName, $noExtensionName)
+    static function getImageData($file, $imageName, $noExtensionName,$encode = true)
     {
-        return json_encode([
+        $data = [
             'width'                  => getimagesize($file)[0],
             'height'                 => getimagesize($file)[1],
             'mime-type'              => $file->getClientMimeType(),
@@ -179,7 +179,8 @@ class Helper
             'imageSizeHumanReadable' => Helper::fileSize($file->getSize()),
             'image_title'            => '',
             'image_alt'              => ''
-        ]);
+        ];
+        return $encode ? json_encode($data) : $data;
     }
 
     static function createTablePagesBar($typeData, $names, $routeName, $param = 'type', $render = true)

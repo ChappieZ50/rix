@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Rix;
 
 use App\Classes\Users;
-use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
