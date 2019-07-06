@@ -7,6 +7,7 @@ Route::get('robots.txt', function () {
     return Response::make($robots->generate(), 200, array( 'Content-Type' => 'text/plain' ));
 });
 Auth::routes();
+Route::get('sitemap.xml','SitemapController@index')->name('sitemap');
 Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware' => [ 'accessibility', 'roles' ] ], function () {
     Route::get('', 'Rix\RixController@get_rix')->name('rix_home');
     // Gallery

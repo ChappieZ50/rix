@@ -15,12 +15,12 @@ class CreateRixPostsTable extends Migration
     {
         Schema::create('rix_posts', function (Blueprint $table) {
             $table->bigIncrements('post_id');
-            $table->string('title',255);
-            $table->string('slug',255)->unique();
+            $table->string('title');
+            $table->string('slug')->unique();
             $table->longText('content');
             $table->text('summary');
             $table->integer('featured_image');
-            $table->string('seo_title',255);
+            $table->string('seo_title');
             $table->text('seo_description');
             $table->text('seo_keywords')->nullable();
             $table->integer('featured')->default(0);
@@ -32,6 +32,7 @@ class CreateRixPostsTable extends Migration
             $table->unsignedBigInteger('author_id');
             $table->string('readable_date',25);
             $table->timestamps();
+
         });
     }
 

@@ -4,4 +4,6 @@ return [
     'PUBLIC_PATH'            => 'storage/media',
     'GALLERY_PAGINATE'       => 60,
     'MODAL_GALLERY_PAGINATE' => 60,
+    'CATEGORIES_PREFIX'      => 'kategoriler/',
+    'TAGS_PREFIX'            => 'etiketler/',
 ];
