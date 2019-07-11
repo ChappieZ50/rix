@@ -43,6 +43,7 @@ class SitemapController extends Controller
                     $prefix = null;
                 $sitemap->add(Url::create($prefix . $item->slug)->setLastModificationDate($item->updated_at));
             }
+        $sitemap->add(Url::create('/'));
         \File::put($this->sitemap, $sitemap->render());
         return true;
     }

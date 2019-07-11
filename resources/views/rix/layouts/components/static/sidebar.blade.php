@@ -24,6 +24,7 @@
                  $add->setPage('Mesajlar','rix_messages',['icon' => 'ion ion-ios-email-outline','size' => 19]);
                  $add->setSubPage('Bülten','ion ion-speakerphone',[
                     ['Aboneler','rix_subscriptions'],
+                    ['Abonelere Mail Gönder','rix_send_email_subscriptions'],
                  ]);
                  $add->setSubPage('Kullanıcılar','far fa-user',[['Bütün Kullanıcılar','rix_users'],['Yeni Ekle','rix_user'],['Profil','rix_profile']]);
                  $add->setPage('Ayarlar','rix_settings',['icon' => 'ion ion-gear-a','size' => 19]);

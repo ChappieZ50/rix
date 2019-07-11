@@ -61,8 +61,10 @@ class Pages
         if ($validator->isNotEmpty())
             return Helper::response(false, '', [ 'errors' => $validator ]);
         $create = ModelPages::create(self::requestData($request));
-        if ($create)
+        if ($create){
+            Sitemap::refresh();
             return Helper::response(true, 'Eklendi', [ 'custom' => [ 'page_id' => $create->page_id, 'action' => 'insert' ] ]);
+        }
         return Helper::response(false);
 
     }
@@ -73,8 +75,10 @@ class Pages
         if ($validator->isNotEmpty())
             return Helper::response(false, '', [ 'errors' => $validator ]);
         $update = ModelPages::where('page_id', $request->input('id'))->update(self::requestData($request));
-        if ($update)
+        if ($update){
+            Sitemap::refresh();
             return Helper::response(true, 'Güncellendi', [ 'custom' => [ 'page_id' => $request->input('id'), 'action' => 'update' ] ]);
+        }
         return Helper::response(false);
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -7,7 +7,6 @@
     <title>Rix Admin Giriş</title>
     @include("rix.layouts.components.static.scripts-styles.css")
 </head>
-
 <body>
 <div id="app">
     <section class="section">
@@ -52,7 +51,11 @@
                                         <label class="custom-control-label" for="remember-me">Beni Hatırla</label>
                                     </div>
                                 </div>
-
+                                @if(\App\Helpers\Helper::recaptchaIsHave() && \App\Helpers\Helper::recaptchaRequirements('status_recaptcha_panel',1))
+                                    <div class="form-group">
+                                        <div id="g-recaptcha"></div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                         Giriş Yap
@@ -67,5 +70,15 @@
     </section>
 </div>
 @include("rix.layouts.components.static.scripts-styles.js")
+@if(\App\Helpers\Helper::recaptchaIsHave() && \App\Helpers\Helper::recaptchaRequirements('status_recaptcha_panel',1))
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl={{config('recaptcha.language')}}" async defer></script>
+    <script>
+        var onloadCallback = function() {
+            grecaptcha.render('g-recaptcha', {
+                'sitekey' : '{{config('recaptcha.site_key')}}'
+            });
+        };
+    </script>
+@endif
 </body>
 </html>

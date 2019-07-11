@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Rix\Posts;
 
-use App\Classes\SiteMap;
+use App\Classes\Sitemap;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
@@ -47,7 +47,7 @@ class PostsController extends Controller
         if ($validator->isEmpty()) {
             $insert = ModelPosts::create(Posts::requestData($request));
             if ($insert) {
-                SiteMap::addLink($insert->slug,$insert->updated_at);
+                Sitemap::refresh();
                 $res = Posts::termRelations($request, $insert->post_id);
                 return array_merge($res, [ 'post_id' => $insert->post_id ]);
             }
@@ -99,10 +99,12 @@ class PostsController extends Controller
                 if ($validator->isEmpty()) {
                     $updateData = Posts::requestData($request);
                     $update = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
-                    if ($update)
+                    if ($update) {
+                        Sitemap::refresh();
                         return Posts::termRelations($request, $request->input('id'));
-                    else
+                    } else {
                         return Helper::response(false, 'Bir sorun oluştu');
+                    }
                 }
                 return Helper::response(false, '', [ 'errors' => $validator ]);
             }

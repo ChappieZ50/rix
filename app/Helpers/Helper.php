@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Classes\Settings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -165,7 +166,7 @@ class Helper
         return $ids;
     }
 
-    static function getImageData($file, $imageName, $noExtensionName,$encode = true)
+    static function getImageData($file, $imageName, $noExtensionName, $encode = true)
     {
         $data = [
             'width'                  => getimagesize($file)[0],
@@ -219,12 +220,12 @@ class Helper
         foreach ($types as $key => $value) {
             $html[] = '<li class="nav-item">';
             $active = null;
-            if (!array_key_exists(\Request::get($param), $types)){
+            if (!array_key_exists(\Request::get($param), $types)) {
                 $first = array_key_first($types);
-                if($first == $key)
+                if ($first == $key)
                     $active = 'active';
                 $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
-            }else{
+            } else {
                 if ($key == \Request::get($param))
                     $active = 'active';
                 $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
@@ -246,5 +247,29 @@ class Helper
             return $date;
 
         return $date->m . " Ay " . $date->d . " Gün " . $date->h . " Saat " . $date->i . " Dakika " . $date->s . " Saniye ";
+    }
+
+    static function recaptchaRequirements($requirement = 'status_recaptcha', $equal = null)
+    {
+        $setting = self::getSetting('security');
+        if (!isset($setting->status_recaptcha) || $setting->status_recaptcha != 1)
+            return false;
+        else if (!isset($setting->$requirement) || $setting->$requirement != $equal)
+            return false;
+        else
+            return true;
+    }
+
+    static function recaptchaIsHave()
+    {
+        if (config('recaptcha.site_key') != null || config('recaptcha.secret_key') != null)
+            return true;
+        return false;
+    }
+
+    static function getSetting($type, $param = null)
+    {
+        $setting = Settings::getSetting($type, !empty($param) ? $param : $type)->first();
+        return isset($setting->$type) ? json_decode($setting->$type) : $setting;
     }
 }

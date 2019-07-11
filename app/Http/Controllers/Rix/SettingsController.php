@@ -31,9 +31,7 @@ class SettingsController extends Controller
         foreach ($this->settings as $key => $setting)
             if ($request->routeIs($setting->route)) {
                 if ($request->isMethod('get')) {
-                    return view($setting->view)->with([
-                        'setting' => Settings::getSetting($key, $request->get('setting') ? $request->get('setting') : $setting->default)->first()
-                    ]);
+                    return view($setting->view)->with('setting', Settings::getSetting($key, $request->get('setting') ? $request->get('setting') : $setting->default)->first());
                 } elseif ($request->isMethod('post')) {
                     return $this->action_setting($request, $key);
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rix\Posts;
 
+use App\Classes\Sitemap;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
@@ -57,6 +58,7 @@ class CategoriesController extends Controller
                     'slug'          => $slug,
                     'readable_date' => Helper::readableDateFormat()
                 ])->termTaxonomy()->create(['taxonomy' => 'category', 'parent' => $parent,]);
+                Sitemap::refresh();
                 if ($done)
                     return Categories::getRenderedCategories();
             } else {

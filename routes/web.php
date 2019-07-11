@@ -52,6 +52,8 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware
     // Subscription
     Route::get('subscriptions', 'Rix\SubscriptionsController@get_subscriptions')->name('rix_subscriptions');
     Route::post('subscriptions', 'Rix\SubscriptionsController@action_subscriptions')->name('rix_action_subscriptions');
+    Route::get('send_email_subscriptions','Rix\SubscriptionsController@get_send_email_subscriptions')->name('rix_send_email_subscriptions');
+    Route::post('send_email_subscriptions','Rix\SubscriptionsController@action_send_email_subscriptions')->name('rix_action_send_email_subscriptions');
     // Users
     Route::get('users', 'Rix\UsersController@get_users')->name('rix_users');
     Route::post('users', 'Rix\UsersController@action_users')->name('rix_action_users');

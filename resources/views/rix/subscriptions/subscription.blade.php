@@ -18,6 +18,12 @@
     <script src="/rix/assets/js/page/subscriptions.js"></script>
 @endsection
 
+@section('section_header_bottom')
+    <div class="section-header-button">
+        <a href="{{route('rix_send_email_subscriptions')}}" class="btn btn-primary">Abonelere Mail Gönder</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row mt-4">
         <div class="col-12">
