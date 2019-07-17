@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemap>
+        <loc>http://localhost:8000/sitemap_posts.xml</loc>
+    
+        <lastmod>2019-07-17T18:35:47+03:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://localhost:8000/sitemap_pages.xml</loc>
+    
+        <lastmod>2019-07-17T18:35:47+03:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://localhost:8000/sitemap_categories.xml</loc>
+    
+        <lastmod>2019-07-17T18:35:47+03:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://localhost:8000/sitemap_tags.xml</loc>
+    
+        <lastmod>2019-07-17T18:35:47+03:00</lastmod>
+    </sitemap>
+</sitemapindex>

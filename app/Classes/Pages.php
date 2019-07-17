@@ -9,6 +9,7 @@
 namespace App\Classes;
 
 
+use App\Events\SiteMapCrud;
 use App\Helpers\Helper;
 use App\Models\Pages as ModelPages;
 use Illuminate\Support\Str;
@@ -62,7 +63,6 @@ class Pages
             return Helper::response(false, '', [ 'errors' => $validator ]);
         $create = ModelPages::create(self::requestData($request));
         if ($create){
-            Sitemap::refresh();
             return Helper::response(true, 'Eklendi', [ 'custom' => [ 'page_id' => $create->page_id, 'action' => 'insert' ] ]);
         }
         return Helper::response(false);
@@ -74,9 +74,8 @@ class Pages
         $validator = self::validatePage($request);
         if ($validator->isNotEmpty())
             return Helper::response(false, '', [ 'errors' => $validator ]);
-        $update = ModelPages::where('page_id', $request->input('id'))->update(self::requestData($request));
+        $update = ModelPages::find($request->input('id'))->update(self::requestData($request));
         if ($update){
-            Sitemap::refresh();
             return Helper::response(true, 'Güncellendi', [ 'custom' => [ 'page_id' => $request->input('id'), 'action' => 'update' ] ]);
         }
         return Helper::response(false);

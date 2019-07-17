@@ -47,7 +47,6 @@ class PostsController extends Controller
         if ($validator->isEmpty()) {
             $insert = ModelPosts::create(Posts::requestData($request));
             if ($insert) {
-                Sitemap::refresh();
                 $res = Posts::termRelations($request, $insert->post_id);
                 return array_merge($res, [ 'post_id' => $insert->post_id ]);
             }
@@ -77,7 +76,6 @@ class PostsController extends Controller
                 $categories = CategoriesAndTags::getRecords([ 'taxonomy' => 'category', 'selectTerms' => [ 'term_id', 'name' ] ]);
                 $tags = CategoriesAndTags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => [ 'term_id', 'name' ] ]);
 
-
                 return view('rix.posts.post')->with([
                     'images'      => $images,
                     'parentItems' => $categories->get(),
@@ -98,9 +96,8 @@ class PostsController extends Controller
                 $validator = Posts::validatePost($request);
                 if ($validator->isEmpty()) {
                     $updateData = Posts::requestData($request);
-                    $update = ModelPosts::where('post_id', $request->input('id'))->update($updateData);
+                    $update = ModelPosts::find($request->input('id'))->update($updateData);
                     if ($update) {
-                        Sitemap::refresh();
                         return Posts::termRelations($request, $request->input('id'));
                     } else {
                         return Helper::response(false, 'Bir sorun oluştu');

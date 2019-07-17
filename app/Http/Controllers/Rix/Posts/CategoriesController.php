@@ -21,14 +21,14 @@ class CategoriesController extends Controller
                 $parents = Categories::parentCategories($request->input('term_id'), $request->input('main'), false);
                 return Categories::renderCategories($parents, 'parentCategories', 'rix.layouts.components.posts.categories.parent-categories-modal');
             } elseif ($action == 'getTable') {
-                $records = Categories::getRecords(['taxonomy' => 'category', 'doPaginate' => true]);
+                $records = Categories::getRecords([ 'taxonomy' => 'category', 'doPaginate' => true ]);
                 return Categories::renderCategories($records, 'tableItems', 'rix.layouts.components.posts.categories.table');
             }
         }
-        if($request->get('search'))
-            $categories =  Categories::search($request->get('search'),'category');
+        if ($request->get('search'))
+            $categories = Categories::search($request->get('search'), 'category');
         else
-            $categories =  Categories::getRecords(['taxonomy' => 'category']);
+            $categories = Categories::getRecords([ 'taxonomy' => 'category' ]);
         $view = [
             'tableItems'  => $categories->paginate(20),
             'parentItems' => $categories->get(),
@@ -46,7 +46,7 @@ class CategoriesController extends Controller
 
     public function new_category(Request $request)
     {
-        $validate = ['name' => 'required|max:255', 'slug' => 'required|max:255', 'parent' => 'required'];
+        $validate = [ 'name' => 'required|max:255', 'slug' => 'required|max:255', 'parent' => 'required' ];
         $validator = \Validator::make($request->all(), $validate);
         if (!$validator->fails()) {
             $name = $request->input('name');
@@ -57,15 +57,14 @@ class CategoriesController extends Controller
                     'name'          => $name,
                     'slug'          => $slug,
                     'readable_date' => Helper::readableDateFormat()
-                ])->termTaxonomy()->create(['taxonomy' => 'category', 'parent' => $parent,]);
-                Sitemap::refresh();
+                ])->termTaxonomy()->create([ 'taxonomy' => 'category', 'parent' => $parent, ]);
                 if ($done)
                     return Categories::getRenderedCategories();
             } else {
                 return Helper::response(false, 'Kategori daha önceden eklenmiş');
             }
         }
-        return Helper::response(false, '', ['errors' => $validator->errors()]);
+        return Helper::response(false, '', [ 'errors' => $validator->errors() ]);
     }
 
     public function delete_category(Request $request)
@@ -75,7 +74,7 @@ class CategoriesController extends Controller
                 return $this->confirmDelete($request->input('data'));
             $data = [];
             $ids = $request->input('ids');
-            $ids = is_array($ids) ? $ids : [$ids];
+            $ids = is_array($ids) ? $ids : [ $ids ];
             foreach ($ids as $id) {
                 $record = Categories::parentCategories($id);
                 if (empty($record['records'])) {
@@ -86,7 +85,7 @@ class CategoriesController extends Controller
                 }
             }
             if (isset($data['yesParent']) && !empty($data['yesParent']))
-                return ['confirm' => true, 'data' => $data];
+                return [ 'confirm' => true, 'data' => $data ];
             else
                 return $this->deleteAll($data['noParent']);
         }
@@ -99,7 +98,7 @@ class CategoriesController extends Controller
         $ids = $data['yesParent']['id'];
         $records = $data['yesParent']['records'];
         foreach ($records as $record)
-            TermTaxonomy::where('parent', $record['term_taxonomy']['parent'])->update(['parent' => 0]);
+            TermTaxonomy::where('parent', $record['term_taxonomy']['parent'])->update([ 'parent' => 0 ]);
         return $this->deleteAll($ids);
     }
 
@@ -112,7 +111,7 @@ class CategoriesController extends Controller
 
     public function update_category(Request $request)
     {
-        $validate = ['name' => 'required|max:255', 'slug' => 'required|max:255', 'parent' => 'required', 'id' => 'required|integer'];
+        $validate = [ 'name' => 'required|max:255', 'slug' => 'required|max:255', 'parent' => 'required', 'id' => 'required|integer' ];
         $validator = \Validator::make($request->all(), $validate);
         if (!$validator->fails()) {
 
@@ -123,29 +122,27 @@ class CategoriesController extends Controller
             if (Categories::findExistRecord('category', $name, $slug, $parent)) {
                 $termParent = TermTaxonomy::where([
                     'parent' => $id,
-                ])->select(['parent', 'term_id'])->get();
+                ])->select([ 'parent', 'term_id' ])->get();
                 if (!empty($termParent)) {
                     foreach ($termParent as $term) {
                         if ($term->term_id == $parent)
                             return Helper::response(false, 'Seçtiğiniz alt kategori zaten kendisinin bir alt kategorisi');
                     }
                 }
-                $update = \DB::table('rix_terms')
-                    ->join('rix_term_taxonomy', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
-                    ->where('rix_terms.term_id', $id)
-                    ->update([
-                        'name'   => $name,
-                        'slug'   => $slug,
-                        'parent' => $parent
-                    ]);
-                if ($update)
+                $term = Terms::find($id);
+                $updateTermTaxonomy = $term->termTaxonomy()->update([ 'parent' => $parent ]);
+                $updateTerm = $term->update([
+                    'name' => $name,
+                    'slug' => $slug,
+                ]);
+                if ($updateTermTaxonomy || $updateTerm)
                     return Categories::getRenderedCategories();
 
             } else {
                 return Helper::response(false, 'Kategori Zaten Mevcut');
             }
         }
-        return Helper::response(false, '', ['errors' => $validator->errors()]);
+        return Helper::response(false, '', [ 'errors' => $validator->errors() ]);
     }
 
 

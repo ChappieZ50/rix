@@ -55,7 +55,6 @@ class TagsController extends Controller
                     'slug'          => $slug,
                     'readable_date' => Helper::readableDateFormat()
                 ])->termTaxonomy()->create([ 'taxonomy' => 'post_tag' ]);
-                Sitemap::refresh();
                 if ($done) {
                     $records = Tags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms, 'doPaginate' => true ]);
                     return Helper::render($records, 'tags', 'rix.layouts.components.posts.tags.table');
@@ -89,10 +88,9 @@ class TagsController extends Controller
             $slug = Str::slug($request->input('slug'));
             $id = $request->input('id');
             if (Tags::findExistRecord('post_tag', $name, $slug)) {
-                $update = Terms::where('term_id', $id)->update($request->only('name', 'slug'));
+                $update = Terms::find($id)->update($request->only('name', 'slug'));
                 if ($update) {
                     $records = Tags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => $this->selectTerms, 'doPaginate' => true ]);
-                    Sitemap::refresh();
                     return Helper::render($records, 'tags', 'rix.layouts.components.posts.tags.table');
                 }
 

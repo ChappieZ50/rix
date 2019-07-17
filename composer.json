@@ -18,7 +18,8 @@
     "laravel/tinker": "^1.0",
     "nesbot/carbon": "^2.19",
     "spatie/laravel-sitemap": "^5.3",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.6",

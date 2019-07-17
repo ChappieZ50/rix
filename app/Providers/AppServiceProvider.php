@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use App\Classes\Settings;
-use Illuminate\Support\Facades\Config;
+use App\Models\Pages;
+use App\Models\Posts;
+use App\Models\Terms\Terms;
+use App\Observers\PagesObserver;
+use App\Observers\PostsObserver;
+use App\Observers\TermsObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -40,8 +45,8 @@ class AppServiceProvider extends ServiceProvider
         $siteKey = isset($setting->recaptcha_site_key) ? $setting->recaptcha_site_key : false;
         $secretKey = isset($setting->recaptcha_secret_key) ? $setting->recaptcha_secret_key : false;
         $language = isset($setting->recaptcha_language) ? $setting->recaptcha_language : 'tr';
-        \Config::set('recaptcha.site_key',$siteKey);
-        \Config::set('recaptcha.secret_key',$secretKey);
-        \Config::set('recaptcha.language',$language);
+        \Config::set('recaptcha.site_key', $siteKey);
+        \Config::set('recaptcha.secret_key', $secretKey);
+        \Config::set('recaptcha.language', $language);
     }
 }

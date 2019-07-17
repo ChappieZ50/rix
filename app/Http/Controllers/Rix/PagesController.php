@@ -14,7 +14,7 @@ class PagesController extends Controller
     {
         if ($request->get('search'))
             $pages = $pages->where('title', 'like', '%' . $request->get('search') . '%');
-        return view('rix.pages.pages')->with('pages', $pages->paginate(20));
+        return view('rix.pages.pages')->with('pages', $pages->orderByDesc('created_at')->paginate(20));
     }
 
     public function get_page(ModelPages $pages, $id = '')
