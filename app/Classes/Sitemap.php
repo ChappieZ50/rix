@@ -13,14 +13,6 @@ use Spatie\Sitemap\Tags\Url;
 
 class Sitemap
 {
-    static $sitemap;
-
-    public function __construct()
-    {
-
-        self::$sitemap = new Sitemap();
-    }
-
     static function refresh()
     {
         return self::create();
@@ -50,6 +42,7 @@ class Sitemap
     static function create($type = '')
     {
         self::createSitemaps();
+        $sitemap = new \Spatie\Sitemap\Sitemap();
         if (empty($type)) {
             foreach (self::getAll() as $key => $value)
                 self::writeAllRecords($key, $value);
@@ -61,11 +54,11 @@ class Sitemap
                 else if ($type === 'categories')
                     $prefix = config('definitions.CATEGORIES_PREFIX');
                 $frequency = $type === 'posts' ? Url::CHANGE_FREQUENCY_DAILY : Url::CHANGE_FREQUENCY_WEEKLY;
-                self::$sitemap->add(Url::create($prefix . $item->slug)->setChangeFrequency($frequency));
+                $sitemap->add(Url::create($prefix . $item->slug)->setChangeFrequency($frequency));
             }
             if ($type === 'pages')
-                self::$sitemap->add(Url::create('/')->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY));
-            self::$sitemap->writeToFile(self::getSitemap($type));
+                $sitemap->add(Url::create('/')->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY));
+            $sitemap->writeToFile(public_path(self::getSitemap($type)));
         }
         return true;
     }
@@ -153,30 +146,31 @@ class Sitemap
         $sitemap->writeToFile($file);
     }
 
-    static function insert($loc, $lastmod, $xml, $changefreg = Url::CHANGE_FREQUENCY_DAILY, $priority = 0.8)
+    static function insert($loc, $lastmod, $xml, $changefreg = Url::CHANGE_FREQUENCY_DAILY, $prefix = null, $priority = 0.8)
     {
         self::createSitemaps();
         $file = public_path($xml);
         $xml = simplexml_load_file($file);
         $child = $xml->addChild('url');
-        $child->addChild('loc', \url($loc));
+        $child->addChild('loc', \url($prefix . $loc));
         $child->addChild('lastmod', Carbon::parse($lastmod)->toIso8601String());
         $child->addChild('changefreg', $changefreg);
         $child->addChild('priority', $priority);
         $xml->saveXML($file);
     }
 
-    static function delete($slug,$xml,$homepage = false)
+    static function delete($slug, $xml, $prefix = null)
     {
         $file = public_path($xml);
         $xml = simplexml_load_file($file);
+        $c = 0;
         foreach ($xml->children() as $key => $value) {
-            if (url('') != $value->loc && $homepage) {
-                unset($xml[$key]);
-            }else{
-                unset($xml[$key]);
+            if (url('') != $value->loc && $value->loc == url($prefix . $slug)) {
+                unset($xml->url[$c]);
+                break;
             }
+            $c++;
         }
-        $xml->saveXML(public_path('sitemap_pages.xml'));
+        $xml->saveXML($file);
     }
 }

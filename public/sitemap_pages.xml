@@ -2,20 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>http://localhost:8000</loc>
-        <lastmod>2019-07-17T17:46:27+03:00</lastmod>
+        <lastmod>2019-07-18T14:20:43+03:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
-    <url>
-        <loc>http://localhost:8000/aa</loc>
-        <lastmod>2019-07-17T17:46:36+03:00</lastmod>
-        <changefreg>daily</changefreg>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://localhost:8000/bb</loc>
-        <lastmod>2019-07-17T17:46:42+03:00</lastmod>
-        <changefreg>daily</changefreg>
-        <priority>0.8</priority>
-    </url>
-<url><loc>http://localhost:8000/trtr</loc><lastmod>2019-07-17T18:35:47+03:00</lastmod><changefreg>daily</changefreg><priority>0.8</priority></url></urlset>
+</urlset>

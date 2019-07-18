@@ -6,9 +6,6 @@ use App\Classes\Settings;
 use App\Models\Pages;
 use App\Models\Posts;
 use App\Models\Terms\Terms;
-use App\Observers\PagesObserver;
-use App\Observers\PostsObserver;
-use App\Observers\TermsObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 

@@ -76,13 +76,13 @@ class Posts
         $data = $request->input('data');
         if ($data) {
             foreach ($data as $item) {
-                $update = ModelPosts::where('post_id', $item['id'])->update([
+                $update = ModelPosts::find($item['id'])->update([
                     'status'        => 'trash',
                     'before_status' => $item['status']
                 ]);
                 $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($item) {
                     return $query->whereHas('posts', function ($query) use ($item) {
-                        return $query->where('post_id', $item['id']);
+                        return $query->where('post_id',$item['id']);
                     });
                 })->select('term_taxonomy_id')->get();
                 foreach ($taxonomy as $tax)
@@ -108,15 +108,15 @@ class Posts
     {
         $data = is_array($request->input('data')) ? $request->input('data') : [ $request->input('data') ];
         foreach ($data as $id) {
-            $beforeStatus = ModelPosts::where('post_id', $id)->select('before_status')->first();
+            $beforeStatus = ModelPosts::find($id)->select('before_status')->first();
             $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($id) {
                 return $query->whereHas('posts', function ($query) use ($id) {
-                    return $query->where('post_id', $id);
+                    return $query->where('post_id',$id);
                 });
             })->select('term_taxonomy_id')->get();
             foreach ($taxonomy as $tax)
                 self::relationsCounter($tax->term_taxonomy_id, 'increment');
-            if (!ModelPosts::where('post_id', $id)->update([ 'status' => !empty($beforeStatus) ? $beforeStatus->before_status : 'closed', 'before_status' => null ]))
+            if (!ModelPosts::find($id)->update([ 'status' => !empty($beforeStatus) ? $beforeStatus->before_status : 'closed', 'before_status' => null ]))
                 return Helper::response(false, 'Bir Sorun Oluştu ve Bazı Yazılar Çöpten Taşınamadı');
         }
         return [ 'posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar([ 'type' => $request->input('currentType') ]) ];
@@ -129,9 +129,9 @@ class Posts
                 $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
                     ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
                     ->select('post_id', 'rix_terms.term_id', 'rix_terms.name', 'rix_term_taxonomy.taxonomy');
-            } ])->where('post_id', $id)->first();
+            } ])->find($id)->first();
         if (!empty($record)) {
-            $featuredImage = Gallery::where('image_id', $record->featured_image)->first();
+            $featuredImage = Gallery::find($record->featured_image)->first();
             if (!empty($featuredImage))
                 $record->selected_featured_image = $featuredImage;
             return $record;

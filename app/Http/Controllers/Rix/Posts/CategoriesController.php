@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Rix\Posts;
 
-use App\Classes\Sitemap;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>http://localhost:8000/denemeqq</loc>
-        <lastmod>2019-07-17T17:46:27+03:00</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://localhost:8000/yazi</loc>
-        <lastmod>2019-07-17T17:46:27+03:00</lastmod>
-        <changefreq>daily</changefreq>
+        <loc>http://localhost:8000/asd</loc>
+        <lastmod>2019-07-18T14:22:02+03:00</lastmod>
+        <changefreg>daily</changefreg>
         <priority>0.8</priority>
     </url>
 </urlset>

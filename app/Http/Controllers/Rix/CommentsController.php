@@ -9,19 +9,20 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
-    protected $types = ['approved','pending','spam'];
+    protected $types = [ 'approved', 'pending', 'spam' ];
+
     public function get_comments(Request $request)
     {
-        $type      = $request->get('status');
-        $typeData  = ['type' => $type];
-        $paramType = Helper::findStatusOnParam($type,$this->types);
+        $type = $request->get('status');
+        $typeData = [ 'type' => $type ];
+        $paramType = Helper::findStatusOnParam($type, $this->types);
         if ($request->get('post'))
-            $typeData = array_merge(['post_id' => $request->get('post')], $typeData);
+            $typeData = array_merge([ 'post_id' => $request->get('post') ], $typeData);
         $options = [
             'with'       => 'post',
-            'withSelect' => ['post_id', 'title', 'url']
+            'withSelect' => [ 'post_id', 'title', 'url' ]
         ];
-        $data    = Comments::getCommentsWithCount(array_merge($paramType, $options), $typeData);
+        $data = Comments::getCommentsWithCount(array_merge($paramType, $options), $typeData);
         if ($request->get('search')) {
             $value = $request->get('search');
             $data['comments']->where(function ($query) use ($value) {
@@ -30,8 +31,8 @@ class CommentsController extends Controller
                     ->orWhere('comment', 'like', '%' . $value . '%');
             });
         }
-        if($request->get('comment'))
-            $data['comments']->where('comment_id',$request->get('comment'));
+        if ($request->get('comment'))
+            $data['comments']->where('comment_id', $request->get('comment'));
         return view('rix.comments')->with([
             'comments' => $data['comments']->paginate(20),
             'typeData' => $data['count']

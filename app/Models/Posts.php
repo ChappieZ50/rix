@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Classes\Sitemap;
 use Illuminate\Database\Eloquent\Model;
 
 class Posts extends Model
@@ -9,6 +10,7 @@ class Posts extends Model
     protected $table = 'rix_posts';
     protected $guarded = [];
     protected $primaryKey = 'post_id';
+    protected static $sitemap = 'sitemap_posts.xml';
 
     public function termRelationships()
     {
@@ -28,5 +30,19 @@ class Posts extends Model
     public function user()
     {
         return $this->belongsTo(Users::class, 'author_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::created(function ($post) {
+            Sitemap::insert($post->slug, $post->created_at, self::$sitemap);
+        });
+        self::updated(function () {
+            Sitemap::refreshPosts();
+        });
+        self::deleted(function ($post) {
+            Sitemap::delete($post->slug, self::$sitemap);
+        });
     }
 }
