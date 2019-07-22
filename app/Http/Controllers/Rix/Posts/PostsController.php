@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Rix\Posts;
 
-use App\Classes\Sitemap;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
@@ -16,14 +15,15 @@ class PostsController extends Controller
 
     public function get_posts(Request $request)
     {
-        if ($request->get('search'))
-            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')));
-        else
+        if ($request->get('search')) {
             $records = Posts::getPosts()->whereIn('status', Posts::pageType($request->get('type')));
-        $typeData = Posts::getTypeData([ 'type' => $request->get('type') ]);
+            $records = $records->paginate(20);
+        }else{
+            $records = Posts::paginate(20,$request->get('type'));
+        }
         return view('rix.posts.posts')->with([
-            'typeData' => $typeData,
-            'posts'    => $records->paginate(20),
+            'typeData' => Posts::getTypeData([ 'type' => $request->get('type') ]),
+            'posts' => $records
         ]);
     }
 
@@ -68,8 +68,8 @@ class PostsController extends Controller
 
     public function get_post(Request $request)
     {
-        if ($request->get('action') == 'edit' && $request->get('id')) {
 
+        if ($request->get('action') == 'edit' && $request->get('id')) {
             $data = Posts::findPostForUpdate($request->get('id'));
             if (!empty($data)) {
                 $images = Gallery::get_gallery([ 'image_id', 'image_name' ], config('definitions.NEW_POST_GALLERY_PAGINATE'));
@@ -97,6 +97,7 @@ class PostsController extends Controller
                 if ($validator->isEmpty()) {
                     $updateData = Posts::requestData($request);
                     $update = ModelPosts::find($request->input('id'))->update($updateData);
+                    Posts::clearCache($request->input('status') ? 'open' : 'closed');
                     if ($update) {
                         return Posts::termRelations($request, $request->input('id'));
                     } else {

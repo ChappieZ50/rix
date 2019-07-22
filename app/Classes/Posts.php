@@ -8,11 +8,19 @@ use App\Models\Terms\Terms;
 use App\Models\Terms\TermRelationships;
 use App\Models\Terms\TermTaxonomy;
 use App\Helpers\Helper;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class Posts
 {
     static $postID;
+    static protected $pageTypes = [
+        'open',
+        'closed',
+        'trash',
+    ];
+
+    CONST CACHE_KEY = 'POSTS';
 
     static function getPosts($options = [])
     {
@@ -80,9 +88,11 @@ class Posts
                     'status'        => 'trash',
                     'before_status' => $item['status']
                 ]);
+                self::clearCache($item['status']);
+                self::clearCache('trash');
                 $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($item) {
                     return $query->whereHas('posts', function ($query) use ($item) {
-                        return $query->where('post_id',$item['id']);
+                        return $query->where('post_id', $item['id']);
                     });
                 })->select('term_taxonomy_id')->get();
                 foreach ($taxonomy as $tax)
@@ -109,9 +119,11 @@ class Posts
         $data = is_array($request->input('data')) ? $request->input('data') : [ $request->input('data') ];
         foreach ($data as $id) {
             $beforeStatus = ModelPosts::find($id)->select('before_status')->first();
+            self::clearCache('trash');
+            self::clearCache(isset($beforeStatus->before_status) ? $beforeStatus->before_status : 'closed');
             $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($id) {
                 return $query->whereHas('posts', function ($query) use ($id) {
-                    return $query->where('post_id',$id);
+                    return $query->where('post_id', $id);
                 });
             })->select('term_taxonomy_id')->get();
             foreach ($taxonomy as $tax)
@@ -129,7 +141,7 @@ class Posts
                 $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
                     ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
                     ->select('post_id', 'rix_terms.term_id', 'rix_terms.name', 'rix_term_taxonomy.taxonomy');
-            } ])->find($id)->first();
+            } ])->where('post_id',$id)->first();
         if (!empty($record)) {
             $featuredImage = Gallery::find($record->featured_image)->first();
             if (!empty($featuredImage))
@@ -155,7 +167,7 @@ class Posts
             'featured'        => 'integer',
             'slider'          => 'integer',
             'categories'      => 'required',
-            'tags'            => 'nullable|notIn:[]',
+            'tags'            => 'required|notIn:[]',
         ];
         $validate = array_merge($defaultValidate, $validate);
         $validator = \Validator::make($request->all(), $validate);
@@ -309,5 +321,35 @@ class Posts
             $type = [ 'closed', 'open' ];
 
         return !is_array($type) ? explode(',', $type) : $type;
+    }
+
+    static function getPageType($type)
+    {
+        if (in_array($type, self::$pageTypes))
+            return $type;
+        return 'all';
+    }
+
+    static function getCacheKey($key)
+    {
+        $key = strtoupper($key);
+        return self::CACHE_KEY . ".$key";
+    }
+
+    static function paginate($num, $type)
+    {
+        $key = self::getPageType($type);
+        $cacheKey = self::getCacheKey($key);
+        return \Cache::remember($cacheKey, Carbon::now()->addSeconds(50), function () use ($num, $type) {
+            $records = self::getPosts()->whereIn('status', self::pageType($type));
+            return $records->paginate($num);
+        });
+    }
+
+    static function clearCache($key)
+    {
+        \Cache::forget(self::CACHE_KEY . '.ALL');
+        $key = strtoupper($key);
+        return \Cache::forget(self::CACHE_KEY . ".$key");
     }
 }

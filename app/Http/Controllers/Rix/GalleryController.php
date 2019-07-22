@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Rix;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
-use App\Models\Posts;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -14,13 +14,17 @@ class GalleryController extends Controller
 
     public function get_gallery(Request $request)
     {
-        $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
-        $images = Gallery::get_gallery([ 'image_id', 'image_name', 'image_data', 'created_at' ], $paginate);
+
+        if (!\Cache::has('images')) {
+            $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
+            $images = Gallery::get_gallery([ 'image_id', 'image_name', 'image_data', 'created_at' ], $paginate);
+            \Cache::put('images', $images, Carbon::now()->addSeconds(10));
+        }
         if ($request->ajax()) {
             $blade = $request->input('action') == 'forGallery' ? 'rix.layouts.components.media.gallery-images' : 'rix.layouts.components.images';
-            return Helper::render($images, 'images', $blade);
+            return Helper::render(\Cache::get('images'), 'images', $blade);
         }
-        return view('rix.media.gallery', compact('images'));
+        return view('rix.media.gallery')->with('images', \Cache::get('images'));
     }
 
     public function new_media(Request $request)
