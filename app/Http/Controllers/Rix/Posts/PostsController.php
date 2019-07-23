@@ -16,20 +16,21 @@ class PostsController extends Controller
     public function get_posts(Request $request)
     {
         if ($request->get('search')) {
-            $records = Posts::getPosts()->whereIn('status', Posts::pageType($request->get('type')));
+            $records = Posts::search($request->get('search'), Posts::pageType($request->get('type')));
             $records = $records->paginate(20);
-        }else{
-            $records = Posts::paginate(20,$request->get('type'));
+        } else {
+            $records = Posts::paginate(20, $request->get('type'), $request->get('page'));
         }
+
         return view('rix.posts.posts')->with([
             'typeData' => Posts::getTypeData([ 'type' => $request->get('type') ]),
-            'posts' => $records
+            'posts'    => $records
         ]);
     }
 
     public function new_post(Request $request)
     {
-        $images = Gallery::get_gallery([ 'image_id', 'image_name' ], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+        $images = Gallery::select('image_id', 'image_name')->orderByDesc('image_id')->paginate(config('definitions.NEW_POST_GALLERY_PAGINATE'));
         if ($request->ajax())
             return Helper::render($images, 'images', 'rix.layouts.component.media.images');
         $categories = CategoriesAndTags::getRecords([ 'taxonomy' => 'category', 'selectTerms' => [ 'term_id', 'name' ] ]);
@@ -72,7 +73,7 @@ class PostsController extends Controller
         if ($request->get('action') == 'edit' && $request->get('id')) {
             $data = Posts::findPostForUpdate($request->get('id'));
             if (!empty($data)) {
-                $images = Gallery::get_gallery([ 'image_id', 'image_name' ], config('definitions.NEW_POST_GALLERY_PAGINATE'));
+                $images = Gallery::select('image_id', 'image_name')->orderByDesc('image_id')->paginate(config('definitions.NEW_POST_GALLERY_PAGINATE'));
                 $categories = CategoriesAndTags::getRecords([ 'taxonomy' => 'category', 'selectTerms' => [ 'term_id', 'name' ] ]);
                 $tags = CategoriesAndTags::getRecords([ 'taxonomy' => 'post_tag', 'selectTerms' => [ 'term_id', 'name' ] ]);
 
@@ -97,12 +98,11 @@ class PostsController extends Controller
                 if ($validator->isEmpty()) {
                     $updateData = Posts::requestData($request);
                     $update = ModelPosts::find($request->input('id'))->update($updateData);
-                    Posts::clearCache($request->input('status') ? 'open' : 'closed');
-                    if ($update) {
+                    if ($update)
                         return Posts::termRelations($request, $request->input('id'));
-                    } else {
+                    else
                         return Helper::response(false, 'Bir sorun oluştu');
-                    }
+
                 }
                 return Helper::response(false, '', [ 'errors' => $validator ]);
             }

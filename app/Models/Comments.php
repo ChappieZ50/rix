@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class Comments extends Model
@@ -17,7 +18,7 @@ class Comments extends Model
 
     public function user()
     {
-        return $this->belongsTo(Users::class,'user_id');
+        return $this->belongsTo(Users::class, 'user_id');
     }
 
     public function activity()
@@ -33,5 +34,19 @@ class Comments extends Model
     public function children()
     {
         return $this->hasMany($this, 'parent_comment');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::created(function () {
+            Helper::clearCache('COMMENTS');
+        });
+        self::updated(function () {
+            Helper::clearCache('COMMENTS');
+        });
+        self::deleted(function () {
+            Helper::clearCache('COMMENTS');
+        });
     }
 }

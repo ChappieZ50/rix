@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Classes\Sitemap;
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Helper;
 
 class Posts extends Model
 {
@@ -37,12 +38,15 @@ class Posts extends Model
         parent::boot();
         self::created(function ($post) {
             Sitemap::insert($post->slug, $post->created_at, self::$sitemap);
+            Helper::clearCache('POSTS');
         });
         self::updated(function () {
             Sitemap::refreshPosts();
+            Helper::clearCache('POSTS');
         });
         self::deleted(function ($post) {
             Sitemap::delete($post->slug, self::$sitemap);
+            Helper::clearCache('POSTS');
         });
     }
 }

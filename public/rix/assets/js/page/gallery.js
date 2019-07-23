@@ -1,4 +1,5 @@
 localStorage.removeItem('selectedImage');
+localStorage.removeItem('imagesData');
 $(document).on('click', '#imageDetailsBtn', function () {
     let id = $(this).attr('data-id'),
         setS = JSON.parse(localStorage.getItem('imagesData'));

@@ -37,8 +37,10 @@ class Posts
         $records = !empty($options['wherePostColumn']) ? $records->where($options['wherePostColumn'], $options['wherePostValue']) : $records;
         $records = !empty($options['whereInPostColumn']) ? $records->whereIn($options['whereInPostColumn'], $options['whereInPostValue']) : $records;
         return $records->with([
-            'user' => function ($query) {
+            'user'        => function ($query) {
                 $query->where('status', 'ok')->select('user_id', 'username');
+            }, 'comments' => function ($query) {
+                $query->select('comment_id', 'post_id');
             } ]);
     }
 
@@ -88,8 +90,6 @@ class Posts
                     'status'        => 'trash',
                     'before_status' => $item['status']
                 ]);
-                self::clearCache($item['status']);
-                self::clearCache('trash');
                 $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($item) {
                     return $query->whereHas('posts', function ($query) use ($item) {
                         return $query->where('post_id', $item['id']);
@@ -108,8 +108,9 @@ class Posts
     static function deletePermanently($request)
     {
         $data = is_array($request->input('data')) ? $request->input('data') : [ $request->input('data') ];
-        if (ModelPosts::destroy($data))
+        if (ModelPosts::destroy($data)) {
             return [ 'posts' => Posts::getRenderedPosts($request->input('currentType')), 'tableBar' => Posts::getRenderedTablePagesBar([ 'type' => $request->input('currentType') ]) ];
+        }
 
         return Helper::response(false, 'Silinemedi');
     }
@@ -118,9 +119,7 @@ class Posts
     {
         $data = is_array($request->input('data')) ? $request->input('data') : [ $request->input('data') ];
         foreach ($data as $id) {
-            $beforeStatus = ModelPosts::find($id)->select('before_status')->first();
-            self::clearCache('trash');
-            self::clearCache(isset($beforeStatus->before_status) ? $beforeStatus->before_status : 'closed');
+            $beforeStatus = ModelPosts::where('post_id', $id)->select('before_status')->first();
             $taxonomy = TermTaxonomy::whereHas('termRelationships', function ($query) use ($id) {
                 return $query->whereHas('posts', function ($query) use ($id) {
                     return $query->where('post_id', $id);
@@ -141,9 +140,9 @@ class Posts
                 $query->join('rix_term_taxonomy', 'rix_term_relationships.term_taxonomy_id', '=', 'rix_term_taxonomy.term_taxonomy_id')
                     ->join('rix_terms', 'rix_term_taxonomy.term_id', '=', 'rix_terms.term_id')
                     ->select('post_id', 'rix_terms.term_id', 'rix_terms.name', 'rix_term_taxonomy.taxonomy');
-            } ])->where('post_id',$id)->first();
+            } ])->where('post_id', $id)->first();
         if (!empty($record)) {
-            $featuredImage = Gallery::find($record->featured_image)->first();
+            $featuredImage = Gallery::where('image_id', $record->featured_image)->first();
             if (!empty($featuredImage))
                 $record->selected_featured_image = $featuredImage;
             return $record;
@@ -317,7 +316,7 @@ class Posts
 
     static function pageType($type)
     {
-        if ($type != 'closed' && $type != 'trash')
+        if ($type != 'closed' && $type != 'trash' && $type != 'open')
             $type = [ 'closed', 'open' ];
 
         return !is_array($type) ? explode(',', $type) : $type;
@@ -330,26 +329,14 @@ class Posts
         return 'all';
     }
 
-    static function getCacheKey($key)
-    {
-        $key = strtoupper($key);
-        return self::CACHE_KEY . ".$key";
-    }
 
-    static function paginate($num, $type)
+    static function paginate($num, $type, $page)
     {
         $key = self::getPageType($type);
-        $cacheKey = self::getCacheKey($key);
-        return \Cache::remember($cacheKey, Carbon::now()->addSeconds(50), function () use ($num, $type) {
+        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Carbon::now()->addMinutes(10), function () use ($num, $type) {
             $records = self::getPosts()->whereIn('status', self::pageType($type));
             return $records->paginate($num);
         });
-    }
-
-    static function clearCache($key)
-    {
-        \Cache::forget(self::CACHE_KEY . '.ALL');
-        $key = strtoupper($key);
-        return \Cache::forget(self::CACHE_KEY . ".$key");
     }
 }

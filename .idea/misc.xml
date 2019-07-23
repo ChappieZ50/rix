@@ -3,4 +3,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/storage/framework/cache/data/cache/_rix_cache_COMMENTS.ALL" />
+  </component>
 </project>

@@ -4,9 +4,18 @@ namespace App\Classes;
 
 use App\Helpers\Helper;
 use App\Models\Comments as ModelComments;
+use Carbon\Carbon;
 
 class Comments
 {
+    static protected $pageTypes = [
+        'approved',
+        'pending',
+        'spam',
+    ];
+
+    CONST CACHE_KEY = 'COMMENTS';
+
     static function getTypeData($custom = [])
     {
         $all = [ 'whereColumn' => 'status', 'whereValue' => [ 'approved', 'pending' ] ];
@@ -42,7 +51,7 @@ class Comments
             'wherePostValue'  => '',
             'order'           => 'created_at',
             'orderBy'         => 'desc',
-            'userSelect'      => ['user_id','name','username','email'],
+            'userSelect'      => [ 'user_id', 'name', 'username', 'email' ],
         ];
         $options = array_merge($defaults, $options);
         $comments = new ModelComments();
@@ -63,7 +72,7 @@ class Comments
         return $comments->whereHas('post', function ($query) {
             return $query->where('status', '!=', 'trash');
         })->with([
-            'user' => function ($query) use($options) {
+            'user' => function ($query) use ($options) {
                 $query->select($options['userSelect']);
             } ])->orderBy($options['order'], $options['orderBy']);
     }
@@ -72,10 +81,12 @@ class Comments
     {
 
         $count = self::getTypeData($custom);
-        if (isset($custom['post_id']))
+        if (isset($custom['post_id'])) {
             $comments = self::getComments(array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $options));
-        else
+            unset($count->post_id);
+        } else {
             $comments = self::getComments($options);
+        }
         return [
             'comments' => $comments,
             'count'    => $count
@@ -86,12 +97,15 @@ class Comments
     {
         $ids = Helper::getIds($comments);
         if ($action === 'approved' || $action === 'pending') {
-            $do = ModelComments::whereIn('comment_id', $ids)->update([ 'status' => $action, 'before_status' => null ]);
+            $do = ModelComments::findMany($ids);
+            $do->each(function ($item) use ($action) {
+                $item->update([ 'status' => $action, 'before_status' => null ]);
+            });
         } elseif ($action === 'spam' || $action === 'unspam') {
             if (is_array($comments) || is_object($comments)) {
                 foreach ($comments as $comment) {
                     $get = ModelComments::where('comment_id', $comment['id'])->first();
-                    $do = ModelComments::where('comment_id', $comment['id'])->update([
+                    $do = ModelComments::find($comment['id'])->update([
                         'before_status' => $action === 'unspam' ? null : $comment['status'],
                         'status'        => $action === 'unspam' && isset($get->before_status) ? $get->before_status : $action
                     ]);
@@ -138,5 +152,40 @@ class Comments
         if (ModelComments::create($data))
             return Helper::response(true, 'Yorum Gönderildi');
         return Helper::response(false, 'Bir Sorun Oluştu');
+    }
+
+    static function search($request)
+    {
+        $value = $request->get('search');
+        return ModelComments::where(function ($query) use ($value) {
+            $query->where('name', 'like', '%' . $value . '%')
+                ->orWhere('email', 'like', '%' . $value . '%')
+                ->orWhere('comment', 'like', '%' . $value . '%');
+        })->orderByDesc('created_at');
+    }
+
+    static function getPageType($type)
+    {
+        if (in_array($type, self::$pageTypes))
+            return $type;
+        return 'all';
+    }
+
+    static function pageType($type)
+    {
+        if ($type != 'approved' && $type != 'spam' && $type != 'pending')
+            $type = [ 'approved', 'pending' ];
+
+        return !is_array($type) ? explode(',', $type) : $type;
+    }
+
+    static function paginate($options, $num, $type, $page)
+    {
+        $key = self::getPageType($type);
+        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Carbon::now()->addMinutes(10), function () use ($num, $type, $options) {
+            $records = self::getComments($options)->whereIn('status', self::pageType($type));
+            return $records->paginate($num);
+        });
     }
 }

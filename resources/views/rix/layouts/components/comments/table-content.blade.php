@@ -20,18 +20,18 @@
                 @if(!Request::get('status') || Request::get('status') != 'approved' &&  Request::get('status') != 'pending' &&  Request::get('status') != 'spam')
                     @if($comment->status == 'pending')
                         <a href="javascript:;" class="text-success" id="approved">Onayla</a>
-                            <div class="bullet"></div>
+                        <div class="bullet"></div>
                     @elseif($comment->status == 'approved')
                         <a href="javascript:;" class="text-danger" id="pending">Onayı Kaldır</a>
-                            <div class="bullet"></div>
-                        @endif
+                        <div class="bullet"></div>
+                    @endif
                 @endif
                 @if(Request::get('status') == 'spam')
                     <a href="javascript:;" class="text-success" id="unspam">Spamdan Kaldır</a>
-                        <div class="bullet"></div>
+                    <div class="bullet"></div>
                 @else
                     <a href="javascript:;" class="text-danger" id="spam">Spam Olarak İşaretle</a>
-                        <div class="bullet"></div>
+                    <div class="bullet"></div>
                 @endif
                 <a href="javascript:;" class="text-danger" id="delete">Kalıcı Olarak Sil</a>
             </div>
@@ -43,10 +43,12 @@
             {{$comment->comment}}
         </td>
         <td>{{$comment->readable_date}}</td>
-        <td>
-            <a href="{{Request::fullUrlWithQuery(['post' => $comment->post->post_id])}}" class="comment">
-                <span class="comment-count">1</span>
-            </a>
-        </td>
+        @if(!Request::has('post'))
+            <td>
+                <a href="{{Request::fullUrlWithQuery(['post' => $comment->post->post_id])}}" class="comment">
+                    <span class="comment-count">...</span>
+                </a>
+            </td>
+        @endif
     </tr>
 @endforeach

@@ -201,8 +201,9 @@ class Helper
                 $spanClass = 'badge badge-white';
                 $type = 'temp';
             }
+            $namesKey = isset($names->$key) ? $names->$key : null;
             $html[] = '<li class="nav-item">';
-            $html[] = '<a class="' . $aClass . '" href="' . $href . '">' . $names->$key . '';
+            $html[] = '<a class="' . $aClass . '" href="' . $href . '">' . $namesKey . '';
             $html[] = '<span class="' . $spanClass . '">' . $value . '</span>';
             $html[] = '</a>';
             $html[] = ' </li>';
@@ -271,5 +272,31 @@ class Helper
     {
         $setting = Settings::getSetting($type, !empty($param) ? $param : $type)->first();
         return isset($setting->$type) ? json_decode($setting->$type) : $setting;
+    }
+
+    static function insertCacheKey($current, $key, $value = null)
+    {
+        $key = strtoupper($key);
+        if (!empty($value))
+            $key .= "_$value";
+        return $current . ".$key";
+    }
+
+    static function getCacheKey($cacheKey, $key)
+    {
+        $key = strtoupper($key);
+        return $cacheKey . ".$key";
+    }
+
+    static function clearCache($cacheKey)
+    {
+        \Cache::tags($cacheKey)->flush();
+    }
+
+    static function pageAutoCache($key,$value,$type = 'page')
+    {
+        if (!empty($value) && is_numeric($value))
+           return self::insertCacheKey($key, $type, $value);
+        return $key;
     }
 }

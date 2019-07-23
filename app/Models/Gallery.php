@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
@@ -10,13 +11,18 @@ class Gallery extends Model
     protected $guarded = [];
     protected $primaryKey = 'image_id';
 
-    static function get_gallery($select = [ '*' ], $paginate, $order = 'desc')
+    protected static function boot()
     {
-        return self::select($select)->orderBy('image_id', $order)->paginate($paginate);
+        parent::boot();
+        self::created(function () {
+            Helper::clearCache('IMAGES');
+        });
+        self::updated(function () {
+            Helper::clearCache('IMAGES');
+        });
+        self::deleted(function () {
+            Helper::clearCache('IMAGES');
+        });
     }
 
-    public function image_relations()
-    {
-        return $this->hasMany(ImageRelationships::class,'image_id');
-    }
 }

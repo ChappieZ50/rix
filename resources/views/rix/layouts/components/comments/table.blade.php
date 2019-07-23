@@ -11,7 +11,9 @@
         <th>E-Posta</th>
         <th style="width: 40%;">Mesaj</th>
         <th>Oluşturma Tarihi</th>
-        <th><i class="fas fa-comment-alt" style="font-size: 20px;"></i></th>
+        @if(!Request::has('post'))
+            <th><i class="fas fa-comment-alt" style="font-size: 20px;"></i></th>
+        @endif
     </tr>
     @if($comments->isNotEmpty())
         @include('rix.layouts.components.comments.table-content')

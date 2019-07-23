@@ -10,32 +10,30 @@ use App\Http\Controllers\Controller;
 class CommentsController extends Controller
 {
     protected $types = [ 'approved', 'pending', 'spam' ];
+    protected $options = [
+        'with'       => 'post',
+        'withSelect' => [ 'post_id', 'title', 'url' ]
+    ];
 
     public function get_comments(Request $request)
     {
+
         $type = $request->get('status');
-        $typeData = [ 'type' => $type ];
-        $paramType = Helper::findStatusOnParam($type, $this->types);
-        if ($request->get('post'))
-            $typeData = array_merge([ 'post_id' => $request->get('post') ], $typeData);
-        $options = [
-            'with'       => 'post',
-            'withSelect' => [ 'post_id', 'title', 'url' ]
-        ];
-        $data = Comments::getCommentsWithCount(array_merge($paramType, $options), $typeData);
-        if ($request->get('search')) {
-            $value = $request->get('search');
-            $data['comments']->where(function ($query) use ($value) {
-                $query->where('name', 'like', '%' . $value . '%')
-                    ->orWhere('email', 'like', '%' . $value . '%')
-                    ->orWhere('comment', 'like', '%' . $value . '%');
-            });
+        if ($request->has('search')) {
+            $comments = Comments::search($request);
+            $records = $comments->paginate(20);
+        } else if ($request->has('comment')) {
+            $records = \App\Models\Comments::where('comment_id', $request->get('comment'))->paginate(20);
+        } else if ($request->has('post')) {
+            $records = \App\Models\Comments::with(['post' => function($query){
+                return $query->select($this->options['withSelect']);
+            }])->where('post_id',$request->get('post'))->orderByDesc('created_at')->paginate(20);
+        } else {
+            $records = Comments::paginate(array_merge(Helper::findStatusOnParam($type, $this->types), $this->options), 20, $request->get('status'), $request->get('page'));
         }
-        if ($request->get('comment'))
-            $data['comments']->where('comment_id', $request->get('comment'));
         return view('rix.comments')->with([
-            'comments' => $data['comments']->paginate(20),
-            'typeData' => $data['count']
+            'comments' => $records,
+            'typeData' => Comments::getTypeData([ 'type' => $type ])
         ]);
     }
 

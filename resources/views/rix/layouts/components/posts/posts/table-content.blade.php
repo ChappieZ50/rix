@@ -42,8 +42,10 @@
             {{$post->user->username}}
         </td>
         <td>
-            <a href="#" class="comment">
-                <span class="comment-count">1</span>
+            <a href="{{route('rix_comments',['post' => $post->post_id])}}" class="comment">
+                <span class="comment-count">
+                    {{$post->comments->count()}}
+                </span>
             </a>
         </td>
     </tr>
