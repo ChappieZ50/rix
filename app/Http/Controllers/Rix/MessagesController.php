@@ -9,28 +9,27 @@ use App\Http\Controllers\Controller;
 
 class MessagesController extends Controller
 {
-    protected $types = ['read','unread','trash'];
-    public function get_messages(Request $request){
+    protected $types = [ 'read', 'unread', 'trash' ];
+
+    public function get_messages(Request $request)
+    {
+
+
         $type = $request->get('status');
-        $typeData = ['type' => $type];
-        $paramType = Helper::findStatusOnParam($type,$this->types);
-        $messages = Messages::getMessagesWithCount($paramType,$typeData);
-        if ($request->get('search')) {
-            $value = $request->get('search');
-            $messages['messages']->where(function ($query) use ($value) {
-                $query->where('name', 'like', '%' . $value . '%')
-                    ->orWhere('subject', 'like', '%' . $value . '%')
-                    ->orWhere('email', 'like', '%' . $value . '%')
-                    ->orWhere('message', 'like', '%' . $value . '%');
-            });
+        if ($request->has('search')) {
+            $messages = Messages::search( $request->get('search'),Helper::getPageType($type,$this->types));
+            $records = $messages->paginate(20);
+        } else if ($request->has('message')) {
+            $records = \App\Models\Messages::where('message_id', $request->get('message'))->paginate(1);
+        } else {
+            $records = Messages::paginate(Helper::findStatusOnParam($type, $this->types), 20, $request->get('status'), $request->get('page'));
         }
-        if($request->get('message'))
-            $messages['messages']->where('message_id',$request->get('message'));
         return view('rix.messages')->with([
-            'messages' => $messages['messages']->paginate(20),
-            'typeData' => $messages['count']
+            'messages' => $records,
+            'typeData' => Messages::getTypeData([ 'type' => $type ])
         ]);
     }
+
     public function action_messages(Request $request)
     {
         if ($request->ajax())

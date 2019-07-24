@@ -41,6 +41,11 @@ class SettingsController extends Controller
 
     public function action_setting($request, $page)
     {
+        if ($request->has('refreshCache'))
+            if (\Cache::flush())
+                return redirect()->back()->with('success', 'Önbellek Başarıyla Sıfırlandı!');
+            else
+                return redirect()->back()->with('error', 'Bir Sorun Oluştu!');
         return Settings::createOrUpdate($request, $page);
     }
 }

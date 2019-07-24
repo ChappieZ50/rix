@@ -8,7 +8,6 @@ use App\Models\Terms\Terms;
 use App\Models\Terms\TermRelationships;
 use App\Models\Terms\TermTaxonomy;
 use App\Helpers\Helper;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class Posts
@@ -322,19 +321,11 @@ class Posts
         return !is_array($type) ? explode(',', $type) : $type;
     }
 
-    static function getPageType($type)
-    {
-        if (in_array($type, self::$pageTypes))
-            return $type;
-        return 'all';
-    }
-
-
     static function paginate($num, $type, $page)
     {
-        $key = self::getPageType($type);
+        $key = Helper::getPageType($type, self::$pageTypes);
         $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Carbon::now()->addMinutes(10), function () use ($num, $type) {
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type) {
             $records = self::getPosts()->whereIn('status', self::pageType($type));
             return $records->paginate($num);
         });

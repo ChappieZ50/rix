@@ -4,7 +4,6 @@ namespace App\Classes;
 
 use App\Helpers\Helper;
 use App\Models\Gallery as ModelGallery;
-use Carbon\Carbon;
 
 class Gallery
 {
@@ -68,7 +67,7 @@ class Gallery
     static function paginate($request)
     {
         $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Carbon::now()->addMinutes(10), function () use ($request) {
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($request) {
             $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
             return ModelGallery::select('image_id', 'image_name', 'image_data', 'created_at')->orderByDesc('image_id')->paginate($paginate);
         });

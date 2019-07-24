@@ -20,7 +20,7 @@ class CommentsController extends Controller
 
         $type = $request->get('status');
         if ($request->has('search')) {
-            $comments = Comments::search($request);
+            $comments = Comments::search($request->get('search'),Helper::getPageType($type,$this->types));
             $records = $comments->paginate(20);
         } else if ($request->has('comment')) {
             $records = \App\Models\Comments::where('comment_id', $request->get('comment'))->paginate(20);

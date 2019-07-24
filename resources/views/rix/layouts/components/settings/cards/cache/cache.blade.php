@@ -21,7 +21,7 @@
                         <input type="checkbox" name="status_cache_refresh" class="custom-switch-input"
                                @isset($setting->status_cache_refresh){{$setting->status_cache_refresh == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
                         <span class="custom-switch-indicator"></span>
-                        <span class="custom-switch-description">Otomatik Yenileme (Yazı,sayfa vb şeyler eklendiğinde otomatik olarak yenilenir)</span>
+                        <span class="custom-switch-description">Otomatik Yenileme (Yazı,resim,yorum vb şeyler eklendiğinde otomatik olarak yenilenir)</span>
                     </label>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="card-footer bg-whitesmoke text-md-right">
             <button class="btn btn-primary" id="save">Kaydet</button>
-            <button class="btn btn-warning" id="refreshCache">Önbelleği Sıfırla</button>
+            <button class="btn btn-warning" name="refreshCache" id="refreshCache">Önbelleği Sıfırla</button>
         </div>
     </div>
 </div>

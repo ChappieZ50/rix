@@ -52,9 +52,9 @@ $app->singleton(
 |
 */
 \Illuminate\Database\Eloquent\Relations\Relation::morphMap([
-    'post' => \App\Models\Posts::class,
+    'post'    => \App\Models\Posts::class,
     'comment' => \App\Models\Comments::class,
-    'user' => \App\Models\Users::class,
+    'user'    => \App\Models\Users::class,
 ]);
 
 return $app;

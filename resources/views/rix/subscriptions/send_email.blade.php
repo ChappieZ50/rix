@@ -30,9 +30,24 @@
 @endsection
 
 @section('content')
-    <form action="{{route('rix_action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm">
+    @if($errors->any())
+        <div class="alert alert-danger pb-1">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @elseif (session()->has('success'))
+        <div id="output-status">
+            <div class="alert alert-success">{{session('success')}}</div>
+        </div>
+    @endif
+    <form action="{{route('rix_action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm"
+          onsubmit="return confirm('Bu işlem kuyruğa alınacaktır ve bittiğinde bilgilendirileceksiniz.')">
         @csrf
         <div class="row">
+
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -49,28 +64,30 @@
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ad Soyad</label>
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" class="form-control" name="name" value="{{auth()->user()->name}}">
-                                    <div class="invalid-feedback d-block" data-name="name" style="margin-top: -20px;margin-bottom: 10px;"></div>
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">E-Posta</label>
                                 <div class="col-sm-12 col-md-7">
-                                    <input type="email" class="form-control" name="email" value="@isset($setting->email){{$setting->email}}@endisset">
-                                    <div class="invalid-feedback d-block" data-name="email" style="margin-top: -20px;margin-bottom: 10px;"></div>
+                                    <input type="email" class="form-control" name="email" value="asd@hotmail.com @isset($setting->email){{$setting->email}}@endisset">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Telefon (İsteğe Bağlı)</label>
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Konu / Başlık</label>
                                 <div class="col-sm-12 col-md-7">
-                                    <input type="text" class="form-control" name="phone">
-                                    <div class="invalid-feedback d-block" data-name="phone" style="margin-top: -20px;margin-bottom: 10px;"></div>
+                                    <input type="text" class="form-control" name="subject">
                                 </div>
                             </div>
                             <div class="form-group row mb-2">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Mesaj</label>
                                 <div class="col-sm-12 col-md-7">
-                                    <textarea class="summernote" id="summernote"></textarea>
-                                    <div class="invalid-feedback d-block" data-name="message" style="margin-top: -20px;margin-bottom: 10px;"></div>
+                                    <textarea class="summernote" name="message" id="summernote"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-2">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                <div class="col-sm-12 col-md-7">
+                                    <button type="submit" class="btn btn-primary" name="sendEmails">Gönder</button>
                                 </div>
                             </div>
                         </div>

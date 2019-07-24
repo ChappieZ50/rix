@@ -17,7 +17,7 @@ class Pages extends Model
     {
         parent::boot();
         self::created(function ($page) {
-            Sitemap::insert($page->slug, $page->created_at, self::$sitemap,Url::CHANGE_FREQUENCY_DAILY);
+            Sitemap::insert($page->slug, $page->created_at, self::$sitemap, Url::CHANGE_FREQUENCY_DAILY);
         });
         self::updated(function () {
             Sitemap::refreshPages();

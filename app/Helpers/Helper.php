@@ -288,15 +288,36 @@ class Helper
         return $cacheKey . ".$key";
     }
 
-    static function clearCache($cacheKey)
+    static function clearCache(...$cacheKey)
     {
-        \Cache::tags($cacheKey)->flush();
+        if (\Cache::tags($cacheKey))
+            \Cache::tags($cacheKey)->flush();
     }
 
-    static function pageAutoCache($key,$value,$type = 'page')
+    static function pageAutoCache($key, $value, $type = 'page')
     {
         if (!empty($value) && is_numeric($value))
-           return self::insertCacheKey($key, $type, $value);
+            return self::insertCacheKey($key, $type, $value);
         return $key;
+    }
+
+    static function getPageType($type, $types, $default = 'all')
+    {
+        if (in_array($type, $types))
+            return $type;
+        return $default;
+    }
+
+    static function cacheTime($default = 30, $doCarbon = true)
+    {
+        $setting = Settings::getSetting('cache', 'cache')->first();
+        if (!empty($setting) && isset($setting->cache)) {
+            $cache = json_decode($setting->cache);
+            if (!empty($cache->cache_refresh_time))
+                $default = $cache->cache_refresh_time;
+        }
+        if ($doCarbon)
+            return Carbon::now()->addMinutes($default);
+        return $default;
     }
 }

@@ -19,6 +19,14 @@
 
 
 @section('content')
+    <h2 class="section-title">Dikkat</h2>
+    <p class="section-lead">
+        Bazı şeylerin doğru çalışabilmesi için bunları yapmanız gerekmektedir.
+        <br>
+        Cron Job'a eklemeniz gereken kod: <span class="text-primary">/usr/bin/php /path/to/artisan schedule:run >/dev/null 2>&1</span>
+        <br>
+        Php.ini'ye eklemeniz gereken kod: <span class="text-primary">register_argc_argv=On</span>
+    </p>
     <div class="row">
         <div class="col-lg-6">
             <div class="card card-large-icons col-12 p-0">

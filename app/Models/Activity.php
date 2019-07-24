@@ -12,7 +12,6 @@ class Activity extends Model
 
     public function activityable()
     {
-
-        return $this->morphTo(null,'meta_type','meta_id');
+        return $this->morphTo(null, 'meta_type', 'meta_id');
     }
 }

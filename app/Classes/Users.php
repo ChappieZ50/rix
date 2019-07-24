@@ -12,6 +12,14 @@ use Intervention\Image\ImageManagerStatic;
 
 class Users
 {
+    static protected $pageTypes = [
+        'admin',
+        'editor',
+        'user',
+        'banned',
+    ];
+    CONST CACHE_KEY = 'USERS';
+
     static function validateUser($request, $validate = [])
     {
         $defaultValidate = [
@@ -134,7 +142,7 @@ class Users
                 ];
             if (isset($avatar) && File::exists(public_path('storage/avatars/') . $user->avatar))
                 File::delete(public_path('storage/avatars/') . $user->avatar);
-            if (ModelUsers::where('user_id', $user->user_id)->update($data))
+            if (ModelUsers::find($user->user_id)->update($data))
                 return Helper::response(true, 'Güncellendi', [ 'custom' => [ 'user_id' => $user->user_id, 'action' => 'update' ] ]);
             return Helper::response(false);
         }
@@ -174,16 +182,6 @@ class Users
         return (object)$typeData;
     }
 
-    static function getUsersWithCount($options = [], $custom = [])
-    {
-        $count = self::getTypeData($custom);
-        $users = self::getUsers($options);
-        return [
-            'users' => $users,
-            'count' => $count
-        ];
-    }
-
     static function actionUsers($request)
     {
         if ($request->input('action') === 'transfer') {
@@ -195,6 +193,7 @@ class Users
                         'author_id' => $data->transferID
                     ]);
                     if ($user) {
+                        Helper::clearCache('POSTS');
                         $getUser = ModelUsers::where('user_id', $data->deleteID)->select('user_id', 'avatar')->get();
                         if (!empty($getUser))
                             self::deleteUserThings($getUser);
@@ -226,7 +225,7 @@ class Users
                 foreach ($ids as $id) {
                     $user = ModelUsers::where('user_id', $id)->select('user_id', 'created_at', 'status_data', 'status')->first();
                     if (!empty($user)) {
-                        $find = ModelUsers::where('user_id', $user->user_id);
+                        $find = ModelUsers::find($user->user_id);
                         $statusData = json_decode($user->status_data);
                         if ($request->input('action') === 'ban' && $user->status !== 'banned') {
                             $find->update([
@@ -288,4 +287,46 @@ class Users
         ]);
     }
 
+    static function search($value, $type)
+    {
+        if ($type === 'all')
+            $type = [ 'admin', 'editor', 'user' ];
+        if (!is_array($type))
+            $type = explode(',', $type);
+        return ModelUsers::where(function ($query) use ($value) {
+            $query->where('username', 'like', '%' . $value . '%')
+                ->orWhere('name', 'like', '%' . $value . '%')
+                ->orWhere('email', 'like', '%' . $value . '%');
+        })->whereIn('role', $type)->orderByDesc('created_at');
+    }
+
+    static function pageType($type)
+    {
+        if ($type != 'admin' && $type != 'editor' && $type != 'user' && $type != 'banned')
+            $type = [ 'admin', 'editor', 'user' ];
+
+        return !is_array($type) ? explode(',', $type) : $type;
+    }
+
+    static function paginate($options, $num, $type, $page)
+    {
+        $key = Helper::getPageType($type, self::$pageTypes);
+        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+            if ($type === 'banned')
+                $records = self::getUsers(array_merge($options, [ 'whereColumn' => 'status', 'whereValue' => $type ]));
+            else
+                $records = self::getUsers($options);
+            $records->withCount([
+                'post' => function ($query) {
+                    $query->where('status', '!=', 'trash');
+                } ]);
+            return $records->paginate(20);
+        });
+    }
+
+    static function getAdmins()
+    {
+        return ModelUsers::whereIn('role', [ 'admin', 'editor' ])->get();
+    }
 }

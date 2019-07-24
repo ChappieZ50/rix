@@ -7,6 +7,8 @@ use App\Models\Subscriptions as ModelSubscriptions;
 
 class Subscriptions
 {
+    CONST CACHE_KEY = 'SUBSCRIPTIONS';
+
     static function getSubscriptions($options = [])
     {
         $defaults = [
@@ -28,8 +30,25 @@ class Subscriptions
     {
         $ids = Helper::getIds($id);
         $delete = ModelSubscriptions::destroy($ids);
-        if($delete)
-            return Helper::response(true,'Başarıyla Silindi');
-        return Helper::response(false,'Silme İşlemi Başarısız');
+        if ($delete)
+            return Helper::response(true, 'Başarıyla Silindi');
+        return Helper::response(false, 'Silme İşlemi Başarısız');
+    }
+
+    static function search($value)
+    {
+        return ModelSubscriptions::where(function ($query) use ($value) {
+            return $query->where('email', 'like', '%' . $value . '%')
+                ->orWhere('ip', 'like', '%' . $value . '%');
+        })->orderByDesc('created_at');
+    }
+
+    static function paginate($request,$num)
+    {
+        $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num) {
+            $records =  Subscriptions::getSubscriptions();
+            return $records->paginate($num);
+        });
     }
 }

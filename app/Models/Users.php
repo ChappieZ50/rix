@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,20 @@ class Users extends Model implements Authenticatable
     public function accessibility()
     {
         return \Auth::user()->role === self::ADMIN_TYPE || \Auth::user()->role === self::EDITOR_TYPE;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::created(function () {
+            Helper::clearCache('USERS','POSTS');
+        });
+        self::updated(function () {
+            Helper::clearCache('USERS','POSTS');
+        });
+        self::deleted(function () {
+            Helper::clearCache('USERS','POSTS');
+        });
     }
 }

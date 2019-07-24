@@ -2,8 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>http://localhost:8000</loc>
-        <lastmod>2019-07-22T13:35:50+03:00</lastmod>
+        <lastmod>2019-07-24T12:52:45+03:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
+    
 </urlset>

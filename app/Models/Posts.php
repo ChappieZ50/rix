@@ -38,15 +38,19 @@ class Posts extends Model
         parent::boot();
         self::created(function ($post) {
             Sitemap::insert($post->slug, $post->created_at, self::$sitemap);
-            Helper::clearCache('POSTS');
+            Helper::clearCache('POSTS','USERS');
         });
-        self::updated(function () {
+        self::updated(function ($post) {
             Sitemap::refreshPosts();
             Helper::clearCache('POSTS');
+            if (Comments::where('post_id', $post->post_id)->count() > 0)
+                Helper::clearCache('COMMENTS');
         });
         self::deleted(function ($post) {
             Sitemap::delete($post->slug, self::$sitemap);
-            Helper::clearCache('POSTS');
+            Helper::clearCache('POSTS','USERS');
+            if (Comments::where('post_id', $post->post_id)->count() > 0)
+                Helper::clearCache('COMMENTS');
         });
     }
 }

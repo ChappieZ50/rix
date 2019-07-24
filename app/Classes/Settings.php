@@ -69,8 +69,8 @@ class Settings
         $type = $request->input('setting_type');
         if ($type === 'site_map') {
             if (Sitemap::refresh())
-                return self::response(true,['Başarıyla Güncellendi!']);
-            return self::response(false,['Başarıyla Güncellendi','Güncelleme Başarısız!']);
+                return self::response(true, [ 'Başarıyla Güncellendi!' ]);
+            return self::response(false, [ 'Başarıyla Güncellendi', 'Güncelleme Başarısız!' ]);
         }
         $validator = self::validateSettings($page, $type);
         if (!isset($validator['validate'])) {
@@ -177,13 +177,13 @@ class Settings
         }
     }
 
-    private static function response($action,$messages = [])
+    public static function response($action, $messages = [])
     {
         $defaults = [
-          'Başarıyla Kaydedildi!',
-          'Bir Sorun Oluştu!'
+            'Başarıyla Kaydedildi!',
+            'Bir Sorun Oluştu!'
         ];
-        $messages = array_merge($messages,$defaults);
+        $messages = array_merge($messages, $defaults);
         if ($action)
             return redirect()->back()->with('success', $messages[0]);
         return redirect()->back()->with('error', $messages[1]);

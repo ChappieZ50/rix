@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // Custom
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\RixServiceProvider::class,
     ],
 
     /*

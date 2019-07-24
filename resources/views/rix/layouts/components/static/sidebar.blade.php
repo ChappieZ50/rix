@@ -19,7 +19,7 @@
                         ['Etiketler','rix_tags']
                    ]);
                 if(Auth::user()->role == 'admin'){ $add->setSubPage('Sayfalar','ion ion-ios-paper-outline',[['Bütün Sayfalar','rix_pages'],['Yeni Ekle','rix_page']]);}
-                $add->setPage('Yorumlar','rix_comments',['icon' => 'ion ion-ios-chatbubble-outline','size' => 19,'id' => 'beepMessage']);
+                $add->setPage('Yorumlar','rix_comments',['icon' => 'ion ion-ios-chatbubble-outline','size' => 19]);
                 if(Auth::user()->role == 'admin'){
                  $add->setPage('Mesajlar','rix_messages',['icon' => 'ion ion-ios-email-outline','size' => 19]);
                  $add->setSubPage('Bülten','ion ion-speakerphone',[

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ugur
- * Date: 12.06.2019
- * Time: 11:22
- */
 
 namespace App\Classes;
 
@@ -13,6 +7,14 @@ use App\Models\Messages as ModelMessages;
 
 class Messages
 {
+    static protected $pageTypes = [
+        'read',
+        'unread',
+        'trash',
+    ];
+
+    CONST CACHE_KEY = 'MESSAGES';
+
     static function getMessages($options = [])
     {
         $defaults = [
@@ -49,27 +51,19 @@ class Messages
         return (object)$typeData;
     }
 
-    static function getMessagesWithCount($options = [], $custom = [])
-    {
-
-        $count = self::getTypeData($custom);
-        $messages = self::getMessages($options);
-        return [
-            'messages' => $messages,
-            'count'    => $count
-        ];
-    }
-
     static function doMessageAction($messages, $action)
     {
         $ids = Helper::getIds($messages);
         if ($action === 'read' || $action === 'unread') {
-            $do = ModelMessages::whereIn('message_id', $ids)->update([ 'status' => $action, 'before_status' => null ]);
+            $do = ModelMessages::findMany($ids);
+            $do->each(function ($item) use ($action) {
+                $item->update([ 'status' => $action, 'before_status' => null ]);
+            });
         } elseif ($action === 'trash' || $action === 'untrash') {
             if (is_array($messages) || is_object($messages)) {
                 foreach ($messages as $message) {
                     $get = ModelMessages::where('message_id', $message['id'])->first();
-                    $do = ModelMessages::where('message_id', $message['id'])->update([
+                    $do = ModelMessages::find($message['id'])->update([
                         'before_status' => $action === 'untrash' ? null : $message['status'],
                         'status'        => $action === 'untrash' && isset($get->before_status) ? $get->before_status : $action
                     ]);
@@ -102,8 +96,40 @@ class Messages
             'readable_date' => Helper::readableDateFormat(),
             'ip'            => $request->ip(),
         ];
-        if(ModelMessages::create($data))
-            return Helper::response(true,'Mesaj Gönderildi');
-        return Helper::response(false,'Mesaj Gönderilemedi');
+        if (ModelMessages::create($data))
+            return Helper::response(true, 'Mesaj Gönderildi');
+        return Helper::response(false, 'Mesaj Gönderilemedi');
+    }
+
+    static function search($value,$type)
+    {
+        if($type === 'all')
+            $type = ['read','unread'];
+        if(!is_array($type))
+            $type = explode(',',$type);
+        return ModelMessages::where(function ($query) use ($value) {
+            $query->where('name', 'like', '%' . $value . '%')
+                ->orWhere('subject', 'like', '%' . $value . '%')
+                ->orWhere('email', 'like', '%' . $value . '%')
+                ->orWhere('message', 'like', '%' . $value . '%');
+        })->whereIn('status',$type)->orderByDesc('created_at');
+    }
+
+    static function pageType($type)
+    {
+        if ($type != 'read' && $type != 'unread' && $type != 'trash')
+            $type = [ 'read', 'unread' ];
+
+        return !is_array($type) ? explode(',', $type) : $type;
+    }
+
+    static function paginate($options, $num, $type, $page)
+    {
+        $key = Helper::getPageType($type, self::$pageTypes);
+        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+            $records = self::getMessages($options);
+            return $records->paginate($num);
+        });
     }
 }

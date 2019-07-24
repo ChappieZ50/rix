@@ -15,9 +15,10 @@ class CreateRixSubscriptionsTable extends Migration
     {
         Schema::create('rix_subscriptions', function (Blueprint $table) {
             $table->bigIncrements('subscription_id');
-            $table->string('email',255)->unique();
+            $table->string('email', 255)->unique();
             $table->ipAddress('ip')->nullable();
-            $table->string('readable_date',25);
+            $table->string('readable_date', 25);
+            $table->string('security', 60)->unique();
             $table->timestamps();
         });
     }

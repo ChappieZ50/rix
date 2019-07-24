@@ -4,7 +4,6 @@ namespace App\Classes;
 
 use App\Helpers\Helper;
 use App\Models\Comments as ModelComments;
-use Carbon\Carbon;
 
 class Comments
 {
@@ -77,22 +76,6 @@ class Comments
             } ])->orderBy($options['order'], $options['orderBy']);
     }
 
-    static function getCommentsWithCount($options = [], $custom = [])
-    {
-
-        $count = self::getTypeData($custom);
-        if (isset($custom['post_id'])) {
-            $comments = self::getComments(array_merge([ 'wherePostColumn' => 'post_id', 'wherePostValue' => $custom['post_id'] ], $options));
-            unset($count->post_id);
-        } else {
-            $comments = self::getComments($options);
-        }
-        return [
-            'comments' => $comments,
-            'count'    => $count
-        ];
-    }
-
     static function doCommentAction($comments, $action)
     {
         $ids = Helper::getIds($comments);
@@ -154,21 +137,17 @@ class Comments
         return Helper::response(false, 'Bir Sorun Oluştu');
     }
 
-    static function search($request)
+    static function search($value,$type)
     {
-        $value = $request->get('search');
+        if($type === 'all')
+            $type = ['approved','pending'];
+        if(!is_array($type))
+            $type = explode(',',$type);
         return ModelComments::where(function ($query) use ($value) {
             $query->where('name', 'like', '%' . $value . '%')
                 ->orWhere('email', 'like', '%' . $value . '%')
                 ->orWhere('comment', 'like', '%' . $value . '%');
-        })->orderByDesc('created_at');
-    }
-
-    static function getPageType($type)
-    {
-        if (in_array($type, self::$pageTypes))
-            return $type;
-        return 'all';
+        })->whereIn('status',$type)->orderByDesc('created_at');
     }
 
     static function pageType($type)
@@ -181,9 +160,9 @@ class Comments
 
     static function paginate($options, $num, $type, $page)
     {
-        $key = self::getPageType($type);
+        $key = Helper::getPageType($type,self::$pageTypes);
         $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Carbon::now()->addMinutes(10), function () use ($num, $type, $options) {
+        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
             $records = self::getComments($options)->whereIn('status', self::pageType($type));
             return $records->paginate($num);
         });
