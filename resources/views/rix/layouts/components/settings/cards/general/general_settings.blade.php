@@ -29,7 +29,8 @@
             <div class="col-sm-6 col-md-9">
                 <label>
                     <input type="hidden" value="0" name="adblock">
-                    <input type="checkbox" name="adblock" class="custom-switch-input" @isset($setting->adblock){{$setting->adblock == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
+                    <input type="checkbox" name="adblock" class="custom-switch-input"
+                           @isset($setting->adblock){{$setting->adblock == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
                     <span class="custom-switch-indicator"></span>
                     <span class="custom-switch-description">Adblock Uyarısı</span>
                 </label>
@@ -37,10 +38,18 @@
             <div class="col-sm-6 col-md-9">
                 <label>
                     <input type="hidden" value="0" name="cookie">
-                    <input type="checkbox" name="cookie" class="custom-switch-input" @isset($setting->cookie){{$setting->cookie == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
+                    <input type="checkbox" name="cookie" class="custom-switch-input"
+                           @isset($setting->cookie){{$setting->cookie == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
                     <span class="custom-switch-indicator"></span>
                     <span class="custom-switch-description">Çerez Uyarısı</span>
                 </label>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label class="form-control-label col-sm-3 text-md-right">Çerez Uyarısı Metni</label>
+            <div class="col-sm-6 col-md-9">
+                <textarea class="summernote-simple" name="cookie_text">@isset($setting->cookie_text){!! $setting->cookie_text !!}@endisset</textarea>
+                <div class="invalid-feedback" data-name="cookie_text"></div>
             </div>
         </div>
         <div class="card-footer bg-whitesmoke text-md-right">
@@ -54,4 +63,30 @@
             $(this).val($(this).is(':checked') ? 1 : 0);
         });
     </script>
+@append
+
+@section('general_js')
+    <script src="/rix/assets/modules/summernote/dist/summernote-bs4.js"></script>
+    <script src="/rix/assets/modules/summernote/dist/lang/summernote-tr-TR.min.js"></script>
+    <script>
+        $(function () {
+            if (jQuery().summernote) {
+                $(".summernote-simple").summernote({
+                    dialogsInBody: true,
+                    minHeight: 150,
+                    lang: "tr-TR",
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough']],
+                        ['para', ['paragraph']],
+                        ["insert", ["link"]],
+                    ],
+                });
+            }
+        });
+    </script>
+@append
+
+@section('general_css')
+    <link rel="stylesheet" href="/rix/assets/modules/summernote/dist/summernote-bs4.css">
 @append

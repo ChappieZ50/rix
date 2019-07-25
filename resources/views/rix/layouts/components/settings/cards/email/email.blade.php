@@ -15,13 +15,6 @@
             </div>
         </div>
         <div class="form-group row align-items-center">
-            <label class="form-control-label col-sm-3 text-md-right">Başlık</label>
-            <div class="col-sm-6 col-md-9">
-                <input type="text" name="email_title" class="form-control" value="@isset($setting->email_title){{$setting->email_title}}@endisset">
-                <div class="invalid-feedback" data-name="email_title"></div>
-            </div>
-        </div>
-        <div class="form-group row align-items-center">
             <label class="form-control-label col-sm-3 text-md-right">E-Posta Sunucusu</label>
             <div class="col-sm-6 col-md-9">
                 <input type="text" name="email_host" class="form-control" value="@isset($setting->email_host){{$setting->email_host}}@endisset">
@@ -33,6 +26,13 @@
             <div class="col-sm-6 col-md-9">
                 <input type="text" name="email_port" class="form-control" value="@isset($setting->email_port){{$setting->email_port}}@endisset">
                 <div class="invalid-feedback" data-name="email_port"></div>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label class="form-control-label col-sm-3 text-md-right">Kullanıcı Adı <span class="text-muted">(İsteğe Bağlı)</span></label>
+            <div class="col-sm-6 col-md-9">
+                <input type="text" name="username" class="form-control"  value="@isset($setting->username){{$setting->username}}@endisset">
+                <div class="invalid-feedback" data-name="username"></div>
             </div>
         </div>
         <div class="form-group row align-items-center">

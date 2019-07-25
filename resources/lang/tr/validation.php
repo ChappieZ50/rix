@@ -186,6 +186,8 @@ return [
         'email_port'           => 'Port',
         'email_password'       => 'E-Posta Şifresi',
         'cache_refresh_time'   => 'Önbellek Yenilenme Zamanı',
+        'status_cache_site'    => 'Web Site Önbellek',
         'g-recaptcha-response' => 'Recaptcha',
+        'cookie_text'          => 'Çerez Uyarısı Metni'
     ],
 ];

@@ -28,7 +28,7 @@
         <div class="form-group row align-items-center">
             <label class="form-control-label col-sm-3 text-md-right">İletişim Metni</label>
             <div class="col-sm-6 col-md-9">
-                <textarea class="summernote-simple" name="contact_text">@isset($setting->contact_text){!! $setting->contact_text !!}@endisset</textarea>
+                <textarea class="summernote-simple"  name="contact_text">@isset($setting->contact_text){!! $setting->contact_text !!}@endisset</textarea>
                 <div class="invalid-feedback" data-name="contact_text"></div>
             </div>
         </div>
@@ -40,6 +40,7 @@
 
 @section('general_js')
     <script src="/rix/assets/modules/summernote/dist/summernote-bs4.js"></script>
+    <script src="/rix/assets/modules/summernote/dist/lang/summernote-tr-TR.min.js"></script>
 @append
 
 @section('general_css')

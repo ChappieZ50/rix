@@ -137,17 +137,17 @@ class Comments
         return Helper::response(false, 'Bir Sorun Oluştu');
     }
 
-    static function search($value,$type)
+    static function search($value, $type)
     {
-        if($type === 'all')
-            $type = ['approved','pending'];
-        if(!is_array($type))
-            $type = explode(',',$type);
+        if ($type === 'all')
+            $type = [ 'approved', 'pending' ];
+        if (!is_array($type))
+            $type = explode(',', $type);
         return ModelComments::where(function ($query) use ($value) {
             $query->where('name', 'like', '%' . $value . '%')
                 ->orWhere('email', 'like', '%' . $value . '%')
                 ->orWhere('comment', 'like', '%' . $value . '%');
-        })->whereIn('status',$type)->orderByDesc('created_at');
+        })->whereIn('status', $type)->orderByDesc('created_at');
     }
 
     static function pageType($type)
@@ -160,11 +160,20 @@ class Comments
 
     static function paginate($options, $num, $type, $page)
     {
-        $key = Helper::getPageType($type,self::$pageTypes);
-        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
-            $records = self::getComments($options)->whereIn('status', self::pageType($type));
-            return $records->paginate($num);
-        });
+
+        if (Helper::cacheIsOn()) {
+            $key = Helper::getPageType($type, self::$pageTypes);
+            $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+                return self::getPaginateRecords($options, $num, $type);
+            });
+        }
+        return self::getPaginateRecords($options, $num, $type);
+    }
+
+    private static function getPaginateRecords($options, $num, $type)
+    {
+        $records = self::getComments($options)->whereIn('status', self::pageType($type));
+        return $records->paginate($num);
     }
 }

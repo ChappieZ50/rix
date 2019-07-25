@@ -23,9 +23,9 @@
     <p class="section-lead">
         Bazı şeylerin doğru çalışabilmesi için bunları yapmanız gerekmektedir.
         <br>
-        Cron Job'a eklemeniz gereken kod: <span class="text-primary">/usr/bin/php /path/to/artisan schedule:run >/dev/null 2>&1</span>
+        Cron'a eklemeniz gereken kod: <span class="text-primary">/usr/bin/php "Artisan dosyasının bulunduğu dosya yolu" schedule:run  >/dev/null 2>&1</span>
         <br>
-        Php.ini'ye eklemeniz gereken kod: <span class="text-primary">register_argc_argv=On</span>
+        Php.ini'ye eklemeniz gereken kod: <span class="text-primary">register_argc_argv=on</span>
     </p>
     <div class="row">
         <div class="col-lg-6">

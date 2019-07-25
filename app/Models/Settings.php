@@ -15,16 +15,21 @@ class Settings extends Model
         parent::boot();
 
         self::created(function ($setting) {
-            if ($setting->setting_type === 'security')
-                \Cache::forget('SETTINGS.SECURITY');
+            self::cacheForgets($setting->setting_type);
         });
         self::updated(function ($setting) {
-            if ($setting->setting_type === 'security')
-                \Cache::forget('SETTINGS.SECURITY');
+            self::cacheForgets($setting->setting_type);
         });
         self::deleted(function ($setting) {
-            if ($setting->setting_type === 'security')
-                \Cache::forget('SETTINGS.SECURITY');
+            self::cacheForgets($setting->setting_type);
         });
+    }
+
+    private static function cacheForgets($type)
+    {
+        if ($type === 'security')
+            \Cache::forget('SETTINGS.SECURITY');
+        else if ($type === 'email')
+            \Cache::forget('SETTINGS.EMAIL');
     }
 }

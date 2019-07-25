@@ -21,6 +21,17 @@
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
     <script src="/rix/assets/js/simple-post.js"></script>
     <script src="/rix/assets/js/summernote-custom-media.js"></script>
+    <script>
+        $(function () {
+            $('#preview').on('click', function () {
+                $('#sendEmailSubscriptionsForm').attr('target', '_blank').attr('action', '{{route('rix_preview_mail')}}').submit();
+            });
+            $('#sendEmails').on('click', function () {
+                if (confirm('Bu işlem kuyruğa alınacaktır ve bittiğinde bilgilendirileceksiniz.'))
+                    $('#sendEmailSubscriptionsForm').attr('target','_self').attr('action','{{route('rix_action_send_email_subscriptions')}}').submit();
+            });
+        });
+    </script>
 @endsection
 
 @section('section_header_top')
@@ -43,8 +54,7 @@
             <div class="alert alert-success">{{session('success')}}</div>
         </div>
     @endif
-    <form action="{{route('rix_action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm"
-          onsubmit="return confirm('Bu işlem kuyruğa alınacaktır ve bittiğinde bilgilendirileceksiniz.')">
+    <form action="{{route('rix_action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm">
         @csrf
         <div class="row">
 
@@ -69,7 +79,7 @@
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">E-Posta</label>
                                 <div class="col-sm-12 col-md-7">
-                                    <input type="email" class="form-control" name="email" value="asd@hotmail.com @isset($setting->email){{$setting->email}}@endisset">
+                                    <input type="email" class="form-control" name="email" value="@isset($setting->email){{$setting->email}}@endisset">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
@@ -87,7 +97,8 @@
                             <div class="form-group row mb-2">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                 <div class="col-sm-12 col-md-7">
-                                    <button type="submit" class="btn btn-primary" name="sendEmails">Gönder</button>
+                                    <button type="button" class="btn btn-primary" name="sendEmails" id="sendEmails">Gönder</button>
+                                    <button type="button" class="btn btn-dark float-right" id="preview">Önizle</button>
                                 </div>
                             </div>
                         </div>
@@ -98,4 +109,3 @@
     </form>
     @include('rix.layouts.components.media-modal')
 @endsection
-

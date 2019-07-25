@@ -310,23 +310,31 @@ class Users
 
     static function paginate($options, $num, $type, $page)
     {
-        $key = Helper::getPageType($type, self::$pageTypes);
-        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
-            if ($type === 'banned')
-                $records = self::getUsers(array_merge($options, [ 'whereColumn' => 'status', 'whereValue' => $type ]));
-            else
-                $records = self::getUsers($options);
-            $records->withCount([
-                'post' => function ($query) {
-                    $query->where('status', '!=', 'trash');
-                } ]);
-            return $records->paginate(20);
-        });
+        if (Helper::cacheIsOn()) {
+            $key = Helper::getPageType($type, self::$pageTypes);
+            $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+                return self::getPaginateRecords($options,$num,$type);
+            });
+        }
+        return self::getPaginateRecords($options,$num,$type);
     }
 
     static function getAdmins()
     {
         return ModelUsers::whereIn('role', [ 'admin', 'editor' ])->get();
+    }
+
+    private static function getPaginateRecords($options,$num,$type)
+    {
+        if ($type === 'banned')
+            $records = self::getUsers(array_merge($options, [ 'whereColumn' => 'status', 'whereValue' => $type ]));
+        else
+            $records = self::getUsers($options);
+        $records->withCount([
+            'post' => function ($query) {
+                $query->where('status', '!=', 'trash');
+            } ]);
+        return $records->paginate($num);
     }
 }

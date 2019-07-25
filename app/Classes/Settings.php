@@ -33,11 +33,11 @@ class Settings
             'email'    => [
                 'email'   => [
                     'security_type'  => 'required',
-                    'email_title'    => 'required',
                     'email_host'     => 'required',
                     'email_port'     => 'required|numeric',
                     'email'          => 'required|email',
-                    'email_password' => 'required'
+                    'email_password' => 'required',
+                    'username'       => 'required|nullable'
                 ],
                 'setting' => [
                     'email' => 'nullable|email',
@@ -94,8 +94,12 @@ class Settings
             $dataAttributes = array_map(function ($value, $key) {
                 return "'$key','$value'";
             }, array_values($setting_data), array_keys($setting_data));
-            $update = ModelSettings::where('setting_type', $page)->update([ 'setting_data' => \DB::raw("JSON_SET(setting_data,'$." . $type . "',JSON_OBJECT(" . implode(',', $dataAttributes) . "))") ]);
-            return self::response($update);
+            $setting = ModelSettings::where('setting_type', $page)->select('setting_id')->first();
+            if (!empty($setting)) {
+                $update = ModelSettings::find($setting->setting_id)->update([ 'setting_data' => \DB::raw("JSON_SET(setting_data,'$." . $type . "',JSON_OBJECT(" . implode(',', $dataAttributes) . "))") ]);
+                return self::response($update);
+            }
+            return self::response(false);
         }
     }
 
@@ -160,7 +164,7 @@ class Settings
                     $record = json_decode($record->setting_data);
                     $request->merge([ 'email_password' => $record->email->email_password ]);
                 } else {
-                    $request->merge([ 'email_password' => \Hash::make($request->input('email_password')) ]);
+                    $request->merge([ 'email_password' => $request->input('email_password') ]);
                 }
             }
 

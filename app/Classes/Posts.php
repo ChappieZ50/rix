@@ -323,11 +323,20 @@ class Posts
 
     static function paginate($num, $type, $page)
     {
-        $key = Helper::getPageType($type, self::$pageTypes);
-        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type) {
-            $records = self::getPosts()->whereIn('status', self::pageType($type));
-            return $records->paginate($num);
-        });
+        if (Helper::cacheIsOn()) {
+            $key = Helper::getPageType($type, self::$pageTypes);
+            $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type) {
+                return self::getPaginateRecords($num, $type);
+            });
+        }
+
+        return self::getPaginateRecords($num, $type);
+    }
+
+    private static function getPaginateRecords($num, $type)
+    {
+        $records = self::getPosts()->whereIn('status', self::pageType($type));
+        return $records->paginate($num);
     }
 }

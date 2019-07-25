@@ -43,12 +43,21 @@ class Subscriptions
         })->orderByDesc('created_at');
     }
 
-    static function paginate($request,$num)
+    static function paginate($request, $num)
     {
-        $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num) {
-            $records =  Subscriptions::getSubscriptions();
-            return $records->paginate($num);
-        });
+        if (Helper::cacheIsOn()) {
+            $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num) {
+                return self::getPaginateRecords($num);
+            });
+        }
+        return self::getPaginateRecords($num);
+
+    }
+
+    private static function getPaginateRecords($num)
+    {
+        $records = Subscriptions::getSubscriptions();
+        return $records->paginate($num);
     }
 }

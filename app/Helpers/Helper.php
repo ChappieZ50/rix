@@ -294,6 +294,14 @@ class Helper
             \Cache::tags($cacheKey)->flush();
     }
 
+    static function forget(...$key)
+    {
+        if (is_array($key))
+            foreach ($key as $value)
+                \Cache::forget($value);
+
+    }
+
     static function pageAutoCache($key, $value, $type = 'page')
     {
         if (!empty($value) && is_numeric($value))
@@ -319,5 +327,16 @@ class Helper
         if ($doCarbon)
             return Carbon::now()->addMinutes($default);
         return $default;
+    }
+
+    static function cacheIsOn()
+    {
+        $setting = Settings::getSetting('cache', 'cache')->first();
+        if (!empty($setting) && isset($setting->cache)) {
+            $cache = json_decode($setting->cache);
+            if (isset($cache->status_cache) && $cache->status_cache == 0)
+                return false;
+        }
+        return true;
     }
 }

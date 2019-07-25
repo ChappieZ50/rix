@@ -6,22 +6,22 @@
     <div class="card-body">
         <div class="form-group row align-items-center">
             <div class="row align-items-center justify-content-center">
-                <div class="col-sm-6 col-md-10">
+                <div class="col-sm-12 col-md-10">
                     <label>
                         <input type="hidden" value="0" name="status_cache">
                         <input type="checkbox" name="status_cache" class="custom-switch-input"
                                @isset($setting->status_cache){{$setting->status_cache == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
                         <span class="custom-switch-indicator"></span>
-                        <span class="custom-switch-description">Önbelleklemeyi Etkinleştir</span>
+                        <span class="custom-switch-description">Önbelleklemeyi Etkinleştir <span class="text-primary">( Yönetim Paneli İçin )</span></span>
                     </label>
                 </div>
                 <div class="col-sm-6 col-md-10">
                     <label>
-                        <input type="hidden" value="0" name="status_cache_refresh">
-                        <input type="checkbox" name="status_cache_refresh" class="custom-switch-input"
-                               @isset($setting->status_cache_refresh){{$setting->status_cache_refresh == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
+                        <input type="hidden" value="0" name="status_cache_site">
+                        <input type="checkbox" name="status_cache_site" class="custom-switch-input"
+                               @isset($setting->status_cache_site){{$setting->status_cache_site == 0 ? 'value=0' : 'value=1 checked' }} @else value="1" checked @endisset>
                         <span class="custom-switch-indicator"></span>
-                        <span class="custom-switch-description">Otomatik Yenileme (Yazı,resim,yorum vb şeyler eklendiğinde otomatik olarak yenilenir)</span>
+                        <span class="custom-switch-description">Önbelleklemeyi Etkinleştir <span class="text-primary">( Web Site İçin )</span> </span>
                     </label>
                 </div>
             </div>

@@ -177,6 +177,7 @@ return [
         // Custom
         App\Providers\ComposerServiceProvider::class,
         App\Providers\RixServiceProvider::class,
+        App\Providers\MailConfigServiceProvider::class,
     ],
 
     /*

@@ -66,10 +66,18 @@ class Gallery
 
     static function paginate($request)
     {
-        $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($request) {
-            $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
-            return ModelGallery::select('image_id', 'image_name', 'image_data', 'created_at')->orderByDesc('image_id')->paginate($paginate);
-        });
+        if (Helper::cacheIsOn()) {
+            $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($request) {
+                return self::getPaginateRecords($request);
+            });
+        }
+        return self::getPaginateRecords($request);
+    }
+
+    private static function getPaginateRecords($request)
+    {
+        $paginate = $request->ajax() && $request->input('action') != 'forGallery' ? config('definitions.MODAL_GALLERY_PAGINATE') : config('definitions.GALLERY_PAGINATE');
+        return ModelGallery::select('image_id', 'image_name', 'image_data', 'created_at')->orderByDesc('image_id')->paginate($paginate);
     }
 }

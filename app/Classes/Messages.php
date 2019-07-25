@@ -101,18 +101,18 @@ class Messages
         return Helper::response(false, 'Mesaj Gönderilemedi');
     }
 
-    static function search($value,$type)
+    static function search($value, $type)
     {
-        if($type === 'all')
-            $type = ['read','unread'];
-        if(!is_array($type))
-            $type = explode(',',$type);
+        if ($type === 'all')
+            $type = [ 'read', 'unread' ];
+        if (!is_array($type))
+            $type = explode(',', $type);
         return ModelMessages::where(function ($query) use ($value) {
             $query->where('name', 'like', '%' . $value . '%')
                 ->orWhere('subject', 'like', '%' . $value . '%')
                 ->orWhere('email', 'like', '%' . $value . '%')
                 ->orWhere('message', 'like', '%' . $value . '%');
-        })->whereIn('status',$type)->orderByDesc('created_at');
+        })->whereIn('status', $type)->orderByDesc('created_at');
     }
 
     static function pageType($type)
@@ -125,11 +125,19 @@ class Messages
 
     static function paginate($options, $num, $type, $page)
     {
-        $key = Helper::getPageType($type, self::$pageTypes);
-        $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
-        return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
-            $records = self::getMessages($options);
-            return $records->paginate($num);
-        });
+        if (Helper::cacheIsOn()) {
+            $key = Helper::getPageType($type, self::$pageTypes);
+            $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+                return self::getPaginateRecords($options, $num);
+            });
+        }
+        return self::getPaginateRecords($options, $num);
+    }
+
+    static function getPaginateRecords($options, $num)
+    {
+        $records = self::getMessages($options);
+        return $records->paginate($num);
     }
 }
