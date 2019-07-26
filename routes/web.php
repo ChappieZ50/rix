@@ -91,6 +91,7 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware
         ];
         return new \App\Mail\Subscriptions($items, 'test@gmail.com');
     })->name('rix_preview_mail');
+    Route::post('/mark_notifications', 'Rix\NotificationsController@action_notifications')->name('rix_mark_notifications');
 });
 Route::get('/rix-login', 'Rix\LoginController@get_login')->name('rix_login');
 Route::post('/rix-login', 'Rix\LoginController@action_login')->name('rix_action_login');

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -32,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         setLocale(LC_TIME, 'tr_TR');
+
     }
 }

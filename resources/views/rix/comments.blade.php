@@ -27,7 +27,6 @@
 
 @section('js')
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="/rix/assets/js/simple-post.js"></script>
     <script src="/rix/assets/js/page/comments.js"></script>
 @endsection
 

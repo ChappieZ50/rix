@@ -27,6 +27,7 @@
         </div>
     </form>
     <ul class="navbar-nav navbar-right">
+        @php $helper = new \App\Helpers\Helper(); @endphp
         @if($composeMessages->isNotEmpty())
             <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
@@ -39,7 +40,7 @@
                                 </div>
                                 <div class="dropdown-item-desc">
                                     <b>{{$composeMessage->name}}</b>
-                                    <p>{{\App\Helpers\Helper::longText($composeMessage->message,['len' => 120])}}</p>
+                                    <p>{{$helper::longText($composeMessage->message,['len' => 120])}}</p>
                                     <div class="time">{{$composeMessage->readable_date}}</div>
                                 </div>
                             </a>
@@ -61,7 +62,9 @@
                         @foreach($composeComments as $composeComment)
                             <a href="{{route('rix_comments',['comment' => $composeComment->comment_id])}}" class="dropdown-item dropdown-item-unread">
                                 <div class="dropdown-item-avatar">
-                                    <img alt="image" src="{{!empty($composeComment->user->avatar) ? url(asset('storage/avatars').'/'.$composeComment->user->avatar) : '/rix/assets/img/avatar/avatar-1.png'}}" class="rounded-circle">
+                                    <img alt="image"
+                                         src="{{!empty($composeComment->user->avatar) ? url(asset('storage/avatars').'/'.$composeComment->user->avatar) : '/rix/assets/img/avatar/avatar-1.png'}}"
+                                         class="rounded-circle">
                                 </div>
                                 <div class="dropdown-item-desc">
                                     <b>{{isset($composeComment->user) ? $composeComment->user->username : $composeComment->name }}</b>
@@ -73,6 +76,32 @@
                     </div>
                     <div class="dropdown-footer text-center">
                         <a href="#">Hepsi <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </li>
+        @endif
+        @if($composeNotifications->isNotEmpty())
+            <li class="dropdown dropdown-list-toggle" id="liNotifications"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i
+                            class="far fa-bell"></i></a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <div class="dropdown-header">Bildirimler</div>
+                    <div class="dropdown-list-content dropdown-list-icons">
+                        @foreach($composeNotifications as $notification)
+                            <a href="javascript:;" class="dropdown-item ">
+                                <div class="dropdown-item-icon {{$notification->status == 'success' ? 'bg-success' : 'bg-danger'}} text-white">
+                                    <i class="{{$notification->status == 'success' ? 'fas fa-check' : 'fas fa-exclamation-triangle'}}"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <h6>{{$notification->title}}</h6>
+                                    {{$notification->content}}
+                                    <br>
+                                    <div class="time">{{$helper::changeTimeDiff($helper::getTimeDiff($notification->created_at,null,false))}} Önce</div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <div class="dropdown-footer text-center">
+                        <a href="javascript:;" id="markRead">Okundu Olarak İşaretle <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </li>

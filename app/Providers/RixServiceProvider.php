@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Classes\Settings;
+use App\Models\Notifications;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Support\ServiceProvider;
 
 class RixServiceProvider extends ServiceProvider
@@ -36,5 +39,21 @@ class RixServiceProvider extends ServiceProvider
             \Config::set('recaptcha.secret_key', $secretKey);
             \Config::set('recaptcha.language', $language);
         }
+        \Queue::after(function (JobProcessed $event) {
+            return Notifications::create([
+                'name'    => 'mail',
+                'title'   => 'E-Posta',
+                'content' => json_encode($event->job),
+                'status'  => 'success',
+            ]);
+        });
+        \Queue::failing(function (JobFailed $fail) {
+            return Notifications::create([
+                'name'    => 'mail',
+                'title'   => 'E-Posta',
+                'content' => 'E-Posta gönderiminiz başarısız oldu.',
+                'status'  => 'failed',
+            ]);
+        });
     }
 }

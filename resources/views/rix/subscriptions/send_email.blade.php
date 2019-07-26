@@ -19,7 +19,6 @@
 
 @section('js')
     <script src="/rix/assets/modules/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="/rix/assets/js/simple-post.js"></script>
     <script src="/rix/assets/js/summernote-custom-media.js"></script>
     <script>
         $(function () {

@@ -40,6 +40,5 @@
 
 @section('js')
     <script src="/rix/assets/js/custom.js"></script>
-    <script src="/rix/assets/js/simple-post.js"></script>
     <script src="/rix/assets/js/page/categories.js"></script>
 @append

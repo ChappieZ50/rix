@@ -10,10 +10,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="/rix/assets/js/stisla.js"></script>
-
+<script src="/rix/assets/js/simple-post.js"></script>
 @yield('general_js')
 <!-- Template JS File -->
 <script src="/rix/assets/js/scripts.js"></script>
 <script src="/rix/assets/js/page/modules-ion-icons.js"></script>
 
 @yield("js")
+<script>
+    $(function () {
+        $('#markRead').on('click', function () {
+            simplePost({status: true}, _notifications).done(function (response) {
+                if (response.status === true)
+                    $('#liNotifications').remove();
+            });
+        });
+    });
+</script>

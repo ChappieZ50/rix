@@ -250,6 +250,22 @@ class Helper
         return $date->m . " Ay " . $date->d . " Gün " . $date->h . " Saat " . $date->i . " Dakika " . $date->s . " Saniye ";
     }
 
+    static function changeTimeDiff($date)
+    {
+        $output = null;
+        if ($date->m > 0)
+            $output = $date->m . ' Ay ';
+        else if ($date->d > 0)
+            $output = $date->d . ' Gün ';
+        else if ($date->h > 0)
+            $output = $date->h . ' Saat ';
+        else if ($date->i > 0)
+            $output = $date->i . ' Dakika ';
+        else
+            $output = $date->s . ' Saniye ';
+        return $output;
+    }
+
     static function recaptchaRequirements($requirement = 'status_recaptcha', $equal = null)
     {
         $setting = self::getSetting('security');
@@ -294,11 +310,15 @@ class Helper
             \Cache::tags($cacheKey)->flush();
     }
 
-    static function forget(...$key)
+    static function forget($main, ...$key)
     {
         if (is_array($key))
-            foreach ($key as $value)
-                \Cache::forget($value);
+            foreach ($key as $value) {
+                if (!empty($main))
+                    \Cache::tags($main)->forget($value);
+                else
+                    \Cache::forget($value);
+            }
 
     }
 

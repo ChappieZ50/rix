@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class Settings extends Model
@@ -28,8 +29,8 @@ class Settings extends Model
     private static function cacheForgets($type)
     {
         if ($type === 'security')
-            \Cache::forget('SETTINGS.SECURITY');
+            Helper::forget('SETTINGS','SECURITY');
         else if ($type === 'email')
-            \Cache::forget('SETTINGS.EMAIL');
+            Helper::forget('SETTINGS','EMAIL');
     }
 }

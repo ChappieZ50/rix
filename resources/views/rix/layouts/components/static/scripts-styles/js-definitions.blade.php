@@ -16,5 +16,6 @@
         user = "{{route('rix_user')}}",
         profile = "{{route('rix_profile')}}",
         _pages = "{{route('rix_pages')}}",
-        _page = "{{route('rix_page')}}";
+        _page = "{{route('rix_page')}}",
+        _notifications = "{{route('rix_mark_notifications')}}";
 </script>

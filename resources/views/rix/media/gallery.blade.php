@@ -4,7 +4,6 @@
 {{--  JS --}}
 @section('js')
     <script src="/rix/assets/js/endless-scroll.js"></script>
-    <script src="/rix/assets/js/simple-post.js"></script>
     <script src="/rix/assets/js/page/gallery.js"></script>
 @endsection
 {{--  CSS --}}
