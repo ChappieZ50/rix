@@ -10,9 +10,12 @@ class MessagesComposer
 {
     public function compose(View $view)
     {
-        $messages = \Cache::tags('COMPOSE')->remember('MESSAGES', Carbon::now()->addHour(), function () {
-            return Messages::getMessages([ 'whereValue' => 'unread' ])->take(5)->get();
-        });
-        return $view->with('composeMessages', $messages);
+
+        if (!empty(auth()->user()) && auth()->user()->role  === 'admin') {
+            $messages = \Cache::tags('COMPOSE')->remember('MESSAGES', Carbon::now()->addHour(), function () {
+                return Messages::getMessages(['whereValue' => 'unread'])->take(5)->get();
+            });
+            return $view->with('composeMessages', $messages);
+        }
     }
 }

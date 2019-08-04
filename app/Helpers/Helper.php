@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\File;
 
 class Helper
 {
+
+    static function rixPrefix()
+    {
+        if(\Schema::hasTable('rix_settings')){
+            $generalSetting = \Cache::tags('SETTINGS')->rememberForever('SETTINGS.GENERAL', function () {
+                $setting = Settings::getSetting('general', 'general_settings')->first();
+                return isset($setting->general_settings) ? json_decode($setting->general_settings) : $setting;
+            });
+            if (isset($generalSetting->panel_connect) && !empty($generalSetting->panel_connect))
+                return $generalSetting->panel_connect . '/';
+        }
+        return config('definitions.ADMIN_FOLDER').'/';
+    }
+
     static function uniqImg($options = [], $uniq = '')
     {
         $defaults = [
@@ -41,7 +55,7 @@ class Helper
     static function render($data, $variable, $blade)
     {
         $view = view($blade)->with($variable, $data)->render();
-        return response()->json([ 'html' => $view, 'data' => $data ]);
+        return response()->json(['html' => $view, 'data' => $data]);
     }
 
 
@@ -101,7 +115,7 @@ class Helper
             'errors' => '',
         ];
         $options = array_merge($defaults, $options);
-        $send = [ 'status' => $status, 'message' => $message ];
+        $send = ['status' => $status, 'message' => $message];
         if (!$status)
             $send['errors'] = $options['errors'];
 
@@ -127,7 +141,7 @@ class Helper
         $i = 0;
         foreach ($terms as $term) {
             if ($term->termTaxonomy->taxonomy == $taxonomy) {
-                $params = [ 'action' => 'edit', 'id' => $term->termTaxonomy->term_id ];
+                $params = ['action' => 'edit', 'id' => $term->termTaxonomy->term_id];
                 $route = $taxonomy == 'category' ? route('rix_categories', $params) : route('rix_tags', $params);
                 $i++;
                 echo '<a href="' . $route . '" target="_blank">' . $term->termTaxonomy->terms->name . '</a>, ';
@@ -150,7 +164,7 @@ class Helper
     static function findStatusOnParam($status, $types)
     {
         if (in_array($status, $types))
-            return [ 'whereValue' => $status ];
+            return ['whereValue' => $status];
         return [];
     }
 
@@ -192,7 +206,7 @@ class Helper
         foreach ($typeData as $key => $value) {
             $aClass = 'nav-link';
             $spanClass = 'badge badge-primary';
-            $href = $key !== 'all' ? route($routeName, [ $param => $key ]) : route($routeName);
+            $href = $key !== 'all' ? route($routeName, [$param => $key]) : route($routeName);
             if ($type === $key) {
                 $aClass = 'nav-link active';
                 $spanClass = 'badge badge-white';
@@ -225,11 +239,11 @@ class Helper
                 $first = array_key_first($types);
                 if ($first == $key)
                     $active = 'active';
-                $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
+                $html[] = '<a href="' . route($routeName, [$param => $key]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
             } else {
                 if ($key == \Request::get($param))
                     $active = 'active';
-                $html[] = '<a href="' . route($routeName, [ $param => $key ]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
+                $html[] = '<a href="' . route($routeName, [$param => $key]) . '" class="nav-link ' . $active . '">' . $value . '</a>';
                 $html[] = '</li>';
             }
         }

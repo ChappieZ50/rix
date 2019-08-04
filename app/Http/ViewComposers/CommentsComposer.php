@@ -11,10 +11,10 @@ class CommentsComposer
     public function compose(View $view)
     {
         $comments = \Cache::tags('COMPOSE')->remember('COMMENTS', Carbon::now()->addHour(), function () {
-            return Comments::getComments([ 'whereValue' => 'pending' ])->with([
+            return Comments::getComments(['whereValue' => 'pending'])->with([
                 'user' => function ($query) {
                     $query->select('user_id', 'avatar', 'username');
-                } ])->take(8)->get();
+                }])->take(8)->get();
         });
         return $view->with('composeComments', $comments);
     }

@@ -23,8 +23,8 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('rix.*', 'App\Http\ViewComposers\MessagesComposer');
         view()->composer('rix.*', 'App\Http\ViewComposers\CommentsComposer');
+        view()->composer('rix.*', 'App\Http\ViewComposers\MessagesComposer');
         view()->composer('rix.*', 'App\Http\ViewComposers\NotificationComposer');
     }
 }

@@ -41,12 +41,15 @@ class Comments extends Model
         parent::boot();
         self::created(function () {
             Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMMENTS')->flush();
         });
         self::updated(function () {
             Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMMENTS')->flush();
         });
         self::deleted(function () {
             Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMMENTS')->flush();
         });
     }
 }

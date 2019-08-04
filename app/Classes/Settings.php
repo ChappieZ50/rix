@@ -5,6 +5,7 @@ namespace App\Classes;
 
 use App\Helpers\Helper;
 use App\Models\Settings as ModelSettings;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\File;
 
@@ -69,14 +70,14 @@ class Settings
         $type = $request->input('setting_type');
         if ($type === 'site_map') {
             if (Sitemap::refresh())
-                return self::response(true, [ 'Başarıyla Güncellendi!' ]);
-            return self::response(false, [ 'Başarıyla Güncellendi', 'Güncelleme Başarısız!' ]);
+                return self::response(true, ['Başarıyla Güncellendi!']);
+            return self::response(false, ['Başarıyla Güncellendi', 'Güncelleme Başarısız!']);
         }
         $validator = self::validateSettings($page, $type);
         if (!isset($validator['validate'])) {
             $validator = \Validator::make($request->all(), $validator);
             if ($validator->errors()->isNotEmpty())
-                return Helper::response(false, '', [ 'errors' => $validator->errors() ]);
+                return Helper::response(false, '', ['errors' => $validator->errors()]);
         }
         $record = ModelSettings::where('setting_type', $page)->first();
         self::intervention($request, $page, $type, $record);
@@ -85,7 +86,7 @@ class Settings
             // Yeni kayıt
             $create = ModelSettings::create([
                 'setting_type' => $page,
-                'setting_data' => json_encode([ $type => $data ])
+                'setting_data' => json_encode([$type => $data])
             ]);
             return self::response($create);
         } else {
@@ -96,7 +97,7 @@ class Settings
             }, array_values($setting_data), array_keys($setting_data));
             $setting = ModelSettings::where('setting_type', $page)->select('setting_id')->first();
             if (!empty($setting)) {
-                $update = ModelSettings::find($setting->setting_id)->update([ 'setting_data' => \DB::raw("JSON_SET(setting_data,'$." . $type . "',JSON_OBJECT(" . implode(',', $dataAttributes) . "))") ]);
+                $update = ModelSettings::find($setting->setting_id)->update(['setting_data' => \DB::raw("JSON_SET(setting_data,'$." . $type . "',JSON_OBJECT(" . implode(',', $dataAttributes) . "))")]);
                 return self::response($update);
             }
             return self::response(false);
@@ -147,7 +148,7 @@ class Settings
     private static function uploadImage($image)
     {
         $noExtensionName = Helper::uniqImg();
-        $imageName = Helper::uniqImg([ 'extension' => $image->getClientOriginalExtension() ], $noExtensionName);
+        $imageName = Helper::uniqImg(['extension' => $image->getClientOriginalExtension()], $noExtensionName);
         $img = ImageManagerStatic::make($image->getRealPath());
         if (!File::exists(public_path('storage/settings')))
             File::makeDirectory(public_path('storage/settings'));
@@ -162,21 +163,25 @@ class Settings
             if ($type === 'email') {
                 if ($request->input('email_password') === '#password' && !empty($record)) {
                     $record = json_decode($record->setting_data);
-                    $request->merge([ 'email_password' => $record->email->email_password ]);
+                    $request->merge(['email_password' => $record->email->email_password]);
                 } else {
-                    $request->merge([ 'email_password' => $request->input('email_password') ]);
+                    $request->merge(['email_password' => $request->input('email_password')]);
                 }
             }
 
         } elseif ($page === 'general') {
             if ($type === 'image_settings') {
                 $record = !empty($record) ? $record : null;
-                $types = [ 'site_logo' => 'logo', 'site_favicon' => 'favicon' ];
+                $types = ['site_logo' => 'logo', 'site_favicon' => 'favicon'];
                 self::createOrUpdateImage($request, $types, $record);
                 return $request->except('_token', 'setting_type', 'site_logo', 'site_favicon');
             } elseif ($type === 'general_settings') {
                 if (empty($request->input('post_per_page')))
-                    $request->merge([ 'post_per_page' => 20 ]);
+                    $request->merge(['post_per_page' => 20]);
+                if (!empty($request->input('panel_connect'))){
+                    $request->merge(['panel_connect' => Str::slug($request->input('panel_connect'))]);
+                    \Cache::flush();
+                }
             }
         }
     }

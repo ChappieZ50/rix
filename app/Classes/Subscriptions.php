@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use App\Helpers\Helper;
 use App\Models\Subscriptions as ModelSubscriptions;
+use Illuminate\Support\Str;
 
 class Subscriptions
 {
@@ -52,6 +53,26 @@ class Subscriptions
             });
         }
         return self::getPaginateRecords($num);
+
+    }
+
+    static function insertSub($request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+        if ($validator->fails())
+            return Helper::response(false, '', ['errors' => $validator->errors()]);
+        $insert = ModelSubscriptions::create([
+            'email'         => $request->input('email'),
+            'ip'            => $request->ip(),
+            'readable_date' => Helper::readableDateFormat(),
+            'security'      => \Hash::make(Str::random(16)),
+        ]);
+        if ($insert)
+            return Helper::response(true, 'Başarıyla abone oldunuz');
+
+        return Helper::response(false);
 
     }
 

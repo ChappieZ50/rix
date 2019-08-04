@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="card card-primary">
-                        <div class="card-header"><h4>Giriş</h4></div>
+                        <div class="card-header"><h4>Yönetici Girişi</h4></div>
                         <div class="card-body">
                             @if($errors->any())
                                 <div class="alert alert-danger">

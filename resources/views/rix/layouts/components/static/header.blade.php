@@ -28,7 +28,7 @@
     </form>
     <ul class="navbar-nav navbar-right">
         @php $helper = new \App\Helpers\Helper(); @endphp
-        @if($composeMessages->isNotEmpty())
+        @if(isset($composeMessages) && $composeMessages->isNotEmpty())
             <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
                     <div class="dropdown-header">Okunmamış Mesajlar</div>
@@ -52,7 +52,7 @@
                 </div>
             </li>
         @endif
-        @if($composeComments->isNotEmpty())
+        @if(isset($composeComments) && $composeComments->isNotEmpty())
             <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i
                             class="ion ion-chatbubbles"></i></a>
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
@@ -75,12 +75,12 @@
                         @endforeach
                     </div>
                     <div class="dropdown-footer text-center">
-                        <a href="#">Hepsi <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{route('rix_comments',['status' => 'pending'])}}">Hepsi <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </li>
         @endif
-        @if($composeNotifications->isNotEmpty())
+        @if(isset($composeNotifications) && $composeNotifications->isNotEmpty())
             <li class="dropdown dropdown-list-toggle" id="liNotifications"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i
                             class="far fa-bell"></i></a>
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
@@ -95,7 +95,7 @@
                                     <h6>{{$notification->title}}</h6>
                                     {{$notification->content}}
                                     <br>
-                                    <div class="time">{{$helper::changeTimeDiff($helper::getTimeDiff($notification->created_at,null,false))}} Önce</div>
+                                    <div class="time"><strong>{{$helper::changeTimeDiff($helper::getTimeDiff($notification->created_at,null,false))}} Önce</strong></div>
                                 </div>
                             </a>
                         @endforeach

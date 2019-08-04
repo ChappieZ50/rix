@@ -14,8 +14,8 @@
         <div class="form-group row align-items-center">
             <label class="form-control-label col-sm-3 text-md-right">Yönetim Paneli Bağlantısı</label>
             <div class="col-sm-6 col-md-9">
-                <input type="text" name="panel_connect" class="form-control" value="@isset($setting->panel_connect){{$setting->panel_connect}}@endisset">
-                <div class="invalid-feedback" data-name="panel_connect"></div>
+                <input type="text" name="panel_connect" id="txt_src txt_trg" class="form-control" value="@isset($setting->panel_connect){{$setting->panel_connect}}@endisset">
+                <div class="small" data-name="panel_connect" style="color:red;">Bu alanı dikkatli bir şekilde doldurun. Aksi taktirde panele giriş yapamazsınız (Büyük harf,Özel karakter,Türkçe karakter girmeyiniz. Girdiğiniz taktirde otomatik olarak yok sayılacaktır)</div>
             </div>
         </div>
         <div class="form-group row align-items-center">
@@ -58,13 +58,16 @@
     </div>
 </div>
 @section('js')
+    <script src="/rix/assets/js/custom.js"></script>
     <script>
         $('input[name=adblock],input[name=cookie]').on('change', function () {
             $(this).val($(this).is(':checked') ? 1 : 0);
         });
+        $('#txt_src').on('keyup', function () {
+            $('#txt_trg').val(stringToSlug($(this).val()));
+        });
     </script>
 @append
-
 @section('general_js')
     <script src="/rix/assets/modules/summernote/dist/summernote-bs4.js"></script>
     <script src="/rix/assets/modules/summernote/dist/lang/summernote-tr-TR.min.js"></script>

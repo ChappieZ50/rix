@@ -10,9 +10,11 @@ class NotificationComposer
 {
     public function compose(View $view)
     {
-        $notifications = \Cache::tags('COMPOSE')->remember('NOTIFICATIONS',Carbon::now()->addHour(),function(){
-            return Notifications::all();
-        });
-        return $view->with('composeNotifications', $notifications);
+        if (!empty(auth()->user()) && auth()->user()->role === 'admin') {
+            $notifications = \Cache::tags('COMPOSE')->remember('NOTIFICATIONS', Carbon::now()->addHour(), function () {
+                return Notifications::all();
+            });
+            return $view->with('composeNotifications', $notifications);
+        }
     }
 }

@@ -16,12 +16,15 @@ class Messages extends Model
         parent::boot();
         self::created(function () {
             Helper::forget('COMPOSE', 'MESSAGES');
+            \Cache::tags('MESSAGES')->flush();
         });
         self::updated(function () {
             Helper::forget('COMPOSE', 'MESSAGES');
+            \Cache::tags('MESSAGES')->flush();
         });
         self::deleted(function () {
             Helper::forget('COMPOSE', 'MESSAGES');
+            \Cache::tags('MESSAGES')->flush();
         });
     }
 

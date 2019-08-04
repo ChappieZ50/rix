@@ -29,16 +29,18 @@ class MailConfigServiceProvider extends ServiceProvider
                 $setting = Settings::getSetting('email', 'email')->first();
                 return isset($setting->email) ? json_decode($setting->email) : $setting;
             });
-            $configs = [
-                'driver'     => 'smtp',
-                'host'       => $setting->email_host,
-                'port'       => $setting->email_port,
-                'from'       => [ 'address' => $setting->email, 'name' => config('app.name') ],
-                'encryption' => $setting->security_type,
-                'username'   => $setting->username,
-                'password'   => $setting->email_password,
-            ];
-            \Config::set('mail', $configs);
+            if (!empty($setting)) {
+                $configs = [
+                    'driver' => 'smtp',
+                    'host' => $setting->email_host,
+                    'port' => $setting->email_port,
+                    'from' => ['address' => $setting->email, 'name' => config('app.name')],
+                    'encryption' => $setting->security_type,
+                    'username' => $setting->username,
+                    'password' => $setting->email_password,
+                ];
+                \Config::set('mail', $configs);
+            }
         }
     }
 }

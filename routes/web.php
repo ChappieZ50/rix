@@ -5,7 +5,7 @@ Route::get('robots.txt', function () {
     $robots->addDisallow(config('definitions.ADMIN_FOLDER'));
     $robots->addDisallow('/rix-login');
     $robots->addSitemap(URL::to('/sitemap.xml'));
-    return Response::make($robots->generate(), 200, array( 'Content-Type' => 'text/plain' ));
+    return Response::make($robots->generate(), 200, array('Content-Type' => 'text/plain'));
 });
 
 Route::get('sitemap.xml', 'SitemapController@index')->name('sitemap');
@@ -15,7 +15,7 @@ Route::get('sitemap_categories.xml', 'SitemapController@index')->name('sitemap_c
 Route::get('sitemap_tags.xml', 'SitemapController@index')->name('sitemap_tags');
 
 Auth::routes();
-Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware' => [ 'accessibility', 'roles' ] ], function () {
+Route::group(['prefix' => \App\Helpers\Helper::rixPrefix(), 'middleware' => ['accessibility', 'roles']], function () {
     Route::get('', 'Rix\RixController@get_rix')->name('rix_home');
     // Gallery
     Route::get('gallery', 'Rix\GalleryController@get_gallery')->name('rix_gallery');
@@ -75,7 +75,7 @@ Route::group([ 'prefix' => config('definitions.ADMIN_FOLDER') . '/', 'middleware
     Route::get('page/{id?}', 'Rix\PagesController@get_page')->where('id', '^([0-9-]+)?')->name('rix_page');
     Route::post('page', 'Rix\PagesController@action_page')->name('rix_action_page');
     // Settings
-    Route::group([ 'prefix' => 'settings' ], function () {
+    Route::group(['prefix' => 'settings'], function () {
         Route::get('', 'Rix\SettingsController@get_settings')->name('rix_settings');
         Route::any('general', 'Rix\SettingsController@get_setting')->name('rix_settings_general');
         Route::any('seo', 'Rix\SettingsController@get_setting')->name('rix_settings_seo');
@@ -102,6 +102,5 @@ Route::get('/logout', function () {
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -26,7 +26,14 @@
         </td>
         <td>
             @if(empty($user->avatar))
-                <img src="/rix/assets/img/avatar/avatar-5.png" width="50">
+                @if($user->role === 'admin')
+                    <img src="/rix/assets/img/avatar/avatar-5.png" width="50">
+
+                @elseif($user->role === 'editor')
+                    <img src="/rix/assets/img/avatar/avatar-4.png" width="50">
+                @else
+                    <img src="/rix/assets/img/avatar/avatar-1.png" width="50">
+                @endif
             @else
                 <img src="{{url('storage/avatars/'.$user->avatar)}}" width="50">
             @endif
