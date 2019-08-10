@@ -8,12 +8,6 @@ Route::get('robots.txt', function () {
     return Response::make($robots->generate(), 200, array('Content-Type' => 'text/plain'));
 });
 
-Route::get('sitemap.xml', 'SitemapController@index')->name('sitemap');
-Route::get('sitemap_posts.xml', 'SitemapController@index')->name('sitemap_posts');
-Route::get('sitemap_pages.xml', 'SitemapController@index')->name('sitemap_pages');
-Route::get('sitemap_categories.xml', 'SitemapController@index')->name('sitemap_categories');
-Route::get('sitemap_tags.xml', 'SitemapController@index')->name('sitemap_tags');
-
 Auth::routes();
 Route::group(['prefix' => \App\Helpers\Helper::rixPrefix(), 'middleware' => ['accessibility', 'roles']], function () {
     Route::get('', 'Rix\RixController@get_rix')->name('rix_home');
@@ -82,6 +76,7 @@ Route::group(['prefix' => \App\Helpers\Helper::rixPrefix(), 'middleware' => ['ac
         Route::any('email', 'Rix\SettingsController@get_setting')->name('rix_settings_email');
         Route::any('cache', 'Rix\SettingsController@get_setting')->name('rix_settings_cache');
         Route::any('security', 'Rix\SettingsController@get_setting')->name('rix_settings_security');
+        Route::any('guide', 'Rix\SettingsController@get_setting')->name('rix_settings_guide');
     });
     Route::post('/preview_mail', function () {
         $items = (object)[

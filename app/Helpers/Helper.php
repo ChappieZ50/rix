@@ -11,7 +11,7 @@ class Helper
 
     static function rixPrefix()
     {
-        if(\Schema::hasTable('rix_settings')){
+        if (\Schema::hasTable('rix_settings')) {
             $generalSetting = \Cache::tags('SETTINGS')->rememberForever('SETTINGS.GENERAL', function () {
                 $setting = Settings::getSetting('general', 'general_settings')->first();
                 return isset($setting->general_settings) ? json_decode($setting->general_settings) : $setting;
@@ -19,7 +19,7 @@ class Helper
             if (isset($generalSetting->panel_connect) && !empty($generalSetting->panel_connect))
                 return $generalSetting->panel_connect . '/';
         }
-        return config('definitions.ADMIN_FOLDER').'/';
+        return config('definitions.ADMIN_FOLDER') . '/';
     }
 
     static function uniqImg($options = [], $uniq = '')
@@ -373,4 +373,32 @@ class Helper
         }
         return true;
     }
+
+    static function getUserRole($role)
+    {
+        if ($role === 'admin')
+            $tt = 'Yönetici';
+        else if ($role === 'editor')
+            $tt = 'Yazar';
+        else
+            $tt = 'Kullanıcı';
+
+        return $tt;
+    }
+
+    static function getUserAvatar($avatar, $role, $img = true)
+    {
+        if (empty($avatar)) {
+            if ($role === 'admin')
+                $tt = '/rix/assets/img/avatar/avatar-5.png';
+            else if ($role === 'editor')
+                $tt = '/rix/assets/img/avatar/avatar-4.png';
+            else
+                $tt = '/rix/assets/img/avatar/avatar-1.png';
+        } else {
+            $tt = url('storage/avatars/' . $avatar);
+        }
+        return $img ? "<img src='$tt' width='50'>" : $tt;
+    }
+
 }

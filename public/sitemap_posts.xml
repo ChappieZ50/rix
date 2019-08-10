@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>http://localhost:8000/post</loc>
-        <lastmod>2019-07-25T10:26:44+03:00</lastmod>
+        <loc>http://localhost:8000/asd</loc>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>http://localhost:8000/ewqeqweqwe</loc>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>

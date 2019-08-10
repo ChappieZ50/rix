@@ -3,21 +3,21 @@
     <sitemap>
         <loc>http://localhost:8000/sitemap_posts.xml</loc>
     
-        <lastmod>2019-07-25T10:26:44+03:00</lastmod>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
     </sitemap>
     <sitemap>
         <loc>http://localhost:8000/sitemap_pages.xml</loc>
     
-        <lastmod>2019-07-25T10:26:44+03:00</lastmod>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
     </sitemap>
     <sitemap>
         <loc>http://localhost:8000/sitemap_categories.xml</loc>
     
-        <lastmod>2019-07-25T10:26:44+03:00</lastmod>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
     </sitemap>
     <sitemap>
         <loc>http://localhost:8000/sitemap_tags.xml</loc>
     
-        <lastmod>2019-07-25T10:26:44+03:00</lastmod>
+        <lastmod>2019-08-07T21:44:03+03:00</lastmod>
     </sitemap>
 </sitemapindex>

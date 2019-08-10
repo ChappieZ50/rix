@@ -87,6 +87,18 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="card card-large-icons col-12 p-0">
+                <div class="card-icon bg-primary text-white">
+                    <i class="far fa-newspaper"></i>
+                </div>
+                <div class="card-body">
+                    <h4>Klavuz</h4>
+                    <p>Yönetim panelini daha iyi kullanabilmek için gerekli bilgiler.</p>
+                    <a href="{{route('rix_settings_guide')}}" class="card-cta">Görüntüle <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

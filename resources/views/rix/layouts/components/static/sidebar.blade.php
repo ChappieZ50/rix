@@ -1,7 +1,7 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{route('rix_home')}}">Rix Admin</a>
+            <a href="{{route('rix_home')}}">@if(isset($composePanelName) && !empty($composePanelName)) {{$composePanelName}} @else Rix Admin @endif</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{route('rix_home')}}">Rix</a>

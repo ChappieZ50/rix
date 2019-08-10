@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class SettingsController extends Controller
 {
     private $settings = [
-        'cache'    => [ 'view' => 'rix.settings.cache', 'route' => 'rix_settings_cache', 'default' => 'cache' ],
-        'email'    => [ 'view' => 'rix.settings.email', 'route' => 'rix_settings_email', 'default' => 'email' ],
-        'general'  => [ 'view' => 'rix.settings.general', 'route' => 'rix_settings_general', 'default' => 'general_settings' ],
-        'security' => [ 'view' => 'rix.settings.security', 'route' => 'rix_settings_security', 'default' => 'security' ],
-        'seo'      => [ 'view' => 'rix.settings.seo', 'route' => 'rix_settings_seo', 'default' => 'seo' ],
+        'cache'    => ['view' => 'rix.settings.cache', 'route' => 'rix_settings_cache', 'default' => 'cache'],
+        'email'    => ['view' => 'rix.settings.email', 'route' => 'rix_settings_email', 'default' => 'email'],
+        'general'  => ['view' => 'rix.settings.general', 'route' => 'rix_settings_general', 'default' => 'general_settings'],
+        'security' => ['view' => 'rix.settings.security', 'route' => 'rix_settings_security', 'default' => 'security'],
+        'seo'      => ['view' => 'rix.settings.seo', 'route' => 'rix_settings_seo', 'default' => 'seo'],
+        'guide'    => ['view' => 'rix.settings.guide', 'route' => 'rix_settings_guide', 'default' => 'guide']
     ];
 
     public function __construct()

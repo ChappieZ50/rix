@@ -25,27 +25,10 @@
             {{$user->name}}
         </td>
         <td>
-            @if(empty($user->avatar))
-                @if($user->role === 'admin')
-                    <img src="/rix/assets/img/avatar/avatar-5.png" width="50">
-
-                @elseif($user->role === 'editor')
-                    <img src="/rix/assets/img/avatar/avatar-4.png" width="50">
-                @else
-                    <img src="/rix/assets/img/avatar/avatar-1.png" width="50">
-                @endif
-            @else
-                <img src="{{url('storage/avatars/'.$user->avatar)}}" width="50">
-            @endif
+            {!! \App\Helpers\Helper::getUserAvatar($user->avatar,$user->role) !!}
         </td>
         <td>
-            @if($user->role === 'admin')
-                Yönetici
-            @elseif ($user->role === 'editor')
-                Yazar
-            @else
-                Kullanıcı
-            @endif
+            {{\App\Helpers\Helper::getUserRole($user->role)}}
         </td>
         <td>
             {{$user->readable_date}}
