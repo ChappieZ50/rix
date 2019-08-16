@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function get_login()
     {
         if (\Auth::check())
-            return redirect()->route('rix_home');
+            return redirect()->route('rix.home');
         return view('rix.login')->with(
             'setting', Settings::getSetting('security', 'security')->first()
         );

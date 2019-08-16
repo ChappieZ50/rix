@@ -27,7 +27,7 @@
                                     @endforeach
                                 </div>
                             @endif
-                            <form method="POST" action="{{route('rix.login')}}" class="needs-validation" novalidate="">
+                            <form method="POST" action="{{route('rix_login')}}" class="needs-validation" novalidate="">
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">E-Posta</label>
