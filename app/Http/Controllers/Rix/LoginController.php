@@ -34,21 +34,21 @@ class LoginController extends Controller
 
         $validator = \Validator::make($request->all(), $validate);
         if ($validator->fails()) {
-            return redirect()->route('rix_login')->withErrors($validator->errors());
+            return redirect()->route('rix.login')->withErrors($validator->errors());
         } else {
             if ($existsRecaptcha && $useInPanel) {
                 $response = $this->sendRecaptchaRequest($request);
                 if ($response->success !== true)
-                    return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
+                    return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
             }
             $userData = [
                 'email'    => $request->input('email'),
                 'password' => $request->input('password'),
             ];
             if (\Auth::attempt($userData, $request->input('remember') === 'on' ? true : false))
-                return redirect()->route('rix_home');
+                return redirect()->route('rix.home');
             else
-                return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
+                return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
         }
     }
 

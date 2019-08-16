@@ -10,10 +10,9 @@
         @isset($records['comments'])
             @include('rix.layouts.components.index.cards.latest-comments')
         @endisset
-    </div>
-    <div class="row">
         @isset($records['users'])
             @include('rix.layouts.components.index.cards.latest-users')
         @endisset
     </div>
+
 @endsection

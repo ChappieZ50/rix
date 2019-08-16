@@ -50,7 +50,7 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_posts')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.posts')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 

@@ -19,7 +19,7 @@
 
 @section('section_header_bottom')
     <div class="section-header-button">
-        <a href="{{route('rix_send_email_subscriptions')}}" class="btn btn-primary">Abonelere Mail Gönder</a>
+        <a href="{{route('rix.send_email_subscriptions')}}" class="btn btn-primary">Abonelere Mail Gönder</a>
     </div>
 @endsection
 

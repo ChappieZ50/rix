@@ -38,7 +38,7 @@ class Settings
                     'email_port'     => 'required|numeric',
                     'email'          => 'required|email',
                     'email_password' => 'required',
-                    'username'       => 'required|nullable'
+                    'username'       => 'nullable'
                 ],
                 'setting' => [
                     'email' => 'nullable|email',
@@ -77,7 +77,7 @@ class Settings
         if (!isset($validator['validate'])) {
             $validator = \Validator::make($request->all(), $validator);
             if ($validator->errors()->isNotEmpty())
-                return Helper::response(false, '', ['errors' => $validator->errors()]);
+                return self::response(false);
         }
         $record = ModelSettings::where('setting_type', $page)->first();
         self::intervention($request, $page, $type, $record);
@@ -190,7 +190,7 @@ class Settings
     {
         $defaults = [
             'Başarıyla Kaydedildi!',
-            'Bir Sorun Oluştu!'
+            'Bir Sorun Oluştu ! Lütfen bilgileri kontrol edin'
         ];
         $messages = array_merge($messages, $defaults);
         if ($action)

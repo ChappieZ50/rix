@@ -18,7 +18,7 @@
                     </div>
                     <div class="page-search">
                         <div class="mt-3">
-                            <a href="{{route('rix_home')}}">Anasayfaya Dön</a>
+                            <a href="{{route('rix.home')}}">Anasayfaya Dön</a>
                         </div>
                     </div>
                 </div>

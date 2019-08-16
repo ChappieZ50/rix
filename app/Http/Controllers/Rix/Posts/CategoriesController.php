@@ -38,7 +38,7 @@ class CategoriesController extends Controller
             if (!empty($editCategory))
                 $view['editItem'] = $editCategory;
             else
-                return redirect()->route('rix_categories');
+                return redirect()->route('rix.categories');
         }
         return view('rix.posts.categories')->with($view);
     }

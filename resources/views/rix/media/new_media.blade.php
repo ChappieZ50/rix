@@ -6,7 +6,7 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_gallery')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.gallery')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 

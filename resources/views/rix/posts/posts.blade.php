@@ -6,7 +6,7 @@
 
 @section('section_header_bottom')
     <div class="section-header-button">
-        <a href="{{route('rix_new_post')}}" class="btn btn-primary">Yeni Ekle</a>
+        <a href="{{route('rix.new_post')}}" class="btn btn-primary">Yeni Ekle</a>
     </div>
 @endsection
 

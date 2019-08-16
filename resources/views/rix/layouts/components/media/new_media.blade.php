@@ -1,4 +1,4 @@
-<form class="dropzone" id="dropzone" method="post" enctype="multipart/form-data" action="{{route('rix_new_media')}}">
+<form class="dropzone" id="dropzone" method="post" enctype="multipart/form-data" action="{{route('rix.new_media')}}">
     @csrf
     <div class="fallback">
         <input name="file" type="file" multiple/>

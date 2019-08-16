@@ -3,7 +3,7 @@
         <div class="card-header">
             <h4>Son Yorumlar</h4>
             <div class="card-header-action">
-                <a href="{{route('rix_comments')}}" class="btn btn-primary">Hepsini Göster</a>
+                <a href="{{route('rix.comments')}}" class="btn btn-primary">Hepsini Göster</a>
             </div>
         </div>
         @if($records['comments']->isEmpty())
@@ -27,7 +27,7 @@
                                 <td>
                                     {{$comment->name}}
                                     <div class="table-links">
-                                        <a href="{{route('rix_comments',['comment' => $comment->comment_id])}}" class="text-primary" target="_blank">Git</a>
+                                        <a href="{{route('rix.comments',['comment' => $comment->comment_id])}}" class="text-primary" target="_blank">Git</a>
                                     </div>
                                 </td>
                                 <td>

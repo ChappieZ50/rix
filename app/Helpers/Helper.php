@@ -142,7 +142,7 @@ class Helper
         foreach ($terms as $term) {
             if ($term->termTaxonomy->taxonomy == $taxonomy) {
                 $params = ['action' => 'edit', 'id' => $term->termTaxonomy->term_id];
-                $route = $taxonomy == 'category' ? route('rix_categories', $params) : route('rix_tags', $params);
+                $route = $taxonomy == 'category' ? route('rix.categories', $params) : route('rix.tags', $params);
                 $i++;
                 echo '<a href="' . $route . '" target="_blank">' . $term->termTaxonomy->terms->name . '</a>, ';
             }

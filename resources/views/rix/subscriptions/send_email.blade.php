@@ -23,11 +23,11 @@
     <script>
         $(function () {
             $('#preview').on('click', function () {
-                $('#sendEmailSubscriptionsForm').attr('target', '_blank').attr('action', '{{route('rix_preview_mail')}}').submit();
+                $('#sendEmailSubscriptionsForm').attr('target', '_blank').attr('action', '{{route('rix.preview_mail')}}').submit();
             });
             $('#sendEmails').on('click', function () {
                 if (confirm('Bu işlem kuyruğa alınacaktır ve bittiğinde bilgilendirileceksiniz.'))
-                    $('#sendEmailSubscriptionsForm').attr('target','_self').attr('action','{{route('rix_action_send_email_subscriptions')}}').submit();
+                    $('#sendEmailSubscriptionsForm').attr('target','_self').attr('action','{{route('rix.action_send_email_subscriptions')}}').submit();
             });
         });
     </script>
@@ -35,7 +35,7 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_subscriptions')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.subscriptions')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 
@@ -53,7 +53,7 @@
             <div class="alert alert-success">{{session('success')}}</div>
         </div>
     @endif
-    <form action="{{route('rix_action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm">
+    <form action="{{route('rix.action_send_email_subscriptions')}}" method="post" enctype="multipart/form-data" id="sendEmailSubscriptionsForm">
         @csrf
         <div class="row">
 

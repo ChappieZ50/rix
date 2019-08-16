@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class SettingsController extends Controller
 {
     private $settings = [
-        'cache'    => ['view' => 'rix.settings.cache', 'route' => 'rix_settings_cache', 'default' => 'cache'],
-        'email'    => ['view' => 'rix.settings.email', 'route' => 'rix_settings_email', 'default' => 'email'],
-        'general'  => ['view' => 'rix.settings.general', 'route' => 'rix_settings_general', 'default' => 'general_settings'],
-        'security' => ['view' => 'rix.settings.security', 'route' => 'rix_settings_security', 'default' => 'security'],
-        'seo'      => ['view' => 'rix.settings.seo', 'route' => 'rix_settings_seo', 'default' => 'seo'],
-        'guide'    => ['view' => 'rix.settings.guide', 'route' => 'rix_settings_guide', 'default' => 'guide']
+        'cache' => ['view' => 'rix.settings.cache', 'route' => 'rix.settings.cache', 'default' => 'cache'],
+        'email' => ['view' => 'rix.settings.email', 'route' => 'rix.settings.email', 'default' => 'email'],
+        'general' => ['view' => 'rix.settings.general', 'route' => 'rix.settings.general', 'default' => 'general_settings'],
+        'security' => ['view' => 'rix.settings.security', 'route' => 'rix.settings.security', 'default' => 'security'],
+        'seo' => ['view' => 'rix.settings.seo', 'route' => 'rix.settings.seo', 'default' => 'seo'],
+        'guide' => ['view' => 'rix.settings.guide', 'route' => 'rix.settings.guide', 'default' => 'guide']
     ];
 
     public function __construct()
@@ -31,11 +31,10 @@ class SettingsController extends Controller
     {
         foreach ($this->settings as $key => $setting)
             if ($request->routeIs($setting->route)) {
-                if ($request->isMethod('get')) {
+                if ($request->isMethod('get'))
                     return view($setting->view)->with('setting', Settings::getSetting($key, $request->get('setting') ? $request->get('setting') : $setting->default)->first());
-                } elseif ($request->isMethod('post')) {
+                elseif ($request->isMethod('post'))
                     return $this->action_setting($request, $key);
-                }
             }
         return abort(404);
     }

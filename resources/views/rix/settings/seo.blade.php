@@ -18,7 +18,7 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_settings')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.settings.setting')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form method="post" action="{{route('rix_settings_seo')}}" id="seoSettingsForm">
+            <form method="post" action="{{route('rix.settings.seo')}}" id="seoSettingsForm">
                 @csrf
                 <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'seo' : Request::get('setting')}}">
                 @include('rix.layouts.components.settings.cards.seo.seo')

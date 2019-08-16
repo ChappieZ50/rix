@@ -1,7 +1,7 @@
 <div class="select-image w-100">
     <div class="image-preview mx-auto d-flex justify-content-center align-items-center" style="height:50px; background:#edeff0;width:100%">
         <button type="button" class="image-button btn" data-toggle="modal" data-target="#mediaModal" data-before="0"
-                data-url="{{route('rix_gallery')}}" id="add_image" style="background:transparent;" data-position="featured">
+                data-url="{{route('rix.gallery')}}" id="add_image" style="background:transparent;" data-position="featured">
             Öne çıkan resim (İsteğe bağlı)
         </button>
     </div>

@@ -3,7 +3,7 @@
         <div class="card mb-0">
             <div class="card-body">
                 <ul class="nav nav-pills">
-                    {!! \App\Helpers\Helper::createTablePagesBar($typeData, (object) ['all' => 'Hepsi' ,'open' => 'Gönderilmiş','closed' => 'Gönderilmemiş','trash' => 'Çöp'],'rix_posts') !!}
+                    {!! \App\Helpers\Helper::createTablePagesBar($typeData, (object) ['all' => 'Hepsi' ,'open' => 'Gönderilmiş','closed' => 'Gönderilmemiş','trash' => 'Çöp'],'rix.posts') !!}
                 </ul>
             </div>
         </div>

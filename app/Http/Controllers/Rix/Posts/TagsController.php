@@ -37,7 +37,7 @@ class TagsController extends Controller
             if (!empty($editTag))
                 $view['editTag'] = $editTag;
             else
-                return redirect()->route('rix_tags');
+                return redirect()->route('rix.tags');
         }
         return view('rix.posts.tags')->with($view);
     }

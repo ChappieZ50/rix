@@ -19,7 +19,7 @@
 
 @section('section_header_bottom')
     <div class="section-header-button">
-        <a href="{{route('rix_user')}}" class="btn btn-primary">Yeni Ekle</a>
+        <a href="{{route('rix.user')}}" class="btn btn-primary">Yeni Ekle</a>
     </div>
 @endsection
 

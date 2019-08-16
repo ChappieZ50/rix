@@ -3,7 +3,7 @@
         <div class="card-header">
             <h4>Son Mesajlar</h4>
             <div class="card-header-action">
-                <a href="{{route('rix_messages')}}" class="btn btn-primary">Hepsini Göster</a>
+                <a href="{{route('rix.messages')}}" class="btn btn-primary">Hepsini Göster</a>
             </div>
         </div>
         @if($records['messages']->isEmpty())
@@ -28,7 +28,7 @@
                                 <td>
                                     {{$message->name}}
                                     <div class="table-links">
-                                        <a href="{{route('rix_messages',['message' => $message->message_id])}}" class="text-primary" target="_blank">Git</a>
+                                        <a href="{{route('rix.messages',['message' => $message->message_id])}}" class="text-primary" target="_blank">Git</a>
                                     </div>
                                 </td>
                                 <td>

@@ -18,9 +18,11 @@ class RixAdmin
     public function handle($request, Closure $next)
     {
         $user = new Users();
-        if (auth()->check())
+        if (\Auth::check())
             if ($user->accessibility())
                 return $next($request);
-        return redirect()->route('rix_login');
+            else
+                \Auth::logout();
+        return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
     }
 }

@@ -29,7 +29,7 @@
 
 
 @section('content')
-    <form action="{{route('rix_profile')}}" method="post" enctype="multipart/form-data" id="profileForm">
+    <form action="{{route('rix.profile')}}" method="post" enctype="multipart/form-data" id="profileForm">
         @csrf
         <div class="row profile">
             <div class="col-xl-9 col-lg-12">

@@ -85,7 +85,7 @@ class PostsController extends Controller
                 ]);
             }
         }
-        return redirect()->route('rix_posts');
+        return redirect()->route('rix.posts');
     }
 
     public function update_post(Request $request)

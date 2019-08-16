@@ -23,7 +23,7 @@
     <div class="section-header-items w-100">
         <div class="header-group">
             <div class="section-header-button">
-                <a href="{{route('rix_new_media')}}" class="btn btn-primary">Yeni Ekle</a>
+                <a href="{{route('rix.new_media')}}" class="btn btn-primary">Yeni Ekle</a>
             </div>
         </div>
       <div class="header-group">

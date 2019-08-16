@@ -18,7 +18,7 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_settings')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.settings.setting')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 
@@ -39,13 +39,13 @@
                         'social_media_settings' => 'Sosyal Medya Ayarları',
                         'search_engine_settings' => 'Arama Motoru Ayarları',
                         'site_map' => 'Site Haritası'
-                        ],'rix_settings_general') !!}
+                        ],'rix.settings.general') !!}
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <form method="POST" action="{{route('rix_settings_general')}}" id="generalSettingsForm" enctype="multipart/form-data">
+            <form method="POST" action="{{route('rix.settings.general')}}" id="generalSettingsForm" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="setting_type" value="{{!Request::get('setting') ? 'general_settings' : Request::get('setting')}}">
                 @if(View::exists('rix.layouts.components.settings.cards.general.'.Request::get('setting')))

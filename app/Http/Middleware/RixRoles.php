@@ -25,7 +25,7 @@ class RixRoles
         'rix_pages',
         'rix_action_pages',
         'rix_page',
-        'rix_action_page'
+        'rix_action_page',
     ];
 
     public function handle($request, Closure $next)
@@ -35,6 +35,6 @@ class RixRoles
                 abort(403);
             return $next($request);
         }
-        return redirect()->route('rix_login');
+        return redirect()->route('rix.login');
     }
 }

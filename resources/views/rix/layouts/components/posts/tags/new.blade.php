@@ -2,7 +2,7 @@
     <div class="card-header">
         @if($editTag)
             <div class="section-header-back">
-                <a href="{{route('rix_tags')}}" class="btn btn-icon ml-0" style="border-radius: 3px;padding:3px 15px;"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{route('rix.tags')}}" class="btn btn-icon ml-0" style="border-radius: 3px;padding:3px 15px;"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h4><span>{{!isset($editTag) ?: $editTag->name}}</span> | Düzenleniyor</h4>
         @else

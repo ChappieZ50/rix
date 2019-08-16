@@ -10,7 +10,7 @@
 @if(Request::get('post'))
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_comments')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.comments')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 

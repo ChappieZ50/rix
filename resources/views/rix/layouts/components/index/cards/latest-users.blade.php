@@ -3,7 +3,7 @@
         <div class="card-header">
             <h4>Son Üye Olan Kullanıcılar</h4>
             <div class="card-header-action">
-                <a href="{{route('rix_users')}}" class="btn btn-primary">Hepsini Göster</a>
+                <a href="{{route('rix.users')}}" class="btn btn-primary">Hepsini Göster</a>
             </div>
         </div>
         @if($records['users']->isEmpty())

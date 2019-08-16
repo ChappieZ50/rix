@@ -48,12 +48,12 @@
 
 @section('section_header_top')
     <div class="section-header-back">
-        <a href="{{route('rix_pages')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('rix.pages')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 @endsection
 
 @section('content')
-    <form action="{{route('rix_action_page')}}" method="post" enctype="multipart/form-data" id="pageForm">
+    <form action="{{route('rix.action_page')}}" method="post" enctype="multipart/form-data" id="pageForm">
         @csrf
         <div class="row @isset($page) updatePage @else newPage @endisset">
             @isset($page)<input type="hidden" name="id" value=" {{$page->page_id}}"> @endisset
