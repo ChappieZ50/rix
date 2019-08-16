@@ -2,9 +2,9 @@
 
 ## Kurulum
 
-Repoyu klonlayın: `git clone https://github.com/ChappieZ50/rix.git`
-Gerekli dosyaları yükleyin: `composer update`
-Gerekli dosyaları yükleyin: `npm install`
-.env dosyasını kendinize göre ayarlayın.
+- Repoyu klonlayın: `git clone https://github.com/ChappieZ50/rix.git`
+- Gerekli PHP dosyaları yükleyin: `composer update`
+- Gerekli JS dosyaları yükleyin: `npm install`
+- .env dosyasını kendinize göre ayarlayın.
 
 Bu kadar...
