@@ -757,11 +757,9 @@ function doAction(data, action = '', url,getParam = 'status') {
         currentType: param(getParam).length <= 0 ? 'all' : param(getParam),
         action
     }, url).done(function (res) {
-        console.log(res);
          if (res.status !== false)
              location.reload();
     }).fail(function (res) {
-        console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
     })
 }

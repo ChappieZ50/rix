@@ -17,7 +17,6 @@ $(document).ready(function () {
             },
         }).done(function (res) {
             progressForPublish(0, area);
-            console.log(res);
             if (ajaxCheckStatus(res, {showSuccess: false})) {
                 if (res.content.action === 'insert')
                     window.location.href = _page + "/" + res.content.page_id + "?status=success&action=insert";
@@ -25,7 +24,6 @@ $(document).ready(function () {
                     window.location.href = _page + "/" + res.content.page_id + "?status=success&action=update";
             }
         }).fail(function (res) {
-            console.log(res.responseText);
             progressForPublish(0, area);
             ajaxCheckStatus(res, {status: 500});
         });

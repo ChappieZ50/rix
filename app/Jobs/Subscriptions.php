@@ -33,7 +33,7 @@ class Subscriptions implements ShouldQueue
     public function handle()
     {
         foreach ($this->emails as $email) {
-            \Mail::send(new \App\Mail\Subscriptions($this->items, $email['email']));
+            \Mail::send(new \App\Mail\Subscriptions($this->items, $email));
             sleep(5);
         }
     }

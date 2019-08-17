@@ -19,6 +19,7 @@ class CreateRixSubscriptionsTable extends Migration
             $table->ipAddress('ip')->nullable();
             $table->string('readable_date', 25);
             $table->string('security', 60)->unique();
+            $table->string('send')->nullable()->default('ok');
             $table->timestamps();
         });
     }

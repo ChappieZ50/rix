@@ -36,7 +36,7 @@ class MailConfigServiceProvider extends ServiceProvider
                     'port' => $setting->email_port,
                     'from' => ['address' => $setting->email, 'name' => config('app.name')],
                     'encryption' => $setting->security_type,
-                    'username' => $setting->username,
+                    'username' => !empty($setting->username) ? $setting->username :  $setting->email,
                     'password' => $setting->email_password,
                 ];
                 \Config::set('mail', $configs);

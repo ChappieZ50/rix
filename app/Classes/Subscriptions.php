@@ -5,10 +5,15 @@ namespace App\Classes;
 use App\Helpers\Helper;
 use App\Models\Subscriptions as ModelSubscriptions;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class Subscriptions
 {
     CONST CACHE_KEY = 'SUBSCRIPTIONS';
+    static protected $pageTypes = [
+        'ok',
+        'no',
+    ];
 
     static function getSubscriptions($options = [])
     {
@@ -36,27 +41,32 @@ class Subscriptions
         return Helper::response(false, 'Silme İşlemi Başarısız');
     }
 
-    static function search($value)
+    static function search($value,$type)
     {
+        if ($type === 'all')
+            $type = [ 'no', 'ok' ];
+        if (!is_array($type))
+            $type = explode(',', $type);
         return ModelSubscriptions::where(function ($query) use ($value) {
             return $query->where('email', 'like', '%' . $value . '%')
                 ->orWhere('ip', 'like', '%' . $value . '%');
-        })->orderByDesc('created_at');
+        })->whereIn('send',$type)->orderByDesc('created_at');
     }
 
-    static function paginate($request, $num)
+    static function paginate($options, $num, $type, $page)
     {
         if (Helper::cacheIsOn()) {
-            $cacheKey = Helper::pageAutoCache(self::CACHE_KEY, $request->get('page'));
-            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num) {
-                return self::getPaginateRecords($num);
+            $key = Helper::getPageType($type, self::$pageTypes);
+            $cacheKey = Helper::pageAutoCache(Helper::getCacheKey(self::CACHE_KEY, $key), $page);
+            return \Cache::tags(self::CACHE_KEY)->remember($cacheKey, Helper::cacheTime(), function () use ($num, $type, $options) {
+                return self::getPaginateRecords($options, $num);
             });
         }
-        return self::getPaginateRecords($num);
+        return self::getPaginateRecords($options, $num);
 
     }
 
-    static function insertSub($request)
+    static function insertSubscriber($request)
     {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email',
@@ -71,14 +81,52 @@ class Subscriptions
         ]);
         if ($insert)
             return Helper::response(true, 'Başarıyla abone oldunuz');
-
         return Helper::response(false);
 
     }
 
-    private static function getPaginateRecords($num)
+    static function updateSubscriber($request)
     {
-        $records = Subscriptions::getSubscriptions();
+        $ids = Helper::getIds($request->input('data'));
+        $action = $request->input('action');
+        $do = ModelSubscriptions::findMany($ids);
+        $do->each(function ($item) use ($action) {
+            $item->update(['send' => $action === 'sub' ? 'ok' : 'no']);
+        });
+        if ($do)
+            return Helper::response(true, 'Başarıyla Güncellendi');
+        return Helper::response(false, 'Bir sorun oluştu!');
+    }
+
+    static function unSubscribe($token, $delete = false)
+    {
+        $subscriber = ModelSubscriptions::where('security', $token)->where('send', 'ok')->firstOrFail();
+        if (!empty($subscriber)) {
+            if ($delete)
+                $subscriber = ModelSubscriptions::where('security', $token)->delete();
+            else
+                $subscriber = ModelSubscriptions::where('security', $token)->update(['send' => 'no']);
+        }
+        return $subscriber;
+    }
+
+    static function getTypeData($custom = [])
+    {
+        $subscriber = ['whereColumn' => 'send', 'whereValue' => 'ok'];
+        $unsubscriber = ['whereColumn' => 'send', 'whereValue' => 'no'];
+        $typeData = [
+            'all' => self::getSubscriptions()->count(),
+            'ok'  => self::getSubscriptions($subscriber)->count(),
+            'no'  => self::getSubscriptions($unsubscriber)->count(),
+        ];
+        if (!empty($custom))
+            $typeData = array_merge($typeData, $custom);
+        return (object)$typeData;
+    }
+
+    private static function getPaginateRecords($options, $num)
+    {
+        $records = Subscriptions::getSubscriptions($options);
         return $records->paginate($num);
     }
 }

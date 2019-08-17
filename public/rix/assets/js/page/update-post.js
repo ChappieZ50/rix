@@ -24,10 +24,8 @@ $(document).on('click', '.updatePost #update', function () {
     }, posts, 'put').done(function (res) {
         progressForPublish(0, '', '#update');
         ajaxCheckStatus(res, {successMessage: 'Başarıyla Güncellendi'});
-        console.log(res);
     }).fail(function (res) {
         progressForPublish(0, '', '#update');
         ajaxCheckStatus(res, {status: 500});
-        console.log(res.responseText);
     });
 });

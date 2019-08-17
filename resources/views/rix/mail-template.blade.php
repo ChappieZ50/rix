@@ -150,9 +150,9 @@
                                                             <td class="es-m-txt-c" esdev-links-color="#777777" align="left" style="padding:0;Margin:0;padding-bottom:5px;"><p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#777777;">
                                                                     Abonelikten çıkmak ve e-posta almak istemiyorsanız <u>
-                                                                        <a target="_blank"
+                                                                        <a href="{{$unsubscribe_url}}"
                                                                            style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:14px;text-decoration:none;color:#777777;"
-                                                                           href="{{$mail->unsubscribe_url}}">tıklayın</a></u>.
+                                                                        >tıklayın</a></u>.
                                                                 </p></td>
                                                         </tr>
                                                         </tbody>

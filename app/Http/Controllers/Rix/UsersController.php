@@ -24,10 +24,10 @@ class UsersController extends Controller
             $users = Users::search($request->get('search'), Helper::getPageType($type, $this->types));;
             $records = $users->paginate(20);
         } else {
-            $records = Users::paginate(array_merge(Helper::findStatusOnParam($type, $this->types), [ 'whereColumn' => 'role' ]), 20, $request->get('type'), $request->get('page'));
+            $records = Users::paginate(array_merge(Helper::findStatusOnParam($type, $this->types), ['whereColumn' => 'role']), 20, $type, $request->get('page'));
         }
         return view('rix.users.users')->with([
-            'typeData' => Users::getTypeData([ 'type' => $type ]),
+            'typeData' => Users::getTypeData(['type' => $type]),
             'users'    => $records,
             'admins'   => Users::getAdmins(),
         ]);

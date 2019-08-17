@@ -35,6 +35,6 @@ class RixRoles
                 abort(403);
             return $next($request);
         }
-        return redirect()->route('rix.login');
+        return redirect()->route('rix_login');
     }
 }

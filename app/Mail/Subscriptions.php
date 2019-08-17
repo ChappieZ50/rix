@@ -31,10 +31,12 @@ class Subscriptions extends Mailable
     public function build()
     {
         $name = isset($this->items->name) && !empty($this->items->name) ? $this->items->name : \Config::get('mail.from.name');
-        return $this->from(\Config::get('mail.from.address', $name))
+        $from = isset($this->items->email) && !empty($this->items->email) ? $this->items->email : \Config::get('mail.from.address');
+        return $this->from($from, $name)
             ->view('rix.mail-template')
             ->with([
-                'mail' => $this->items
-            ])->to($this->email);
+                'mail'            => $this->items,
+                'unsubscribe_url' => url('/rix_actions?action=unsubscribe&token=' . $this->email['security'])
+            ])->to($this->email['email']);
     }
 }

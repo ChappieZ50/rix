@@ -24,6 +24,7 @@
 @endsection
 
 @section('content')
+    @include('rix.layouts.components.subscriptions.pages-bar')
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">

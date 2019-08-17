@@ -25,7 +25,7 @@ class Helper
     static function uniqImg($options = [], $uniq = '')
     {
         $defaults = [
-            'prefix'    => 'img_',
+            'prefix' => 'img_',
             'extension' => '',
         ];
         $options = array_merge($defaults, $options);
@@ -82,11 +82,11 @@ class Helper
     static function slugPrefix($slug, $table, $options = [])
     {
         $defaults = [
-            'prefix'     => '-',
-            'table'      => '',
+            'prefix' => '-',
+            'table' => '',
             'slugColumn' => 'slug',
-            'idColumn'   => '',
-            'id'         => ''
+            'idColumn' => '',
+            'id' => ''
         ];
         $options = array_merge($defaults, $options);
         $i = 1;
@@ -110,7 +110,7 @@ class Helper
     static function response($status, $message = '', $options = [])
     {
         $defaults = [
-            'json'   => false,
+            'json' => false,
             'custom' => [],
             'errors' => '',
         ];
@@ -153,7 +153,7 @@ class Helper
     static function longText($str, $options = [])
     {
         $defaults = [
-            'len'   => 50,
+            'len' => 50,
             'start' => 0,
         ];
 
@@ -183,17 +183,17 @@ class Helper
     static function getImageData($file, $imageName, $noExtensionName, $encode = true)
     {
         $data = [
-            'width'                  => getimagesize($file)[0],
-            'height'                 => getimagesize($file)[1],
-            'mime-type'              => $file->getClientMimeType(),
-            'size'                   => $file->getSize(),
-            'extension'              => $file->getClientOriginalExtension(),
-            'url'                    => Helper::srcImage($imageName),
-            'formatedDate'           => Helper::readableDateFormat(),
-            'noExtensionName'        => $noExtensionName,
+            'width' => getimagesize($file)[0],
+            'height' => getimagesize($file)[1],
+            'mime-type' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+            'extension' => $file->getClientOriginalExtension(),
+            'url' => Helper::srcImage($imageName),
+            'formatedDate' => Helper::readableDateFormat(),
+            'noExtensionName' => $noExtensionName,
             'imageSizeHumanReadable' => Helper::fileSize($file->getSize()),
-            'image_title'            => '',
-            'image_alt'              => ''
+            'image_title' => '',
+            'image_alt' => ''
         ];
         return $encode ? json_encode($data) : $data;
     }
@@ -326,14 +326,13 @@ class Helper
 
     static function forget($main, ...$key)
     {
-        if (is_array($key))
-            foreach ($key as $value) {
+        if (is_array($key) && !empty($key)) {
+            foreach ($key as $value)
                 if (!empty($main))
-                    \Cache::tags($main)->forget($value);
-                else
-                    \Cache::forget($value);
-            }
-
+                    \Cache::forget($main . '.' . $value);
+        } else {
+            \Cache::forget($main);
+        }
     }
 
     static function pageAutoCache($key, $value, $type = 'page')

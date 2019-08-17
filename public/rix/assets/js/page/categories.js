@@ -24,7 +24,6 @@ $(document).on('click', '.newCategory #publish', function () {
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
         progressForPublish(0, prefix);
-        console.log(res.responseText);
     });
 });
 
@@ -32,12 +31,10 @@ $(document).on('click', '#parentCategories', function () {
     let id = $(this).attr('data-id'),
         name = $(this).attr('data-name');
     simplePost({action: 'getParents', term_id: id, main: name + ' \'nin Alt Kategorileri'}, category, 'get').done(function (res) {
-        console.log(res);
         $('#parentCategoriesContent').html(res.html).promise().done(function () {
             $('#parentCategoriesModal').modal('toggle');
         });
     }).fail(function (res) {
-        console.log(res.responseText);
     })
 });
 
@@ -59,7 +56,6 @@ function multipleDelete(variable, area) {
 
                     }).fail(function (res) {
                         ajaxCheckStatus(res, {status: 500});
-                        console.log(res.responseText);
                     })
                 }
             }
@@ -75,7 +71,6 @@ function singleDelete(variable) {
                 simplePost({
                     ids: id,
                 }, category, 'delete').done(function (res) {
-                    console.log(res);
                     if (res.confirm) {
                         confirmParentCategories(res, variable);
                     } else {
@@ -85,7 +80,6 @@ function singleDelete(variable) {
 
                 }).fail(function (res) {
                     ajaxCheckStatus(res, {status: 500});
-                    console.log(res.responseText);
                 })
             }
         }
@@ -95,7 +89,6 @@ function singleDelete(variable) {
 function confirmParentCategories(res, variable = '') {
     if (confirm('Bu kategorinin alt kategorileri mevcut. Eğer silerseniz alt kategoriler ana kategori olarak güncellenecektir')) {
         simplePost({data: res.data, confirm: true}, category, 'delete').done(function (response) {
-            console.log(response);
             parseRendered(response);
             if (variable === '#singleDeleteInParents' && res.status !== false) {
                 $(variable).closest('tr').remove();
@@ -103,7 +96,6 @@ function confirmParentCategories(res, variable = '') {
             ajaxCheckStatus(res, {successMessage: 'Başarıyla Silindi', errorTitle: 'Silinemedi', errorMessage: ''});
         }).fail(function (response) {
             ajaxCheckStatus(response, {status: 500});
-            console.log(response.responseText);
         });
     }
 }
@@ -128,7 +120,6 @@ function update(id) {
     progressForPublish(1, prefix, updateClass);
     simplePost({name: name, slug: slug, parent: parent, id: id}, category, 'put').done(function (res) {
         ajaxCheckStatus(res, {successMessage: 'Kategori Başarıyla Güncellendi', area: prefix});
-        console.log(res);
         if (res.status !== false) {
             $.when(parseRendered(res, false)).then(function () {
                 $('.newCategory .card-header h4 span').text(name);
@@ -141,7 +132,6 @@ function update(id) {
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
         progressForPublish(0, prefix, updateClass);
-        console.log(res.responseText);
     });
 }
 

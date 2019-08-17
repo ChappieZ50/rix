@@ -20,12 +20,10 @@ $(document).on('click', '.newPost #publish', function () {
         title, slug, content, summary, seo_title, seo_description, seo_keywords, featured_image,
         categories, tags, status, featured, slider
     }, post).done(function (res) {
-        console.log(res);
         progressForPublish(0, area);
         if(ajaxCheckStatus(res))
             window.location.href = redirectPost + "?action=edit&id=" + res.post_id + '&status=success';
     }).fail(function (res) {
-        console.log(res.responseText);
         progressForPublish(0, area);
         ajaxCheckStatus(res, {status: 500});
     });

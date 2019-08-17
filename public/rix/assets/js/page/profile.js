@@ -16,12 +16,10 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
         }).done(function (res) {
-            console.log(res);
             progressForPublish(0, area);
             if (ajaxCheckStatus(res,{showSuccess: false}))
                 window.location.href = profile + "?status=success";
         }).fail(function (res) {
-            console.log(res.responseText);
             progressForPublish(0, area);
             ajaxCheckStatus(res, {status: 500});
         });

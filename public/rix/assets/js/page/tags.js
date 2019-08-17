@@ -9,7 +9,6 @@ $(document).on('click', '.newTag #publish', function () {
     simplePost({
         name: name, slug: slug
     }, tag).done(function (res) {
-        console.log(res);
         ajaxCheckStatus(res, {successMessage: 'Etiket Başarıyla Eklendi', area: area});
         if (res.status !== false) {
             if ($('#closeSearch').is(':hidden')) {
@@ -23,7 +22,6 @@ $(document).on('click', '.newTag #publish', function () {
         }
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
-        console.log(res.responseText);
     });
 });
 
@@ -33,7 +31,6 @@ function deleteTags(ids) {
             location.reload();
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
-        console.log(res.responseText);
     })
 }
 
@@ -67,7 +64,6 @@ function updateTag(id) {
     progressForPublish(1, prefix, updateClass);
     simplePost({name: name, slug: slug, id: id}, tag, 'put').done(function (res) {
         ajaxCheckStatus(res, {successMessage: 'Etiket Başarıyla Güncellendi', area: prefix});
-        console.log(res);
         if (res.status !== false) {
             $('#tags').html(res.html);
             $('.newTag .card-header h4 span').text(name);
@@ -80,7 +76,6 @@ function updateTag(id) {
     }).fail(function (res) {
         ajaxCheckStatus(res, {status: 500});
         progressForPublish(0, prefix, updateClass);
-        console.log(res.responseText);
     });
 }
 
@@ -104,10 +99,8 @@ function closeSearch() {
     $('#closeSearch').hide();
     $('#searchInCategories').val('');
     simplePost({action: 'getTable'}, tag, 'get').done(function (res) {
-        console.log(res);
         $('#tagsTable').html(res.html);
     }).fail(function (res) {
-        console.log(res.responseText);
         ajaxCheckStatus(res, {status: 500});
     });
 }

@@ -167,7 +167,7 @@
                 <div class="collapse show" id="mycard-collapse9">
                     <div class="card-body">
                         Abonelere mail göndermeden önce <a href="{{route('rix.settings.email')}}" target="_blank">tıklayınız</a>. E-Posta ayarları sayfasından gerekli bilgileri
-                        girdikten sonra eğer vds veya vps sunucunuz varsa terminal ekranından <span class="text-title">php artisan work:queue --queue=mail --tries=2</span> kodunu
+                        girdikten sonra eğer vds veya vps sunucunuz varsa terminal ekranından <span class="text-title">php artisan queue:work --queue=email --tries=2</span> kodunu
                         çalıştırarak kuyruktaki işlemleri başlatabilirsiniz. Eğer bir hosting üzerinden çalışıyorsanız <a href="{{route('rix.settings.setting')}}" target="_blank">Ayarlar
                             sayfasındaki</a> <span class="text-title">"Dikkat"</span> bölümünde ne yapacağınızı anlattım. Şimdi abone mail gönderme işlemine başlayabilirisiniz.
                         Gönder butonuna tıklamadan önce

@@ -82,12 +82,12 @@ Route::group(['prefix' => \App\Helpers\Helper::rixPrefix(),'as' => 'rix.', 'midd
         $items = (object)[
             'title'           => request()->input('subject'),
             'message'         => request()->input('message'),
-            'unsubscribe_url' => '#'
         ];
-        return new \App\Mail\Subscriptions($items, 'test@gmail.com');
+        return new \App\Mail\Subscriptions($items, ['email' => 'test@gmail.com','security' => '#']);
     })->name('preview_mail');
     Route::post('/mark_notifications', 'Rix\NotificationsController@action_notifications')->name('mark_notifications');
 });
+Route::get('rix_actions','Rix\RixActions@get_action')->name('rix_actions');
 Route::get('/rix-login', 'Rix\LoginController@get_login')->name('rix_login');
 Route::post('/rix-login', 'Rix\LoginController@action_login')->name('rix_action_login');
 Route::get('/logout', function () {

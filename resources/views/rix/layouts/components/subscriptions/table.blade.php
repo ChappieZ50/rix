@@ -10,6 +10,7 @@
         <th>E-Posta</th>
         <th>İp Adresi</th>
         <th>Oluşturma Tarihi</th>
+        @if(!Request::has('type')) <th>Gönderim</th> @endif
     </tr>
     @if($subscriptions->isNotEmpty())
         @include('rix.layouts.components.subscriptions.table-content')

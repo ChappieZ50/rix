@@ -23,6 +23,6 @@ class RixAdmin
                 return $next($request);
             else
                 \Auth::logout();
-        return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
+        return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
     }
 }

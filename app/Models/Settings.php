@@ -29,8 +29,8 @@ class Settings extends Model
     private static function cacheForgets($type)
     {
         if ($type === 'security')
-            Helper::forget('SETTINGS','SECURITY');
+            Helper::forget('SETTINGS', 'SECURITY');
         else if ($type === 'email')
-            Helper::forget('SETTINGS','EMAIL');
+            Helper::forget('SETTINGS', 'EMAIL');
     }
 }

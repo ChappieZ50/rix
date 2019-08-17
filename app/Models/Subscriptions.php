@@ -17,6 +17,9 @@ class Subscriptions extends Model
         self::created(function () {
             Helper::clearCache('SUBSCRIPTIONS');
         });
+        self::updated(function () {
+            Helper::clearCache('SUBSCRIPTIONS');
+        });
         self::deleted(function () {
             Helper::clearCache('SUBSCRIPTIONS');
         });
