@@ -38,17 +38,16 @@ class Comments extends Model
 
     protected static function boot()
     {
-        parent::boot();
         self::created(function () {
-            Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMPOSE')->forget('COMMENTS');
             \Cache::tags('COMMENTS')->flush();
         });
         self::updated(function () {
-            Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMPOSE')->forget('COMMENTS');
             \Cache::tags('COMMENTS')->flush();
         });
         self::deleted(function () {
-            Helper::forget('COMPOSE', 'COMMENTS');
+            \Cache::tags('COMPOSE')->forget('COMMENTS');
             \Cache::tags('COMMENTS')->flush();
         });
     }

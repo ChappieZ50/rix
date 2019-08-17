@@ -13,17 +13,16 @@ class Messages extends Model
 
     protected static function boot()
     {
-        parent::boot();
-        self::created(function () {
-            Helper::forget('COMPOSE', 'MESSAGES');
+       self::created(function () {
+            \Cache::tags('COMPOSE')->forget('MESSAGES');
             \Cache::tags('MESSAGES')->flush();
         });
         self::updated(function () {
-            Helper::forget('COMPOSE', 'MESSAGES');
+            \Cache::tags('COMPOSE')->forget('MESSAGES');
             \Cache::tags('MESSAGES')->flush();
         });
         self::deleted(function () {
-            Helper::forget('COMPOSE', 'MESSAGES');
+            \Cache::tags('COMPOSE')->forget('MESSAGES');
             \Cache::tags('MESSAGES')->flush();
         });
     }
