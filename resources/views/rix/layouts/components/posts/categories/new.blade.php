@@ -2,7 +2,7 @@
     <div class="card-header">
         @if($editItem)
             <div class="section-header-back">
-                <a href="{{route('rix_categories')}}" class="btn btn-icon ml-0" style="border-radius: 3px;padding:3px 15px;"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{route('rix.categories')}}" class="btn btn-icon ml-0" style="border-radius: 3px;padding:3px 15px;"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h4><span>{{\App\Helpers\Helper::write($editItem,'name')}}</span> | Düzenleniyor</h4>
         @else

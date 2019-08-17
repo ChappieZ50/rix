@@ -42,7 +42,7 @@
                                     <td>
                                         {{$category->name}}
                                         <div class="table-links actions">
-                                            <a href="{{route('rix_categories',['action' => 'edit','id' => $category->term_id])}}" class="text-primary">Düzenle</a>
+                                            <a href="{{route('rix.categories',['action' => 'edit','id' => $category->term_id])}}" class="text-primary">Düzenle</a>
                                             <div class="bullet"></div>
                                             <a href="#" class="text-danger" id="singleDeleteInParents" data-id="{{$category->term_id}}">Sil</a>
                                             <div class="bullet"></div>

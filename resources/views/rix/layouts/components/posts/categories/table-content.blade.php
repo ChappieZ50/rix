@@ -11,7 +11,7 @@
             <div class="table-links actions" data-id="{{$item->term_id}}">
                 <a href="javascript:;" class="text-primary" id="parentCategories" data-id="{{$item->term_id}}" data-name="{{$item->name}}">Alt Kategorileri Gör</a>
                 <div class="bullet"></div>
-                <a href="{{route('rix_categories',['action' => 'edit','id' => $item->term_id])}}" class="text-primary">Düzenle</a>
+                <a href="{{route('rix.categories',['action' => 'edit','id' => $item->term_id])}}" class="text-primary">Düzenle</a>
                 <div class="bullet"></div>
                 <a href="javascript:;" class="text-danger" id="singleDeleteInTable" data-id="{{$item->term_id}}">Sil</a>
                 <div class="bullet"></div>

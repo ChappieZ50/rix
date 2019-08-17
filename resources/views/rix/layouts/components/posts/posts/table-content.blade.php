@@ -13,7 +13,7 @@
             {{$post->title}} {!! $post->status == 'closed' && $typeData->type != 'closed' ? '<b>— Gönderilmemiş </b>' : null !!}
 
             <div class="table-links actions">
-                <a href="{{route('rix_post',['action' => 'edit','id' => $post->post_id])}}" class="text-primary">Düzenle</a>
+                <a href="{{route('rix.post',['action' => 'edit','id' => $post->post_id])}}" class="text-primary">Düzenle</a>
                 <div class="bullet"></div>
                 @if($typeData->type == 'trash')
                     <a href="javascript:;" class="text-success" id="restore" data-id="{{$post->post_id}}">Geri Al</a>
@@ -42,7 +42,7 @@
             {{$post->user->username}}
         </td>
         <td>
-            <a href="{{route('rix_comments',['post' => $post->post_id])}}" class="comment">
+            <a href="{{route('rix.comments',['post' => $post->post_id])}}" class="comment">
                 <span class="comment-count">
                     {{$post->comments->count()}}
                 </span>
