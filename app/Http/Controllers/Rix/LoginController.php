@@ -16,7 +16,7 @@ class LoginController extends Controller
     {
         if (\Auth::check())
             return redirect()->route('rix.home');
-        return view('rix_login')->with(
+        return view('rix.login')->with(
             'setting', Settings::getSetting('security', 'security')->first()
         );
     }
