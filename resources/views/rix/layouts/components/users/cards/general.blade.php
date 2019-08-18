@@ -115,7 +115,7 @@
         <div class="form-group row mb-2">
             <div class="offset-md-3 offset-lg-3 offset-12"></div>
             <div class="col-sm-12 col-md-7">
-                <button class="btn btn-outline-primary" type="button" id="resetPassword">Şifreyi
+                <button class="btn btn-outline-primary" type="button" id="resetPassword" data-auth="{{Auth::user()->user_id === $user->user_id ? 'self' : 'other'}}">Şifreyi
                     Sıfırla
                 </button>
             </div>

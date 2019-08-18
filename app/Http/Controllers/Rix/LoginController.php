@@ -16,7 +16,7 @@ class LoginController extends Controller
     {
         if (\Auth::check())
             return redirect()->route('rix.home');
-        return view('rix.login')->with(
+        return view('rix_login')->with(
             'setting', Settings::getSetting('security', 'security')->first()
         );
     }
@@ -34,12 +34,12 @@ class LoginController extends Controller
 
         $validator = \Validator::make($request->all(), $validate);
         if ($validator->fails()) {
-            return redirect()->route('rix.login')->withErrors($validator->errors());
+            return redirect()->route('rix_login')->withErrors($validator->errors());
         } else {
             if ($existsRecaptcha && $useInPanel) {
                 $response = $this->sendRecaptchaRequest($request);
                 if ($response->success !== true)
-                    return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
+                    return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
             }
             $userData = [
                 'email'    => $request->input('email'),
@@ -48,7 +48,7 @@ class LoginController extends Controller
             if (\Auth::attempt($userData, $request->input('remember') === 'on' ? true : false))
                 return redirect()->route('rix.home');
             else
-                return redirect()->route('rix.login')->withErrors([ 'Giriş işlemi başarısız' ]);
+                return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
         }
     }
 

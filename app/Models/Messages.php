@@ -13,6 +13,7 @@ class Messages extends Model
 
     protected static function boot()
     {
+	parent::boot();
        self::created(function () {
             \Cache::tags('COMPOSE')->forget('MESSAGES');
             \Cache::tags('MESSAGES')->flush();

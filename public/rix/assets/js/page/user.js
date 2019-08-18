@@ -45,7 +45,7 @@ $('#resetPassword').on('click', function () {
             '            <div class="invalid-feedback" data-name="password_confirmation"></div>\n' +
             '        </div>\n' +
             '    </div>';
-    if (auth !== 'self') {
+    if (auth != 'self') {
         if (confirm('Başka bir kullanıcının profilini güncelliyorsunuz. Bunu yapmak istediğinizden emin misin?')) {
             $(this).hide();
             $('.password_area').html(html);

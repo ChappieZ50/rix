@@ -70,6 +70,6 @@
                     <a href="{{route('rix_login')}}" class="links"> Rix Admin </a>
                 </div>
             </div>
-        </div>
+        </div>z
     </body>
 </html>

@@ -38,6 +38,7 @@ class Comments extends Model
 
     protected static function boot()
     {
+parent::boot();
         self::created(function () {
             \Cache::tags('COMPOSE')->forget('COMMENTS');
             \Cache::tags('COMMENTS')->flush();
