@@ -33,6 +33,7 @@ class Subscriptions extends Mailable
         $name = isset($this->items->name) && !empty($this->items->name) ? $this->items->name : \Config::get('mail.from.name');
         $from = isset($this->items->email) && !empty($this->items->email) ? $this->items->email : \Config::get('mail.from.address');
         return $this->from($from, $name)
+            ->subject($this->items->title)
             ->view('rix.mail-template')
             ->with([
                 'mail'            => $this->items,
