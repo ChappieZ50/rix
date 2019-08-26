@@ -44,13 +44,13 @@ class Posts extends Model
             Sitemap::refreshPosts();
             Helper::clearCache('POSTS');
             if (Comments::where('post_id', $post->post_id)->count() > 0)
-                Helper::clearCache('COMMENTS');
+                Helper::clearCache('COMMENTS','COMPOSE');
         });
         self::deleted(function ($post) {
             Sitemap::delete($post->slug, self::$sitemap);
             Helper::clearCache('POSTS','USERS');
             if (Comments::where('post_id', $post->post_id)->count() > 0)
-                Helper::clearCache('COMMENTS');
+                Helper::clearCache('COMMENTS','COMPOSE');
         });
     }
 }
