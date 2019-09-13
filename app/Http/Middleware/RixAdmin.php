@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Models\Users;
-use App\User;
 use Closure;
 
 class RixAdmin
@@ -23,6 +22,7 @@ class RixAdmin
                 return $next($request);
             else
                 \Auth::logout();
-        return redirect()->route('rix_login')->withErrors([ 'Giriş işlemi başarısız' ]);
+        return redirect()->route('rix_login');
     }
 }
+
