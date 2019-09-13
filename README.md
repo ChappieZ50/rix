@@ -9,3 +9,4 @@
 - Gerekli PHP dosyaları yükleyin: `composer update`
 - Gerekli JS dosyaları yükleyin: `npm install`
 - .env dosyasını kendinize göre ayarlayın.
+# hayalimparke
